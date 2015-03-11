@@ -1,0 +1,37 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/selectbackground"
+    android:gravity="center_horizontal"
+    tools:context="com.example.xiner.trash.acitivity.SelectActivity">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/trash_recycle"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/battonbackground"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:text="二手交易"
+        android:textColor="#3ecb55" />
+
+    <Button
+        android:id="@+id/trash_recycle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="70dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/battonbackground"
+
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:text="废品回收"
+/>
+</RelativeLayout>

@@ -1,0 +1,38 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="actionBarTheme">@style/green</item>
+
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="green" >
+        <item name="colorPrimary">#1bcd6e</item>
+
+    </style>
+
+    <style name="registerstyle" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="actionBarTheme">@style/blue</item>
+
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="blue" >
+        <item name="colorPrimary">#33b5e5</item>
+
+    </style>
+
+
+    <style name="haveaddressstyle" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="actionBarTheme">@style/grey</item>
+
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="grey" >
+        <item name="colorPrimary">#e9e9e3</item>
+
+    </style>
+
+</resources>
