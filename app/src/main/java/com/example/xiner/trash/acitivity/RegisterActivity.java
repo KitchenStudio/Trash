@@ -22,7 +22,7 @@ public class RegisterActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        radioButton=(RadioButton)findViewById(R.id.customer_radio);
+//        radioButton=(RadioButton)findViewById(R.id.customer_radio);
         registerButton=(Button)findViewById(R.id.register_button);
         registerButton.setOnClickListener(new registerListener());
 
