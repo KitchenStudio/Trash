@@ -9,8 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.xiner.trash.R;
-import com.example.xiner.trash.acitivity.EditGoodActivity;
-import com.example.xiner.trash.acitivity.TrashDetailActivity;
+import com.example.xiner.trash.acitivity.WasteDetailActivity;
 
 /**
  * Created by xiner on 15-3-11.
@@ -34,7 +33,7 @@ public class TrashAdapter extends RecyclerView.Adapter<TrashAdapter.ViewHolder>{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(context, TrashDetailActivity.class);
+                intent.setClass(context, WasteDetailActivity.class);
                 context.startActivity(intent);
             }
         });

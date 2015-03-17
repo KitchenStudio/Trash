@@ -19,8 +19,6 @@ import android.widget.Toast;
 import com.example.xiner.trash.R;
 import com.example.xiner.trash.adapter.AllGoodAdapter;
 
-import java.util.ArrayList;
-
 
 public class AllGoodsActivity extends ActionBarActivity {
 
@@ -82,7 +80,7 @@ public class AllGoodsActivity extends ActionBarActivity {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent();
-            intent.setClass(AllGoodsActivity.this,TrashActivity.class);
+            intent.setClass(AllGoodsActivity.this,WasteActivity.class);
             startActivity(intent);
         }
     }
@@ -91,7 +89,7 @@ public class AllGoodsActivity extends ActionBarActivity {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent();
-            intent.setClass(AllGoodsActivity.this,PubliccommodityActivity.class);
+            intent.setClass(AllGoodsActivity.this,PublishCommodityActivity.class);
             startActivity(intent);
         }
     }

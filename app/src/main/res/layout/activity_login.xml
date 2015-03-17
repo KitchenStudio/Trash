@@ -23,6 +23,7 @@
             android:orientation="vertical">
 
             <EditText
+                android:id="@+id/login_et_name"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginLeft="16dp"
@@ -39,6 +40,7 @@
                 android:background="@android:color/darker_gray" />
 
             <EditText
+                android:id="@+id/login_et_password"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginLeft="16dp"
@@ -56,8 +58,18 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="30dp"
             android:background="#3ecb55"
-            android:text="登录"
+            android:text="登  录"
+            android:textSize="20sp"
             android:textColor="@android:color/white" />
+        <TextView
+            android:id="@+id/login_tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="15sp"
+            android:textColor="#00dd77"
+            android:text="还没账号？马上注册！"/>
 
     </LinearLayout>
 

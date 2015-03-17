@@ -1,0 +1,297 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.xiner.trash.acitivity.PublishCommodityActivity">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/addgoodpic" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="标 题"
+                android:textColor="#FF3DBD39" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="@android:color/darker_gray" />
+
+            <EditText
+                android:id="@+id/publish_commodity_et_iname"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:background="@android:color/white"
+                android:hint="物品品牌型号等" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="价 格"
+                android:textColor="#FF3DBD39" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="@android:color/darker_gray" />
+
+            <EditText
+                android:id="@+id/publish_commodity_et_price"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:background="@android:color/white"
+                android:numeric="decimal"
+                android:hint="大于0的数字" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="新旧程度"
+                android:textColor="#FF3DBD39" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="@android:color/darker_gray" />
+
+            <Spinner
+                android:id="@+id/publish_commodity_sp_recency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/commodity_recency"
+                android:prompt="@string/prompt_recency"></Spinner>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:text="描 述"
+                android:textColor="#FF3DBD39" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="60dp"
+                android:background="@android:color/darker_gray" />
+
+            <EditText
+                android:id="@+id/publish_commodity_et_desc"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@android:color/white"
+                android:lines="5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="联系人"
+                android:textColor="#FF3DBD39" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="@android:color/darker_gray" />
+
+            <EditText
+                android:id="@+id/publish_commodity_et_uname"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:background="@android:color/white"
+                android:hint="输入姓名" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="联系电话"
+                android:textColor="#FF3DBD39" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="@android:color/darker_gray" />
+
+            <EditText
+                android:id="@+id/publish_commodity_et_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:background="@android:color/white"
+                android:hint="输入联系电话" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="QQ"
+                android:textColor="#FF3DBD39" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="@android:color/darker_gray" />
+
+            <EditText
+                android:id="@+id/publish_commodity_et_qq"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:background="@android:color/white"
+                android:hint="QQ 号码" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="地 点"
+                android:textColor="#FF3DBD39" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="@android:color/darker_gray" />
+
+            <EditText
+                android:id="@+id/publish_commodity_et_address"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:background="@android:color/white"
+                android:hint="交易地点" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="分类"
+                android:textColor="#FF3DBD39" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="@android:color/darker_gray" />
+
+            <Spinner
+                android:id="@+id/publish_commodity_sp_sort"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/commodity_sort"
+                android:prompt="@string/prompt_sort"></Spinner>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/publish_commodity_btn_publish"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#1bcd6e"
+            android:text="发布"
+            android:gravity="center"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+</ScrollView>

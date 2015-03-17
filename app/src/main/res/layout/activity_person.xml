@@ -11,9 +11,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:orientation="vertical">
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -23,6 +21,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/person_im_head"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center_horizontal"
@@ -30,18 +29,17 @@
                     android:src="@drawable/head" />
 
                 <TextView
+                    android:id="@+id/person_tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:text="昵称" />
-
-
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/myrelease_linear"
+                android:id="@+id/person_ll_second_release"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
@@ -56,11 +54,11 @@
                     android:src="@drawable/twohandpub" />
 
                 <TextView
+                    android:id="@+id/person_tv_secondhand_release"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="我的二手发布" />
-
 
             </LinearLayout>
 
@@ -84,6 +82,7 @@
                     android:src="@drawable/collection" />
 
                 <TextView
+                    android:id="@+id/person_tv_waste_order"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -97,7 +96,7 @@
                 android:background="@android:color/darker_gray" />
 
             <LinearLayout
-                android:id="@+id/collection_linear"
+                android:id="@+id/person_ll_collection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#ddd"
@@ -111,6 +110,7 @@
                     android:src="@drawable/collection" />
 
                 <TextView
+                    android:id="@+id/person_tv_collection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -119,7 +119,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/manageaddid"
+                android:id="@+id/person_ll_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -134,12 +134,11 @@
                     android:src="@drawable/manageaddress" />
 
                 <TextView
+                    android:id="@+id/person_tv_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="管理我的地址" />
-
-
             </LinearLayout>
 
             <View
@@ -148,9 +147,9 @@
                 android:background="@android:color/darker_gray" />
 
             <LinearLayout
+                android:id="@+id/person_ll_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:background="#ddd"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -162,6 +161,7 @@
                     android:src="@drawable/guanli" />
 
                 <TextView
+                    android:id="@+id/person_tv_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -170,6 +170,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/person_ll_history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -184,6 +185,7 @@
                     android:src="@drawable/history" />
 
                 <TextView
+                    android:id="@+id/person_tv_history"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -198,7 +200,7 @@
                 android:background="@android:color/darker_gray" />
 
             <LinearLayout
-                android:id="@+id/setting_linear"
+                android:id="@+id/person_ll_settings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#ddd"
@@ -212,28 +214,24 @@
                     android:src="@drawable/setting" />
 
                 <TextView
+                    android:id="@+id/person_tv_settings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="设置" />
-
             </LinearLayout>
-
-
         </LinearLayout>
-
-
     </ScrollView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@android:color/white"
-
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/twohands_linear"
+            android:id="@+id/person_ll_secondhand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -244,10 +242,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-
                 android:src="@drawable/towhands" />
 
             <TextView
+                android:id="@+id/person_tv_secondhand_trade"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
@@ -255,14 +253,14 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/person_image"
+            android:id="@+id/person_im_head2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@drawable/persondown" />
 
         <LinearLayout
-            android:id="@+id/trash_linear"
+            android:id="@+id/person_ll_trash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -277,6 +275,7 @@
                 android:src="@drawable/trash" />
 
             <TextView
+                android:id="@+id/person_tv_waste_recycle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"

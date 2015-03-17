@@ -18,11 +18,32 @@
     <string name="title_activity_my_collection">我的收藏</string>
     <string name="title_activity_my_release">我的发布</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_edit_good">发布详情</string>
     <string name="title_activity_trash">TrashActivity</string>
     <string name="title_activity_publictrash">PublictrashActivity</string>
     <string name="title_activity_trash_detail">TrashDetailActivity</string>
 
+    <string name="prompt_sort">请选择分类信息</string>
+    <string-array name="commodity_sort">
+        <item>书籍</item>
+        <item>电子</item>
+        <item>家具</item>
+    </string-array>
+
+    <string name="prompt_recency">请选择分类信息</string>
+    <string-array name="commodity_recency">
+        <item>9</item>
+        <item>8</item>
+        <item>7</item>
+        <item>6</item>
+        <item>5成即以下</item>
+    </string-array>
+
+    <string name="prompt_register">请选择用户类型</string>
+    <string-array name="register">
+        <item>普通用户</item>
+        <item>商户</item>
+    </string-array>
 </resources>

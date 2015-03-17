@@ -49,17 +49,12 @@ public class FragmentTabsPager extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
         setContentView(R.layout.fragment_tabs_pager);
 
         LayoutInflater inflater = LayoutInflater.from(this);
-        mTabHost = (TabHost)findViewById(android.R.id.tabhost);
+        mTabHost = (TabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup();
-
-        mViewPager = (ViewPager)findViewById(R.id.pager);
-
+        mViewPager = (ViewPager) findViewById(R.id.pager);
         mTabsAdapter = new TabsAdapter(this, mTabHost, mViewPager);
 
 //        View share = inflater.inflate(R.layout.tab_share,null);
@@ -72,8 +67,6 @@ public class FragmentTabsPager extends ActionBarActivity {
                 Checkingfragment.class, null);
         mTabsAdapter.addTab(mTabHost.newTabSpec("custom").setIndicator("被删除"),
                 Deletefragment.class, null);
-
-
         if (savedInstanceState != null) {
             mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
         }
@@ -185,7 +178,7 @@ public class FragmentTabsPager extends ActionBarActivity {
             // This hack tries to prevent this from pulling focus out of our
             // ViewPager.
             TabWidget widget = mTabHost.getTabWidget();
-          //  widget.setBackgroundColor(mContext.getResources().getColor(R.color.black));
+            //  widget.setBackgroundColor(mContext.getResources().getColor(R.color.black));
             int oldFocusability = widget.getDescendantFocusability();
             widget.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
             mTabHost.setCurrentTab(position);
