@@ -1,6 +1,8 @@
 package com.example.xiner.trash.acitivity;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,34 +11,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.xiner.trash.R;
 import com.example.xiner.trash.util.NetUtil;
 
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 
 public class RegisterActivity extends ActionBarActivity {
@@ -45,18 +27,13 @@ public class RegisterActivity extends ActionBarActivity {
     private EditText passwordEt;
     private Button registerBtn;
     private Spinner userTypeSp;
-    //private final String REGISTER_URL = "http://192.168.1.128/Green/user/reg";
-    private final String REGISTER_URL = "http://211.87.226.182/Green/user/reg";
-    private HttpPost httpRequest;
     private NetUtil net;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         init();
-
     }
 
     private void init() {
@@ -71,10 +48,12 @@ public class RegisterActivity extends ActionBarActivity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        int status;
                         JSONObject json = new JSONObject();
                         net = new NetUtil(RegisterActivity.this);
                         try {
                             String type = userTypeSp.getSelectedItem().toString();
+                            Log.d("type Test", type);
                             json.put("u.name", userNameEt.getText().toString());
                             //json.put("u.age", "123");
                             json.put("u.password", passwordEt.getText().toString());
@@ -84,7 +63,11 @@ public class RegisterActivity extends ActionBarActivity {
                             } else {
                                 json.put("u.tag", "1");
                             }
-                            net.registerReq(json);
+                            status = net.registerReq(json);
+                            Message msg = new Message();
+                            msg.what = status;
+                            handler.sendMessage(msg);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -93,6 +76,23 @@ public class RegisterActivity extends ActionBarActivity {
             }
         });
     }
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    Toast.makeText(RegisterActivity.this, "对不起该用户已注册，请登陆", Toast.LENGTH_SHORT).show();
+                    break;
+                case 1:
+                    Toast.makeText(RegisterActivity.this, "恭喜您注册成功！", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+            }
+        }
+
+    };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

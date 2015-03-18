@@ -31,6 +31,7 @@ public class NetUtil {
     private static final String LOGIN_URL = "http://211.87.226.173/Green/user/logcheck";
     private static final String REGISTER_URL = "http://211.87.226.173/Green/user/reg";
     private static final String SECONDHAND_REALEASE_URL = "http://211.87.226.173/Green/items/output";
+    private static final String WASTE_REALEASE_URL = "http://211.87.226.173/Green/garbage/put";
     private HttpPost httpRequest;
     private HttpResponse httpResponse;
     private Context context;
@@ -70,7 +71,7 @@ public class NetUtil {
                     jsonData += line + "\r\n";
                 }
                 jsonData = jsonData.trim();
-                Log.i("登录测试", "登录数据：" + jsonData);
+                Log.d("登录测试", "登录数据：" + jsonData);
                 status = Integer.parseInt(String.valueOf(jsonData.charAt(1)));
             } else {
                 Log.d("netTest", "不成功");
@@ -114,7 +115,8 @@ public class NetUtil {
                 s += line;
             }
             s = s.trim();
-           // status = Integer.parseInt(String.valueOf(s.charAt(0)));
+            status = Integer.parseInt(String.valueOf(s.charAt(1)));
+            Log.d("registerTest", status + "");
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -154,6 +156,44 @@ public class NetUtil {
                 }
                 jsonData = jsonData.trim();
                 Log.i("二手商品发布测试", "测试数据：" + jsonData);
+            }
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void wasteRealeaseReq(JSONObject jsonObject) {
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        Iterator<?> keys = jsonObject.keys();
+
+        while (keys.hasNext()) {
+            String key = keys.next().toString();
+            try {
+                params.add(new BasicNameValuePair(key, jsonObject.getString(key)));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            httpRequest = new HttpPost(WASTE_REALEASE_URL);
+            httpRequest.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+            httpResponse = new DefaultHttpClient()
+                    .execute(httpRequest);
+            String jsonData = "";
+            int result = httpResponse.getStatusLine().getStatusCode();
+            if (result == 200) {
+                InputStream is = httpResponse.getEntity().getContent();
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                String line = "";
+                while ((line = br.readLine()) != null) {
+                    jsonData += line + "\r\n";
+                }
+                jsonData = jsonData.trim();
+                Log.i("废品发布测试", "测试数据：" + jsonData);
             }
         } catch (ClientProtocolException e) {
             e.printStackTrace();

@@ -21,7 +21,8 @@ public class Main extends Application {
     private static final String LOGIN = "login";
     private static Main app;//静态单例
     private User user;
-    //private DateUtil date = new DateUtil();
+    private boolean login = false;
+
 
     @Override
     public void onCreate() {
@@ -69,10 +70,18 @@ public class Main extends Application {
         }
     }
 
-    public void clear(){
+    public void clear() {
 
     }
 
+    public boolean isLogin() {
+        return login == true;
+
+    }
+
+    public void setLogin(boolean login) {
+        this.login = login;
+    }
 }
 
 

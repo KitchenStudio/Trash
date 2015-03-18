@@ -31,8 +31,14 @@
         <item>电子</item>
         <item>家具</item>
     </string-array>
+    <string-array name="waste_sort">
+        <item>钢铁</item>
+        <item>纸品</item>
+        <item>家具</item>
+        <item>电子产品</item>
+    </string-array>
 
-    <string name="prompt_recency">请选择分类信息</string>
+    <string name="prompt_recency">新旧程度</string>
     <string-array name="commodity_recency">
         <item>9</item>
         <item>8</item>

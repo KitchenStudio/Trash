@@ -46,6 +46,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:background="#ddd"
+                android:password="true"
                 android:hint="请输入密码"
                 android:paddingLeft="10dp" />
         </LinearLayout>
