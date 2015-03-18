@@ -46,4 +46,6 @@
         <item>普通用户</item>
         <item>商户</item>
     </string-array>
+    <string name="title_activity_my_information">MyInformationActivity</string>
+    <string name="title_activity_edit_info">EditInfoActivity</string>
 </resources>
