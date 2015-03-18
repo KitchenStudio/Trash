@@ -2,16 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.xiner.trash" >
 
-<<<<<<< HEAD
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-=======
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
-
->>>>>>> 7327125589cac2d4eb60bf0c49ea26481fd5a28f
     <application
         android:name=".main.Main"
         android:allowBackup="true"
@@ -32,15 +26,13 @@
             android:theme="@style/haveaddressstyle" />
         <activity
             android:name=".acitivity.LoginActivity"
-<<<<<<< HEAD
             android:label="@string/title_activity_login" >
-=======
-            android:label="@string/title_activity_login"></activity>
+</activity>
         <activity
             android:name=".acitivity.AllCommoditiesActivity"
             android:label="@string/title_activity_all_goods"
             android:theme="@style/haveaddressstyle">
->>>>>>> 7327125589cac2d4eb60bf0c49ea26481fd5a28f
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,17 +40,12 @@
             </intent-filter>
         </activity>
         <activity
-<<<<<<< HEAD
             android:name=".acitivity.AllGoodsActivity"
             android:label="@string/title_activity_all_goods"
             android:theme="@style/haveaddressstyle" />
         <activity
             android:name=".acitivity.GoodDetailActivity"
             android:label="@string/title_activity_good_detail" />
-=======
-            android:name=".acitivity.CommodityDetailActivity"
-            android:label="@string/title_activity_good_detail"></activity>
->>>>>>> 7327125589cac2d4eb60bf0c49ea26481fd5a28f
         <activity
             android:name=".acitivity.SettingActivity"
             android:label="@string/title_activity_setting" />
@@ -79,13 +66,12 @@
             android:name=".acitivity.FragmentTabsPager"
             android:label="@string/title_activity_my_release" />
         <activity
-<<<<<<< HEAD
             android:name=".acitivity.EditGoodActivity"
             android:label="@string/title_activity_edit_good" />
-=======
+<activity
             android:name=".acitivity.EditCommodityActivity"
             android:label="@string/title_activity_edit_good"></activity>
->>>>>>> 7327125589cac2d4eb60bf0c49ea26481fd5a28f
+
         <activity
             android:name=".acitivity.WasteActivity"
             android:label="@string/title_activity_trash"
