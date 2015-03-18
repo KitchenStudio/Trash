@@ -187,7 +187,43 @@ public class NetUtil {
 
 
 
+    public void wasteRealeaseReq(JSONObject jsonObject) {
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        Iterator<?> keys = jsonObject.keys();
 
+        while (keys.hasNext()) {
+            String key = keys.next().toString();
+            try {
+                params.add(new BasicNameValuePair(key, jsonObject.getString(key)));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            httpRequest = new HttpPost(WASTE_REALEASE_URL);
+            httpRequest.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+            httpResponse = new DefaultHttpClient()
+                    .execute(httpRequest);
+            String jsonData = "";
+            int result = httpResponse.getStatusLine().getStatusCode();
+            if (result == 200) {
+                InputStream is = httpResponse.getEntity().getContent();
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                String line = "";
+                while ((line = br.readLine()) != null) {
+                    jsonData += line + "\r\n";
+                }
+                jsonData = jsonData.trim();
+                Log.i("废品发布测试", "测试数据：" + jsonData);
+            }
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
