@@ -73,7 +73,7 @@ public class LoginActivity extends ActionBarActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.loginbutton:
-<<<<<<< HEAD
+
 //                    String name = nameEt.getText().toString();
 //                    String passwd = passwordET.getText().toString();
 //                    if (name == "" || passwd == "") {
@@ -89,7 +89,7 @@ public class LoginActivity extends ActionBarActivity {
                     intent = new Intent();
                     intent.setClass(LoginActivity.this, PersonActivity.class);
                     startActivity(intent);
-=======
+
                     name = nameEt.getText().toString();
                     pwd = passwordET.getText().toString();
                     if (name.equals("") || pwd.equals("")) {
@@ -102,7 +102,7 @@ public class LoginActivity extends ActionBarActivity {
                     } else {
                         showMessage("网络无连接，请重试！");
                     }
->>>>>>> 7327125589cac2d4eb60bf0c49ea26481fd5a28f
+
                     break;
                 case R.id.login_tv_register:
                     Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);

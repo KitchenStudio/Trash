@@ -92,7 +92,7 @@ public class Main extends Application {
 
     }
 
-<<<<<<< HEAD
+
     public Bitmap getLoacalBitmap(String url) {
         FileInputStream fis;
         Bitmap bit = null;
@@ -110,7 +110,7 @@ public class Main extends Application {
         return bit;
     }
 
-=======
+
     public boolean isLogin() {
         return login == true;
 
@@ -119,7 +119,7 @@ public class Main extends Application {
     public void setLogin(boolean login) {
         this.login = login;
     }
->>>>>>> 7327125589cac2d4eb60bf0c49ea26481fd5a28f
+
 }
 
 
