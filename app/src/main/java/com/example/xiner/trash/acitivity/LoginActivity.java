@@ -4,8 +4,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +34,9 @@ public class LoginActivity extends ActionBarActivity {
     private ProgressDialog progressDialog;
     private Intent intent;
 
+    private String name;
+    private String pwd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +50,9 @@ public class LoginActivity extends ActionBarActivity {
         loginButton = (Button) findViewById(R.id.loginbutton);
         nameEt = (EditText) findViewById(R.id.login_et_name);
         passwordET = (EditText) findViewById(R.id.login_et_password);
-        loginButton.setOnClickListener(listener);
         registerTv = (TextView) findViewById(R.id.login_tv_register);
+        loginButton.setOnClickListener(listener);
+
         registerTv.setOnClickListener(listener);
     }
 
@@ -66,6 +73,7 @@ public class LoginActivity extends ActionBarActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.loginbutton:
+<<<<<<< HEAD
 //                    String name = nameEt.getText().toString();
 //                    String passwd = passwordET.getText().toString();
 //                    if (name == "" || passwd == "") {
@@ -81,6 +89,20 @@ public class LoginActivity extends ActionBarActivity {
                     intent = new Intent();
                     intent.setClass(LoginActivity.this, PersonActivity.class);
                     startActivity(intent);
+=======
+                    name = nameEt.getText().toString();
+                    pwd = passwordET.getText().toString();
+                    if (name.equals("") || pwd.equals("")) {
+                        showMessage("姓名或密码不能为空！");
+                    } else if (isConnected()) {
+                        app.clear();
+//                        progressDialog = ProgressDialog.show(LoginActivity.this,
+//                                "", "登录中……");
+                        new LoginThread().start();
+                    } else {
+                        showMessage("网络无连接，请重试！");
+                    }
+>>>>>>> 7327125589cac2d4eb60bf0c49ea26481fd5a28f
                     break;
                 case R.id.login_tv_register:
                     Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -91,37 +113,19 @@ public class LoginActivity extends ActionBarActivity {
         }
     }
 
-    private class LoginThread extends Thread {
-        private String name, password;
-        private NetUtil net;
-        private JSONObject loginData;
-        private int status; // 登录状态
-
-        private LoginThread(String name, String password) {
-            this.name = name;
-            this.password = password;
-        }
-
+    private Handler handler = new Handler() {
         @Override
-        public void run() {
-            NetUtil net = new NetUtil(LoginActivity.this);
-            loginData = new JSONObject();
-            try {
-                loginData.put("u.name", name);
-                loginData.put("u.password", password);
-                status = net.LoginReq(loginData);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            switch (status) {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
                 //0表示用户 1表示商户 2表示无该用户 3表示密码错误
                 case 0://用户成功登陆
                     //app.clear();
                     app.getDataStore().edit().putBoolean("login", true)
                             .commit();
                     app.getDataStore().edit().putString("stuid", name).commit();
-                    app.getDataStore().edit().putString("password", password).commit();
-                    progressDialog.dismiss();
+                    app.getDataStore().edit().putString("password", pwd).commit();
+                    app.setLogin(true);
+                    //progressDialog.dismiss();
                     intent = new Intent();
                     intent.setClass(LoginActivity.this, PersonActivity.class);
                     intent.putExtra("name", name);
@@ -137,6 +141,30 @@ public class LoginActivity extends ActionBarActivity {
                     showMessage("对不起，密码不正确，请重新输入！");
                     break;
             }
+        }
+    };
+
+    private class LoginThread extends Thread {
+        private NetUtil net;
+        private JSONObject loginData;
+        private int status; // 登录状态
+
+        @Override
+        public void run() {
+            NetUtil net = new NetUtil(LoginActivity.this);
+            loginData = new JSONObject();
+            try {
+                loginData.put("u.name", name);
+                loginData.put("u.password", pwd);
+                status = net.LoginReq(loginData);
+                Message msg = new Message();
+                msg.what = status;
+                handler.sendMessage(msg);
+                Log.d("StatusTest", status + "");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
 
         }
     }

@@ -51,6 +51,7 @@ public class NetUtil {
     private HttpResponse httpResponse;
     private Context context;
     int serverResponseCode = 0;
+    private static final String WASTE_REALEASE_URL = "http://211.87.226.173/Green/garbage/put";
     public NetUtil(Context context) {
         this.context = context;
     }
@@ -86,7 +87,7 @@ public class NetUtil {
                     jsonData += line + "\r\n";
                 }
                 jsonData = jsonData.trim();
-                Log.i("登录测试", "登录数据：" + jsonData);
+                Log.d("登录测试", "登录数据：" + jsonData);
                 status = Integer.parseInt(String.valueOf(jsonData.charAt(1)));
             } else {
                 Log.d("netTest", "不成功");
@@ -130,7 +131,8 @@ public class NetUtil {
                 s += line;
             }
             s = s.trim();
-           // status = Integer.parseInt(String.valueOf(s.charAt(0)));
+            status = Integer.parseInt(String.valueOf(s.charAt(1)));
+            Log.d("registerTest", status + "");
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -180,6 +182,60 @@ public class NetUtil {
             e.printStackTrace();
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void uploadInfo(JSONObject jsonObject){
         List<NameValuePair> params = new ArrayList<NameValuePair>();

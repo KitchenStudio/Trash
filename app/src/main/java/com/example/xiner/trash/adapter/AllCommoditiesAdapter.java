@@ -9,40 +9,44 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.xiner.trash.R;
-import com.example.xiner.trash.acitivity.EditCommodityActivity;
+import com.example.xiner.trash.acitivity.CommodityDetailActivity;
 
 /**
- * Created by xiner on 15-3-11.
+ * Created by xiner on 15-3-10.
  */
-public class MyReleaseAdapter extends RecyclerView.Adapter<MyReleaseAdapter.ViewHolder> {
+public class AllCommoditiesAdapter extends RecyclerView.Adapter<AllCommoditiesAdapter.ViewHolder>{
 
     Context context;
-    public MyReleaseAdapter(Context context){
+    public AllCommoditiesAdapter(Context context) {
         this.context = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.myreleaselist,viewGroup,false);
+
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_all_commodities,viewGroup,false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(ViewHolder viewHolder, final int i) {
+
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(context, EditCommodityActivity.class);
+                intent.setClass(context, CommodityDetailActivity.class);
                 context.startActivity(intent);
             }
         });
+
+
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return 5;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -51,8 +55,8 @@ public class MyReleaseAdapter extends RecyclerView.Adapter<MyReleaseAdapter.View
 
         public ViewHolder(View itemView) {
             super(itemView);
-            cardView =(CardView)itemView.findViewById(R.id.card_view_releasegoods);
-
+            cardView =(CardView)itemView.findViewById(R.id.card_view_goods);
         }
     }
+
 }

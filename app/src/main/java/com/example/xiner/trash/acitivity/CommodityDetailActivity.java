@@ -2,34 +2,21 @@ package com.example.xiner.trash.acitivity;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.xiner.trash.R;
-import com.example.xiner.trash.adapter.WasteAdapter;
 
-public class WasteActivity extends ActionBarActivity {
-
-    RecyclerView mRecyclerView;
-    LinearLayoutManager mLayoutManager;
-    WasteAdapter trashAdapter;
+public class CommodityDetailActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_waste);
-        mRecyclerView = (RecyclerView)findViewById(R.id.recyclerView_trash);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        trashAdapter = new WasteAdapter(this);
-        mRecyclerView.setAdapter(trashAdapter);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.activity_commodity_detail);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.waste_customview);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setCustomView(R.layout.commodities_detail_customview);
     }
 
 

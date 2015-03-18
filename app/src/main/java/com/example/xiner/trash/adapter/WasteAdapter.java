@@ -9,21 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.xiner.trash.R;
-import com.example.xiner.trash.acitivity.EditCommodityActivity;
+import com.example.xiner.trash.acitivity.WasteDetailActivity;
 
 /**
  * Created by xiner on 15-3-11.
  */
-public class MyReleaseAdapter extends RecyclerView.Adapter<MyReleaseAdapter.ViewHolder> {
-
+public class WasteAdapter extends RecyclerView.Adapter<WasteAdapter.ViewHolder>{
     Context context;
-    public MyReleaseAdapter(Context context){
+    public WasteAdapter(Context context){
         this.context = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.myreleaselist,viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_all_waste,viewGroup,false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -34,7 +33,7 @@ public class MyReleaseAdapter extends RecyclerView.Adapter<MyReleaseAdapter.View
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(context, EditCommodityActivity.class);
+                intent.setClass(context, WasteDetailActivity.class);
                 context.startActivity(intent);
             }
         });
@@ -51,7 +50,8 @@ public class MyReleaseAdapter extends RecyclerView.Adapter<MyReleaseAdapter.View
 
         public ViewHolder(View itemView) {
             super(itemView);
-            cardView =(CardView)itemView.findViewById(R.id.card_view_releasegoods);
+            cardView =(CardView)itemView.findViewById(R.id.card_view_trash);
+
 
         }
     }

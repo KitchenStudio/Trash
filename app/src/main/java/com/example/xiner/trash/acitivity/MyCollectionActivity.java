@@ -18,6 +18,9 @@ public class MyCollectionActivity extends ActionBarActivity {
     LinearLayoutManager mLayoutManager;
     CollectionAdapter collectionAdapter;
 
+    private void init(){
+        
+    }
 
 
     @Override
