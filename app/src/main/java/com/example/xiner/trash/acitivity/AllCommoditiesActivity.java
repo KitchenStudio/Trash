@@ -79,7 +79,7 @@ public class AllCommoditiesActivity extends ActionBarActivity {
 
         personImage = (ImageView) findViewById(R.id.person_image);
         personImage.setOnClickListener(new PersonListener());
-        publishCommodityImage = (ImageView) findViewById(R.id.publicgood);
+        publishCommodityImage = (ImageView) findViewById(R.id.publicgoodallgood);
         publishCommodityImage.setOnClickListener(new publicgoodListener());
         wasteLinear = (LinearLayout) findViewById(R.id.trash_linear);
         wasteLinear.setOnClickListener(new trashListener());

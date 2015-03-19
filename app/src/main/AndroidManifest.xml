@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".main.Main"
         android:allowBackup="true"
@@ -24,15 +25,15 @@
             android:name=".acitivity.PersonActivity"
             android:label="@string/title_activity_publiccommodity"
             android:theme="@style/haveaddressstyle" />
+        <activity android:name=".acitivity.CommodityDetailActivity" />
         <activity
             android:name=".acitivity.LoginActivity"
             android:label="@string/title_activity_login" >
-</activity>
+        </activity>
         <activity
             android:name=".acitivity.AllCommoditiesActivity"
             android:label="@string/title_activity_all_goods"
-            android:theme="@style/haveaddressstyle">
-
+            android:theme="@style/haveaddressstyle" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -68,10 +69,9 @@
         <activity
             android:name=".acitivity.EditGoodActivity"
             android:label="@string/title_activity_edit_good" />
-<activity
+        <activity
             android:name=".acitivity.EditCommodityActivity"
-            android:label="@string/title_activity_edit_good"></activity>
-
+            android:label="@string/title_activity_edit_good" />
         <activity
             android:name=".acitivity.WasteActivity"
             android:label="@string/title_activity_trash"
@@ -89,6 +89,10 @@
         <activity
             android:name=".acitivity.EditInfoActivity"
             android:label="@string/title_activity_edit_info" >
+        </activity>
+        <activity
+            android:name=".acitivity.ChangePasswordActivity"
+            android:label="@string/title_activity_change_password" >
         </activity>
     </application>
 

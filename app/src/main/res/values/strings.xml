@@ -52,6 +52,7 @@
         <item>普通用户</item>
         <item>商户</item>
     </string-array>
-    <string name="title_activity_my_information">MyInformationActivity</string>
-    <string name="title_activity_edit_info">EditInfoActivity</string>
+    <string name="title_activity_my_information">我的信息</string>
+    <string name="title_activity_edit_info">修改信息</string>
+    <string name="title_activity_change_password">修改密码</string>
 </resources>

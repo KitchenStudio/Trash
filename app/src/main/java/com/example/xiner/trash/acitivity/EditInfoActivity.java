@@ -70,6 +70,11 @@ public class EditInfoActivity extends ActionBarActivity {
         man = (RadioButton) findViewById(R.id.man_radio);
         woman = (RadioButton) findViewById(R.id.woman_radio);
         nickname.setText(app.getDataStore().getString("nickname", "未设置昵称"));
+        if (app.getDataStore().getString("sex","男").equals("男")){
+            man.setChecked(true);
+        }else{
+            woman.setChecked(true);
+        }
 
         phonecall.setText(app.getDataStore().getString("phonecall", "未设置电话号码"));
         qqnumber.setText(app.getDataStore().getString("qqnumber", "未设置qq号码"));

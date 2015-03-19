@@ -32,6 +32,9 @@ public class MyInformationActivity extends ActionBarActivity {
 
 
     private void init() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
         InfoListener infoListener = new InfoListener();
         editinfo = (TextView) findViewById(R.id.editinformation);
         editinfo.setOnClickListener(infoListener);
@@ -86,7 +89,7 @@ public class MyInformationActivity extends ActionBarActivity {
                     break;
                 case R.id.changepassword:
                     intent = new Intent();
-                    intent.setClass(MyInformationActivity.this, EditInfoActivity.class);
+                    intent.setClass(MyInformationActivity.this, ChangePasswordActivity.class);
                     startActivity(intent);
                     break;
 
@@ -101,7 +104,9 @@ public class MyInformationActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
 
-
+        if (android.R.id.home == item.getItemId()){
+            finish();
+        }
         return super.onOptionsItemSelected(item);
     }
 }
