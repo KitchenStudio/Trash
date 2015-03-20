@@ -45,7 +45,7 @@ public class NetUtil {
     private static final String REGISTER_URL = "http://211.87.226.173/Green/user/reg";
     private static final String SECONDHAND_REALEASE_URL = "http://211.87.226.173/Green/items/output";
     private static final String TAG = "NetUtil";
-    private  String UPLOADPICTURE_URL = "http://211.87.226.190:8080/api/v1/item/file";
+    private  String UPLOADPICTURE_URL = "http://211.87.226.168:8080/api/v1/item/file";
     private static final String UPLOAD_PERSON_URL= "\"http://211.87.226.173/Green/items/output";
     private HttpPost httpRequest;
     private HttpResponse httpResponse;
@@ -272,9 +272,9 @@ public class NetUtil {
 
         HttpURLConnection conn = null;
         DataOutputStream dos = null;
-//        String lineEnd = "\r\n";
-//        String twoHyphens = "--";
-//        String boundary = "*****";
+        String lineEnd = "\r\n";
+        String twoHyphens = "--";
+        String boundary = "*****";
         int bytesRead, bytesAvailable, bufferSize;
         byte[] buffer;
         int maxBufferSize = 1 * 1024 * 1024;
@@ -293,6 +293,7 @@ public class NetUtil {
                 FileInputStream fileInputStream = new FileInputStream(sourceFile);
                 URL url = new URL(UPLOADPICTURE_URL);
 
+
                 // 打开http连接
                 conn = (HttpURLConnection) url.openConnection();
 
@@ -302,16 +303,16 @@ public class NetUtil {
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Connection", "Keep-Alive");
                 conn.setRequestProperty("ENCTYPE", "multipart/form-data");
-                conn.setRequestProperty("Content-Type", "multipart/form-data");
+                conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
 //                conn.setRequestProperty("uploadfile", fileName);
 
                 dos = new DataOutputStream(conn.getOutputStream());
 
-//                dos.writeBytes(twoHyphens + boundary + lineEnd);
+                dos.writeBytes(twoHyphens + boundary + lineEnd);
                 dos.writeBytes("Content-Disposition: form-data; name=\"uploadfile\";filename=\""
-                        + fileName);
+                        + fileName+ "\"" + lineEnd);
 
-//                dos.writeBytes(lineEnd);
+                dos.writeBytes(lineEnd);
 
                 // 创建一个缓冲区
                 bytesAvailable = fileInputStream.available();
@@ -332,8 +333,8 @@ public class NetUtil {
                 }
 
 //                // 上传文件之后上传字符串
-//                dos.writeBytes(lineEnd);
-//                dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+                dos.writeBytes(lineEnd);
+                dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
 
                 // 服务器的响应
                 serverResponseCode = conn.getResponseCode();

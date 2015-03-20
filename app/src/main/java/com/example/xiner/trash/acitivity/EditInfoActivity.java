@@ -166,7 +166,7 @@ public class EditInfoActivity extends ActionBarActivity {
     class uploadHeadThread extends Thread {
         @Override
         public void run() {
-            Log.v(TAG, "upload");
+
             int code = net.uploadFile(path + "/head.jpg");
             if (code == 200) {
                 finish();
