@@ -59,7 +59,7 @@ public class Main extends Application {
     }
 
     // 头像写到sdcard中
-    public void setPicToView(Bitmap mBitmap, String path) {
+    public void setPicToView(Bitmap mBitmap, String path,String filename) {
 
         String sdStatus = Environment.getExternalStorageState();
         if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
@@ -68,7 +68,7 @@ public class Main extends Application {
         FileOutputStream b = null;
         File file = new File(path);
         file.mkdirs();// 创建文件夹
-        String fileName = path + "/head.jpg";// 图片名字
+        String fileName = path + filename;// 图片名字
         try {
             b = new FileOutputStream(fileName);
             mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件

@@ -44,14 +44,17 @@ public class PublishCommodityActivity extends ActionBarActivity {
     private Button publishBtn;
     private ImageView goodimage;
     private Bitmap goodbitmap;
+    NetUtil net;
     Main app;
     private final static String path = Environment.getExternalStorageDirectory() + "/trash/good";// sd路径
-    private String TAG="Publc";
+    private String TAG = "Publc";
+    String filename = "/good.jpg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_commodity);
+        net = new NetUtil(this);
         app = Main.getInstance();
         init();
 
@@ -61,7 +64,7 @@ public class PublishCommodityActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
-        goodimage =(ImageView)findViewById(R.id.addgoodpic);
+        goodimage = (ImageView) findViewById(R.id.addgoodpic);
         goodimage.setOnClickListener(new picListener());
         inameEt = (EditText) findViewById(R.id.publish_commodity_et_iname);
         priceEt = (EditText) findViewById(R.id.publish_commodity_et_price);
@@ -77,8 +80,16 @@ public class PublishCommodityActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 new secondHandThread().start();
+                new picUploadThread().start();
             }
         });
+    }
+
+    private class picUploadThread extends Thread {
+        @Override
+        public void run() {
+            net.uploadFile(path + filename);
+        }
     }
 
     private class secondHandThread extends Thread {
@@ -114,9 +125,9 @@ public class PublishCommodityActivity extends ActionBarActivity {
                 Date date = new Date();
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String time = format.format(date).toString();
-                jsonObject.put("i.time",time);
+                jsonObject.put("i.time", time);
                 //jsonObject.put("i.time",new Date(udate.getTime()));
-                Log.d("DateTest",time);
+                Log.d("DateTest", time);
 
                 net.secondhandRealeaseReq(jsonObject);
             } catch (JSONException e) {
@@ -127,52 +138,48 @@ public class PublishCommodityActivity extends ActionBarActivity {
         }
     }
 
-    class picListener implements View.OnClickListener{
+    class picListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            new android.app.AlertDialog.Builder(PublishCommodityActivity.this)
-                    .setTitle("头像选择")
-                    .setNegativeButton("相册选取",
-                            new DialogInterface.OnClickListener() {
-
-                                @Override
-                                public void onClick(DialogInterface dialog,
-                                                    int which) {
-                                    dialog.cancel();
-                                    Intent intent1 = new Intent(
-                                            Intent.ACTION_PICK, null);
-//                                    intent1.setDataAndType(
-//                                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-//                                            "image/*");
-                                    startActivityForResult(intent1, 3);
-                                }
-                            })
-                    .setPositiveButton("相机拍照",
-                            new DialogInterface.OnClickListener() {
-
-                                @Override
-                                public void onClick(DialogInterface dialog,
-                                                    int which) {
-                                    dialog.cancel();
-                                    String status = Environment
-                                            .getExternalStorageState();
-                                    if (status
-                                            .equals(Environment.MEDIA_MOUNTED)) {// 判断是否有SD卡
-                                        Intent intent2 = new Intent(
-                                                MediaStore.ACTION_IMAGE_CAPTURE);
-//                                        intent2.putExtra(
-//                                                MediaStore.EXTRA_OUTPUT,
-//                                                Uri.fromFile(new File(
-//                                                        Environment.getExternalStorageDirectory(),
-//                                                        "good.jpg")));
-                                        startActivityForResult(intent2, 3);// 采用ForResult打开
-                                    }
-                                }
-                            }).show();
+            picGet();
         }
     }
 
+    private void picGet(){
+        new android.app.AlertDialog.Builder(this)
+                .setTitle("头像选择")
+                .setNegativeButton("相册选取",
+                        new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                dialog.cancel();
+                                Intent intent1 = new Intent(
+                                        Intent.ACTION_PICK, null);
+
+                                startActivityForResult(intent1, 3);
+                            }
+                        })
+                .setPositiveButton("相机拍照",
+                        new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                dialog.cancel();
+                                String status = Environment
+                                        .getExternalStorageState();
+                                if (status
+                                        .equals(Environment.MEDIA_MOUNTED)) {// 判断是否有SD卡
+                                    Intent intent2 = new Intent(
+                                            MediaStore.ACTION_IMAGE_CAPTURE);
+                                    startActivityForResult(intent2, 3);// 采用ForResult打开
+                                }
+                            }
+                        }).show();
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -186,13 +193,13 @@ public class PublishCommodityActivity extends ActionBarActivity {
 
                         return;
                     }
-                    Log.v(TAG, data+"good");
+                    Log.v(TAG, data + "good");
                     if (data != null) {
                         Bundle extras = data.getExtras();
                         goodbitmap = extras.getParcelable("data");
                         if (goodbitmap != null) {
 
-                        app.setPicToView(goodbitmap, path);// 保存在SD卡中
+                            app.setPicToView(goodbitmap, path, filename);// 保存在SD卡中
                             goodimage.setImageBitmap(goodbitmap);// 用ImageView显示出来
                         }
                     }
@@ -203,6 +210,7 @@ public class PublishCommodityActivity extends ActionBarActivity {
 
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

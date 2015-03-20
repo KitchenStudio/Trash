@@ -42,9 +42,10 @@ public class EditInfoActivity extends ActionBarActivity {
     EditText nickname, phonecall, qqnumber;
     private final static String path = Environment.getExternalStorageDirectory() + "/trash/head";// sd路径
     NetUtil net = new NetUtil(EditInfoActivity.this);
-    String filepath = Environment.getExternalStorageDirectory() + "/trash/head/head.jpg";
+//    String filepath = Environment.getExternalStorageDirectory() + "/trash/head/head.jpg";
     RadioGroup group;
     RadioButton man, woman;
+    String filename = "/head.jpg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +80,7 @@ public class EditInfoActivity extends ActionBarActivity {
         phonecall.setText(app.getDataStore().getString("phonecall", "未设置电话号码"));
         qqnumber.setText(app.getDataStore().getString("qqnumber", "未设置qq号码"));
         if (app.getDataStore().getBoolean("ifhead", false)) {
-            Bitmap bitmap = app.getLoacalBitmap(filepath);
+            Bitmap bitmap = app.getLoacalBitmap(path+filename);
             head.setImageBitmap(bitmap);
         }
 
@@ -103,48 +104,8 @@ public class EditInfoActivity extends ActionBarActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.person_edit_head:
-                    new android.app.AlertDialog.Builder(EditInfoActivity.this)
-                            .setTitle("头像选择")
-                            .setNegativeButton("相册选取",
-                                    new DialogInterface.OnClickListener() {
-
-                                        @Override
-                                        public void onClick(DialogInterface dialog,
-                                                            int which) {
-                                            dialog.cancel();
-                                            Intent intent1 = new Intent(
-                                                    Intent.ACTION_PICK, null);
-                                            intent1.setDataAndType(
-                                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                                                    "image/*");
-                                            startActivityForResult(intent1, 1);
-                                        }
-                                    })
-                            .setPositiveButton("相机拍照",
-                                    new DialogInterface.OnClickListener() {
-
-                                        @Override
-                                        public void onClick(DialogInterface dialog,
-                                                            int which) {
-                                            dialog.cancel();
-                                            String status = Environment
-                                                    .getExternalStorageState();
-                                            if (status
-                                                    .equals(Environment.MEDIA_MOUNTED)) {// 判断是否有SD卡
-                                                Intent intent2 = new Intent(
-                                                        MediaStore.ACTION_IMAGE_CAPTURE);
-                                                intent2.putExtra(
-                                                        MediaStore.EXTRA_OUTPUT,
-                                                        Uri.fromFile(new File(
-                                                                Environment.getExternalStorageDirectory(),
-                                                                "head.jpg")));
-                                                startActivityForResult(intent2, 2);// 采用ForResult打开
-                                            }
-                                        }
-                                    }).show();
+                   picGet();
                     break;
-
-
                 case R.id.save_edit:
                     app.getDataStore().edit().putString("nickname", nickname.getText().toString()).commit();
                     app.getDataStore().edit().putString("phonecall", phonecall.getText().toString()).commit();
@@ -152,17 +113,57 @@ public class EditInfoActivity extends ActionBarActivity {
                     if (app.getDataStore().getBoolean("ifheadstore", false)) {
                         app.getDataStore().edit().putBoolean("ifhead", true).commit();
                     }
-//                    prograss  = new ProgressDialog();
-//                    prograss.
+
                     new uploadHeadThread().start();
 
-//                    new uploadInfo().start();
+                    new uploadInfo().start();
 
                     break;
             }
         }
     }
 
+    private void picGet(){
+        new android.app.AlertDialog.Builder(this)
+                .setTitle("头像选择")
+                .setNegativeButton("相册选取",
+                        new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                dialog.cancel();
+                                Intent intent1 = new Intent(
+                                        Intent.ACTION_PICK, null);
+                                intent1.setDataAndType(
+                                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                                        "image/*");
+                                startActivityForResult(intent1, 1);
+                            }
+                        })
+                .setPositiveButton("相机拍照",
+                        new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                dialog.cancel();
+                                String status = Environment
+                                        .getExternalStorageState();
+                                if (status
+                                        .equals(Environment.MEDIA_MOUNTED)) {// 判断是否有SD卡
+                                    Intent intent2 = new Intent(
+                                            MediaStore.ACTION_IMAGE_CAPTURE);
+                                    intent2.putExtra(
+                                            MediaStore.EXTRA_OUTPUT,
+                                            Uri.fromFile(new File(
+                                                    Environment.getExternalStorageDirectory(),
+                                                    "head.jpg")));
+                                    startActivityForResult(intent2, 2);// 采用ForResult打开
+                                }
+                            }
+                        }).show();
+    }
     class uploadHeadThread extends Thread {
         @Override
         public void run() {
@@ -227,7 +228,7 @@ public class EditInfoActivity extends ActionBarActivity {
                     Bundle extras = data.getExtras();
                     headbitmap = extras.getParcelable("data");
                     if (headbitmap != null) {
-                        app.setPicToView(headbitmap, path);// 保存在SD卡中
+                        app.setPicToView(headbitmap, path,filename);// 保存在SD卡中
                         head.setImageBitmap(headbitmap);// 用ImageView显示出来
                     }
                 }

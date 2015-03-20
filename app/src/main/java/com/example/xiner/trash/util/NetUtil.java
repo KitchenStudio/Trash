@@ -55,9 +55,7 @@ public class NetUtil {
     public NetUtil(Context context) {
         this.context = context;
     }
-//    public JSONArray GetResultFromNet(List<NameValuePair> params){
-//        httpRequest = new HttpPost()
-//    }
+
 
     public int LoginReq(JSONObject jsonObject) {
         //0表示用户 1表示商户 2表示无该用户 3表示密码错误
@@ -265,6 +263,7 @@ public class NetUtil {
         }
     }
 
+    //上传文件
     public int uploadFile(String sourceFileUri) {
 
 
