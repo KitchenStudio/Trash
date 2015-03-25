@@ -73,6 +73,23 @@ public class LoginActivity extends ActionBarActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.loginbutton:
+
+//                    String name = nameEt.getText().toString();
+//                    String passwd = passwordET.getText().toString();
+//                    if (name == "" || passwd == "") {
+//                        showMessage("姓名或密码不能为空！");
+//                    } else if (isConnected()) {
+//                        app.clear();
+//                        progressDialog = ProgressDialog.show(LoginActivity.this,
+//                                "", "登录中……");
+//                        new LoginThread(name, passwd).start();
+//                    } else {
+//                        showMessage("网络无连接，请重试！");
+//                    }
+                    intent = new Intent();
+                    intent.setClass(LoginActivity.this, PersonActivity.class);
+                    startActivity(intent);
+
                     name = nameEt.getText().toString();
                     pwd = passwordET.getText().toString();
                     if (name.equals("") || pwd.equals("")) {
@@ -85,6 +102,7 @@ public class LoginActivity extends ActionBarActivity {
                     } else {
                         showMessage("网络无连接，请重试！");
                     }
+
                     break;
                 case R.id.login_tv_register:
                     Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);

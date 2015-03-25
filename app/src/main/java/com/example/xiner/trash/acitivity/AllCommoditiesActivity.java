@@ -107,14 +107,11 @@ public class AllCommoditiesActivity extends ActionBarActivity {
 
         Listener listener = new Listener();
         personImage = (ImageView) findViewById(R.id.person_image);
-        personImage.setOnClickListener(listener);
-//        publishCommodityImage = (ImageView) findViewById(R.id.publicgood);
-//        publishCommodityImage.setOnClickListener(listener);
-        secondHandLinear = (LinearLayout) findViewById(R.id.commodity_linear);
-        secondHandLinear.setOnClickListener(listener);
-        wasteLinear = (LinearLayout) findViewById(R.id.waste_linear);
-        wasteLinear.setOnClickListener(listener);
-
+        personImage.setOnClickListener(new PersonListener());
+        publishCommodityImage = (ImageView) findViewById(R.id.publicgood);
+        publishCommodityImage.setOnClickListener(new publicgoodListener());
+        wasteLinear = (LinearLayout) findViewById(R.id.trash_linear);
+        wasteLinear.setOnClickListener(new trashListener());
     }
 
     private void Login() {

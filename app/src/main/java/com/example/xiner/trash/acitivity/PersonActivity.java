@@ -102,7 +102,7 @@ public class PersonActivity extends ActionBarActivity {
                     break;
                 case R.id.person_tv_info:
                     intent = new Intent();
-                    intent.setClass(PersonActivity.this, MyAddressActivity.class);
+                    intent.setClass(PersonActivity.this, MyInformationActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.person_tv_history:

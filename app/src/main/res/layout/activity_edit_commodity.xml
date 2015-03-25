@@ -189,20 +189,20 @@
             android:id="@+id/edit_good"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/delete" />
+            android:src="@drawable/editinfo" />
 
         <ImageView
             android:layout_weight="1"
             android:id="@+id/delete_good"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/delete" />
+            android:src="@drawable/deleteinfo" />
 
         <ImageView
             android:layout_weight="1"
             android:id="@+id/contact_good"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/delete" />
+            android:src="@drawable/contactinfo" />
     </LinearLayout>
 </RelativeLayout>

@@ -3,13 +3,17 @@ package com.example.xiner.trash.main;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.util.Log;
 
 import com.example.xiner.trash.model.User;
 import com.example.xiner.trash.util.DBHelper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -59,24 +63,57 @@ public class Main extends Application {
     }
 
     // 头像写到sdcard中
-    public void storeFaceImage(Bitmap bm) {
-        ByteArrayOutputStream baos;
-        FileOutputStream out;
-        try {
-            baos = new ByteArrayOutputStream();
-            bm.compress(Bitmap.CompressFormat.PNG, 100, baos);// png类型
-            out = new FileOutputStream(new File(SDPATH + "/" + "faceimage.png"));
-            out.write(baos.toByteArray());
-            out.flush();
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void setPicToView(Bitmap mBitmap, String path,String filename) {
+
+        String sdStatus = Environment.getExternalStorageState();
+        if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
+            return;
         }
+        FileOutputStream b = null;
+        File file = new File(path);
+        file.mkdirs();// 创建文件夹
+        String fileName = path + filename;// 图片名字
+        try {
+            b = new FileOutputStream(fileName);
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                // 关闭流
+                b.flush();
+                b.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+        getDataStore().edit().putBoolean("ifheadstore",true).commit();
     }
 
     public void clear() {
 
     }
+
+
+    public Bitmap getLoacalBitmap(String url) {
+        FileInputStream fis;
+        Bitmap bit = null;
+        try {
+            fis = new FileInputStream(url);
+            bit = BitmapFactory.decodeStream(fis);
+            fis.close();
+
+            // /锟斤拷锟斤拷转锟斤拷为Bitmap图片
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return bit;
+    }
+
 
     public boolean isLogin() {
         return login == true;
@@ -86,6 +123,7 @@ public class Main extends Application {
     public void setLogin(boolean login) {
         this.login = login;
     }
+
 }
 
 

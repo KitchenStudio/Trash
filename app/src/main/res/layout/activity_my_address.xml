@@ -5,28 +5,51 @@
     android:orientation="vertical"
     tools:context="com.example.xiner.trash.acitivity.MyAddressActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="#f7f7f7"
-        android:orientation="vertical"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp">
+        android:layout_height="wrap_content">
 
-        <TextView
+        <LinearLayout
+
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="某某省某某市某某区"
-            android:textSize="9pt" />
+            android:layout_height="70dp"
+            android:background="#f7f7f7"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="所在区域" />
+            <TextView
+                android:id="@+id/addresstext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="某某省某某市某某区"
+                android:textSize="9pt" />
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/addressedit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/transparent"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:text="某某省某某市某某区"
+                android:textSize="9pt"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="10dp"
+            android:src="@drawable/arrowleft" />
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
@@ -42,22 +65,31 @@
             android:layout_height="70dp"
             android:layout_alignParentLeft="true"
             android:background="#f7f7f7"
+            android:gravity="center_vertical"
             android:orientation="vertical"
-            android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:paddingLeft="10dp">
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp">
 
             <TextView
+                android:id="@+id/streettext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="某某街道123号"
                 android:textSize="9pt" />
 
-            <TextView
+            <EditText
+                android:id="@+id/streetedit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="详细地址" />
+                android:background="@drawable/transparent"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:text="某某街道123号"
+                android:textSize="9pt"
+                android:visibility="gone" />
+
 
         </LinearLayout>
 
@@ -69,10 +101,12 @@
             android:paddingRight="10dp"
             android:src="@drawable/arrowleft" />
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#b3b3b3" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -82,22 +116,31 @@
             android:layout_height="70dp"
             android:layout_alignParentLeft="true"
             android:background="#f7f7f7"
+            android:gravity="center_vertical"
             android:orientation="vertical"
-            android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:paddingLeft="10dp">
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp">
 
             <TextView
+                android:id="@+id/nametext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="张三"
                 android:textSize="9pt" />
 
-            <TextView
+            <EditText
+                android:id="@+id/nameedit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="收货人姓名" />
+                android:background="@drawable/transparent"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:text="张三"
+                android:textSize="9pt"
+                android:visibility="gone" />
+
 
         </LinearLayout>
 
@@ -109,6 +152,7 @@
             android:paddingRight="10dp"
             android:src="@drawable/arrowleft" />
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -123,22 +167,31 @@
             android:layout_height="70dp"
             android:layout_alignParentLeft="true"
             android:background="#f7f7f7"
+            android:gravity="center_vertical"
             android:orientation="vertical"
-            android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:paddingLeft="10dp">
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp">
 
             <TextView
+                android:id="@+id/phonetext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="18366116666"
                 android:textSize="9pt" />
 
-            <TextView
+            <EditText
+                android:id="@+id/phoneedit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="联系方式" />
+                android:background="@drawable/transparent"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:text="18366116666"
+                android:textSize="9pt"
+                android:visibility="gone" />
+
 
         </LinearLayout>
 
@@ -150,4 +203,30 @@
             android:paddingRight="10dp"
             android:src="@drawable/arrowleft" />
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/buttonlinear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:visibility="gone"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/canclebutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="取消" />
+
+        <Button
+            android:id="@+id/okbutton"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="保存" />
+    </LinearLayout>
 </LinearLayout>
