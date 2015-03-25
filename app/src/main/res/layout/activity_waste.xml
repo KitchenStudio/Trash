@@ -1,19 +1,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.xiner.trash.acitivity.WasteActivity">
 
-   <EditText
-       android:id="@+id/search_edit"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:paddingLeft="25dp"
-       android:background="@drawable/searchall"
-       />
+    <EditText
+        android:id="@+id/search_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="25dp"
+        android:background="@drawable/searchall" />
 
     <android.support.v7.widget.RecyclerView
 
-        android:id="@+id/recyclerView_trash"
+        android:id="@+id/recyclerView_waste"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/search_edit" />

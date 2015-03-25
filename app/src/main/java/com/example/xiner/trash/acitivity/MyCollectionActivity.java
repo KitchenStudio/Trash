@@ -19,7 +19,7 @@ public class MyCollectionActivity extends ActionBarActivity {
     CollectionAdapter collectionAdapter;
 
     private void init(){
-        
+
     }
 
 

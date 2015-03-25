@@ -20,7 +20,7 @@ public class WasteActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waste);
-        mRecyclerView = (RecyclerView)findViewById(R.id.recyclerView_trash);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_waste);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);

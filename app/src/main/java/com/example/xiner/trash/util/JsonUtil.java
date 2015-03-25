@@ -1,7 +1,14 @@
 package com.example.xiner.trash.util;
 
+import com.example.xiner.trash.model.Commodity;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -27,4 +34,34 @@ public class JsonUtil {
             return jsonString;
         }
     }
+
+    public Commodity getCommodity(String key, String jsonString) {
+        Commodity item = new Commodity();
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
+            JSONObject commodity = new JSONObject(key);
+
+            item.setId(commodity.getString(""));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        return item;
+    }
+
+    public ArrayList<Commodity> getCommodities(String json) {
+        Gson gson = new Gson();
+        JsonParser parser = new JsonParser();
+        JsonArray array = parser.parse(json).getAsJsonArray();
+        ArrayList<Commodity> list = new ArrayList<Commodity>();
+        for (JsonElement e : array) {
+            Commodity item = gson.fromJson(e, Commodity.class);
+            list.add(item);
+        }
+        return list;
+    }
+
+
 }

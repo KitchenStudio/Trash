@@ -1,9 +1,11 @@
 package com.example.xiner.trash.model;
 
+import java.io.Serializable;
+
 /**
  * Created by peng on 15-3-16.
  */
-public class User {
+public class User implements Serializable {
     private String id;
     private String name;
     private String phone;

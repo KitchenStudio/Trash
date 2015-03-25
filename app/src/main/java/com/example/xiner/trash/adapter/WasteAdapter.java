@@ -14,15 +14,16 @@ import com.example.xiner.trash.acitivity.WasteDetailActivity;
 /**
  * Created by xiner on 15-3-11.
  */
-public class WasteAdapter extends RecyclerView.Adapter<WasteAdapter.ViewHolder>{
+public class WasteAdapter extends RecyclerView.Adapter<WasteAdapter.ViewHolder> {
     Context context;
-    public WasteAdapter(Context context){
+
+    public WasteAdapter(Context context) {
         this.context = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_all_waste,viewGroup,false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_all_waste, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -44,13 +45,13 @@ public class WasteAdapter extends RecyclerView.Adapter<WasteAdapter.ViewHolder>{
         return 4;
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            cardView =(CardView)itemView.findViewById(R.id.card_view_trash);
+            cardView = (CardView) itemView.findViewById(R.id.card_view_trash);
 
 
         }
