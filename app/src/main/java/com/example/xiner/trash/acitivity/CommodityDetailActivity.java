@@ -1,13 +1,25 @@
 package com.example.xiner.trash.acitivity;
 
+
+import android.os.Looper;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.xiner.trash.R;
+import com.example.xiner.trash.model.Commodity;
+import com.example.xiner.trash.util.NetCallBack;
+import com.example.xiner.trash.util.NetError;
+import com.example.xiner.trash.util.NetUtil;
 
-public class CommodityDetailActivity extends ActionBarActivity {
+
+public class CommodityDetailActivity extends ActionBarActivity implements NetCallBack<Commodity> {
+
+    private Handler handler = new Handler();
+    private Commodity commodity;
+    private NetError error;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +29,14 @@ public class CommodityDetailActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setCustomView(R.layout.commodities_detail_customview);
+
+        int id = getIntent().getIntExtra("id", -1);
+        if (id != -1) {
+            NetUtil.getInstance().getFiveItem(this);
+        } else {
+            // TODO if some error happen
+        }
+
     }
 
 
@@ -38,5 +58,25 @@ public class CommodityDetailActivity extends ActionBarActivity {
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // not in UI thread
+    @Override
+    public void receivedResult(Commodity result, NetError error) {
+        Message msg = new Message();
+        msg.arg1 = 1;
+        this.commodity = result;
+        this.error = error;
+        handler.sendMessage(msg);
+    }
+
+    private class Handler extends android.os.Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.arg1) {
+                case 1:
+                    break;
+            }
+        }
     }
 }

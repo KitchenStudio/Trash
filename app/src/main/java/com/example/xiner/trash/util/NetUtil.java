@@ -7,13 +7,19 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.xiner.trash.R;
+import com.example.xiner.trash.model.Commodity;
+import com.google.gson.Gson;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
@@ -35,16 +41,19 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by peng on 15-3-13.
  */
 public class NetUtil {
     private static final String TAG = "NetUtil";
-    private static final String HEAD = "http://211.87.226.219/Green/";
+    private static final String HEAD = "http://211.87.234.180:8080/Green/";
     private static final String LOGIN_URL = HEAD + "user/logcheck";
     private static final String REGISTER_URL = HEAD + "user/reg";
     private static final String SECONDHAND_REALEASE_URL = HEAD + "items/output";
+    private static final String ITEM_FOR_FIVE_URL = HEAD + "items/ForFive";
     private static final String WASTE_REALEASE_URL = HEAD + "garbage/put";
     private static final String UPLOADPICTURE_URL = HEAD + "";
     private static final String GET_COMMODITY_URL = HEAD + "";
@@ -66,6 +75,27 @@ public class NetUtil {
         return netUtil;
     }
 
+    public void getFiveItem(final NetCallBack<Commodity> back) {
+
+        ExecutorService service = Executors.newFixedThreadPool(100);
+        service.execute(new Runnable() {
+            @Override
+            public void run() {
+                HttpGet httpGet = new HttpGet(ITEM_FOR_FIVE_URL);
+                HttpClient httpClient = new DefaultHttpClient();
+                try {
+                    HttpResponse httpResponse =  httpClient.execute(httpGet);
+                    InputStreamReader reader =  new InputStreamReader(httpResponse.getEntity().getContent(), "utf-8");
+                    Gson gson = new Gson();
+                    Commodity commodity = gson.fromJson(reader, Commodity.class);
+                    back.receivedResult(commodity, null);
+                } catch (IOException e) {
+                    back.receivedResult(null, new NetError(1, e.getMessage()));
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
     public int LoginReq(JSONObject jsonObject) {
         //0表示用户 1表示商户 2表示无该用户 3表示密码错误
