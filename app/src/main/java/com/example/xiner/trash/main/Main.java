@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.example.xiner.trash.model.User;
+import com.example.xiner.trash.util.DBHelper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -26,12 +27,15 @@ public class Main extends Application {
     private static Main app;//静态单例
     private User user;
     private boolean login = false;
+    private DBHelper dbHelper;
 
 
     @Override
     public void onCreate() {
         super.onCreate();
         app = this;
+        dbHelper = new DBHelper(this);
+        dbHelper.open();
     }
 
     public static Main getInstance() {

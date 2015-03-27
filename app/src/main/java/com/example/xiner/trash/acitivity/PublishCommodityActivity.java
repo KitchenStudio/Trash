@@ -54,7 +54,7 @@ public class PublishCommodityActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_commodity);
-        net = new NetUtil(this);
+        net = NetUtil.getInstance();
         app = Main.getInstance();
         init();
 
@@ -110,7 +110,7 @@ public class PublishCommodityActivity extends ActionBarActivity {
             recency = recencySp.getSelectedItem().toString();
             //Log.d("DataTest",iname+price+desc+uname+phone+qq+address+sort+recency);
             try {
-                net = new NetUtil(PublishCommodityActivity.this);
+                net = NetUtil.getInstance();
                 jsonObject = new JSONObject();
 
                 jsonObject.put("i.iname", iname);

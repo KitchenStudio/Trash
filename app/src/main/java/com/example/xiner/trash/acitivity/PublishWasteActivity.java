@@ -92,7 +92,7 @@ public class PublishWasteActivity extends ActionBarActivity {
             place = addressEt.getText().toString();
             catagory = typeSp.getSelectedItem().toString();
 
-            net = new NetUtil(PublishWasteActivity.this);
+            net = NetUtil.getInstance();
             object = new JSONObject();
 
             try {

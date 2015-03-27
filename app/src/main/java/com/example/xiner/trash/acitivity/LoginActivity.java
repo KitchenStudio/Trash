@@ -127,7 +127,7 @@ public class LoginActivity extends ActionBarActivity {
                     app.setLogin(true);
                     //progressDialog.dismiss();
                     intent = new Intent();
-                    intent.setClass(LoginActivity.this, PersonActivity.class);
+                    intent.setClass(LoginActivity.this, AllCommoditiesActivity.class);
                     intent.putExtra("name", name);
                     startActivity(intent);
                     LoginActivity.this.finish();
@@ -151,7 +151,7 @@ public class LoginActivity extends ActionBarActivity {
 
         @Override
         public void run() {
-            NetUtil net = new NetUtil(LoginActivity.this);
+            NetUtil net = NetUtil.getInstance();
             loginData = new JSONObject();
             try {
                 loginData.put("u.name", name);
@@ -164,8 +164,6 @@ public class LoginActivity extends ActionBarActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
         }
     }
 

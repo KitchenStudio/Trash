@@ -40,20 +40,30 @@ import java.util.List;
  * Created by peng on 15-3-13.
  */
 public class NetUtil {
-
-    private static final String LOGIN_URL = "http://211.87.226.173/Green/user/logcheck";
-    private static final String REGISTER_URL = "http://211.87.226.173/Green/user/reg";
-    private static final String SECONDHAND_REALEASE_URL = "http://211.87.226.173/Green/items/output";
     private static final String TAG = "NetUtil";
-    private  String UPLOADPICTURE_URL = "http://211.87.226.168:8080/api/v1/item/file";
-    private static final String UPLOAD_PERSON_URL= "\"http://211.87.226.173/Green/items/output";
+    private static final String HEAD = "http://211.87.226.173/Green/";
+    private static final String LOGIN_URL = HEAD + "user/logcheck";
+    private static final String REGISTER_URL = HEAD + "user/reg";
+    private static final String SECONDHAND_REALEASE_URL = HEAD + "items/output";
+    private static final String WASTE_REALEASE_URL = HEAD + "garbage/put";
+    private static final String UPLOADPICTURE_URL = HEAD + "";
+    private static final String GET_COMMODITY_URL = HEAD + "";
+    private static final String GET_WASTE_URL = HEAD + "";
+
+    private static NetUtil netUtil =null;
     private HttpPost httpRequest;
     private HttpResponse httpResponse;
-    private Context context;
     int serverResponseCode = 0;
-    private static final String WASTE_REALEASE_URL = "http://211.87.226.173/Green/garbage/put";
-    public NetUtil(Context context) {
-        this.context = context;
+
+    private NetUtil() {
+
+    }
+
+    public synchronized static NetUtil getInstance(){
+        if(netUtil == null){
+            netUtil = new NetUtil();
+        }
+        return netUtil;
     }
 
 
@@ -85,10 +95,10 @@ public class NetUtil {
                     jsonData += line + "\r\n";
                 }
                 jsonData = jsonData.trim();
-                Log.d("登录测试", "登录数据：" + jsonData);
+                Log.d(TAG, "登陆返回数据：" + jsonData);
                 status = Integer.parseInt(String.valueOf(jsonData.charAt(1)));
             } else {
-                Log.d("netTest", "不成功");
+                Log.d(TAG, "网络似乎有问题。。。。");
             }
         } catch (ClientProtocolException e) {
             e.printStackTrace();
@@ -130,7 +140,7 @@ public class NetUtil {
             }
             s = s.trim();
             status = Integer.parseInt(String.valueOf(s.charAt(1)));
-            Log.d("registerTest", status + "");
+            Log.d(TAG, "注册测试，返回的结果为：" + status);
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -170,7 +180,7 @@ public class NetUtil {
                     jsonData += line + "\r\n";
                 }
                 jsonData = jsonData.trim();
-                Log.i("二手商品发布测试", "测试数据：" + jsonData);
+                Log.d(TAG, "二手商品发布测试，测试数据为：" + jsonData);
             }
         } catch (ClientProtocolException e) {
             e.printStackTrace();
@@ -180,9 +190,6 @@ public class NetUtil {
             e.printStackTrace();
         }
     }
-
-
-
 
 
     public void wasteRealeaseReq(JSONObject jsonObject) {
@@ -212,7 +219,7 @@ public class NetUtil {
                     jsonData += line + "\r\n";
                 }
                 jsonData = jsonData.trim();
-                Log.i("废品发布测试", "测试数据：" + jsonData);
+                Log.i(TAG, "废品发布测试，测试数据：" + jsonData);
             }
         } catch (ClientProtocolException e) {
             e.printStackTrace();
@@ -224,7 +231,7 @@ public class NetUtil {
     }
 
 
-    public void uploadInfo(JSONObject jsonObject){
+    public void uploadInfo(JSONObject jsonObject) {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         Iterator<?> keys = jsonObject.keys();
 
@@ -309,7 +316,7 @@ public class NetUtil {
 
                 dos.writeBytes(twoHyphens + boundary + lineEnd);
                 dos.writeBytes("Content-Disposition: form-data; name=\"uploadfile\";filename=\""
-                        + fileName+ "\"" + lineEnd);
+                        + fileName + "\"" + lineEnd);
 
 
                 dos.writeBytes(lineEnd);
@@ -343,7 +350,7 @@ public class NetUtil {
                 Log.i("uploadFile", "HTTP Response is : "
                         + serverResponseMessage + ": " + serverResponseCode);
 
-                                //关闭流//
+                //关闭流//
                 fileInputStream.close();
                 dos.flush();
                 dos.close();
@@ -359,4 +366,153 @@ public class NetUtil {
 
         }
     }
+
+    public String commodityReq(int type) {
+        String jsonData = "";
+        switch (type) {
+            case 0://请求五条的初始数据
+                try {
+                    httpRequest = new HttpPost(GET_COMMODITY_URL);
+                    httpResponse = new DefaultHttpClient()
+                            .execute(httpRequest);
+                    int result = httpResponse.getStatusLine().getStatusCode();
+                    if (result == 200) {
+                        InputStream is = httpResponse.getEntity().getContent();
+                        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                        String line = "";
+                        while ((line = br.readLine()) != null) {
+                            jsonData += line + "\r\n";
+                        }
+                        jsonData = jsonData.trim();
+                        Log.d(TAG, "Json测试,测试数据：" + jsonData);
+                    } else {
+                        Log.d(TAG, "获取二手商品数据失败，网络不通。。。。");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case 1://请求所有的数据
+                try {
+                    httpRequest = new HttpPost(GET_COMMODITY_URL);
+                    httpResponse = new DefaultHttpClient()
+                            .execute(httpRequest);
+                    int result = httpResponse.getStatusLine().getStatusCode();
+                    if (result == 200) {
+                        InputStream is = httpResponse.getEntity().getContent();
+                        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                        String line = "";
+                        while ((line = br.readLine()) != null) {
+                            jsonData += line + "\r\n";
+                        }
+                        jsonData = jsonData.trim();
+
+                        Log.i("json", "测试数据：" + jsonData);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+        }
+
+
+        return jsonData;
+    }
+
+    public String wasteReq(int type) {
+        String jsonData = "";
+        switch (type) {
+            case 0://请求五条的初始数据
+                try {
+                    httpRequest = new HttpPost(GET_WASTE_URL);
+                    httpResponse = new DefaultHttpClient()
+                            .execute(httpRequest);
+                    int result = httpResponse.getStatusLine().getStatusCode();
+                    if (result == 200) {
+                        InputStream is = httpResponse.getEntity().getContent();
+                        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                        String line = "";
+                        while ((line = br.readLine()) != null) {
+                            jsonData += line + "\r\n";
+                        }
+                        jsonData = jsonData.trim();
+                        Log.i("json", "测试数据：" + jsonData);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case 1://请求所有的数据
+                try {
+                    httpRequest = new HttpPost(GET_COMMODITY_URL);
+                    httpResponse = new DefaultHttpClient()
+                            .execute(httpRequest);
+                    int result = httpResponse.getStatusLine().getStatusCode();
+                    if (result == 200) {
+                        InputStream is = httpResponse.getEntity().getContent();
+                        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                        String line = "";
+                        while ((line = br.readLine()) != null) {
+                            jsonData += line + "\r\n";
+                        }
+                        jsonData = jsonData.trim();
+
+                        Log.i("json", "测试数据：" + jsonData);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+        }
+        return jsonData;
+    }
 }
+
+//    public static List<String> getlistString(String key, String jsonString) {
+//        List<String> list = new ArrayList<String>();
+//        try {
+//            JSONObject jsonObject = new JSONObject(jsonString);
+//            JSONArray jsonArray = jsonObject.getJSONArray(key);
+//            for (int i = 0; i < jsonArray.length(); i++) {
+//
+//                String msg = jsonArray.getString(i);
+//                list.add(msg);
+//            }
+//
+//        } catch (Exception e) {
+//            // TODO: handle exception
+//        }
+//
+//        return list;
+//    }
+//
+//    public static List<Map<String,Object>> getlistMap(String key, String jsonString){
+//        List<Map<String,Object>> list=new ArrayList<Map<String,Object>>();
+//        try {
+//            JSONObject jsonObject = new JSONObject(jsonString);
+//            JSONArray jsonArray = jsonObject.getJSONArray(key);
+//            for (int i = 0; i < jsonArray.length(); i++) {
+//                JSONObject jsonObject2 = jsonArray.getJSONObject(i);
+//                Map<String,Object> map=new HashMap<String, Object>();
+//                Iterator<String> iterator=jsonObject2.keys();
+//
+//                while(iterator.hasNext()){
+//                    String json_key=iterator.next();
+//                    Object json_value=jsonObject2.get(json_key);
+//                    if(json_value==null){
+//                        json_value="";
+//                    }
+//                    map.put(json_key, json_value);
+//                }
+//                list.add(map);
+//            }
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
+//        return list;
+//    }
+//}

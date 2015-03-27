@@ -41,7 +41,7 @@ public class EditInfoActivity extends ActionBarActivity {
     Button saveButton;
     EditText nickname, phonecall, qqnumber;
     private final static String path = Environment.getExternalStorageDirectory() + "/trash/head";// sd路径
-    NetUtil net = new NetUtil(EditInfoActivity.this);
+    NetUtil net = NetUtil.getInstance();
 //    String filepath = Environment.getExternalStorageDirectory() + "/trash/head/head.jpg";
     RadioGroup group;
     RadioButton man, woman;

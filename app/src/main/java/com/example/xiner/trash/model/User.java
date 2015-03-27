@@ -1,15 +1,19 @@
 package com.example.xiner.trash.model;
 
+import java.io.Serializable;
+
 /**
  * Created by peng on 15-3-16.
  */
-public class User {
+public class User implements Serializable {
     private String id;
     private String name;
+    private String age;
+    private String password;
+    private String tag;//0代表普通的用户，1代表商户
     private String phone;
     private String qq;
     private String address;
-    private String tag;//0代表普通的用户，1代表商户
 
     public String getId() {
         return id;
@@ -25,6 +29,30 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public String getPhone() {
@@ -49,13 +77,5 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
     }
 }

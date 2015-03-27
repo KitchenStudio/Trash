@@ -40,7 +40,7 @@
 
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView_allgood"
+        android:id="@+id/recyclerView_allCommodities"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/all_spinner" />
@@ -55,18 +55,17 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/commodity_linear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:id="@+id/twohands_linear"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-
                 android:src="@drawable/towhands" />
 
             <TextView
@@ -77,18 +76,18 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/person_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/person_image"
             android:src="@drawable/person" />
 
         <LinearLayout
+            android:id="@+id/waste_linear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:id="@+id/trash_linear"
             android:orientation="horizontal">
 
             <ImageView
