@@ -50,8 +50,8 @@ public class AllCommoditiesAdapter extends RecyclerView.Adapter<AllCommoditiesAd
 
         for (Commodity item : commodities) {
             viewHolder.inameTv.setText(item.getIname());
-            viewHolder.descTv.setText(item.getDesc());
-            viewHolder.dateTv.setText(item.getCreateTime());
+           // viewHolder.descTv.setText(item.getDesc());
+           // viewHolder.dateTv.setText(item.getCreateTime());
             viewHolder.priceTv.setText(item.getPrice());
 
         }

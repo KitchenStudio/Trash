@@ -50,7 +50,7 @@ public class RegisterActivity extends ActionBarActivity {
                     public void run() {
                         int status;
                         JSONObject json = new JSONObject();
-                        net = new NetUtil(RegisterActivity.this);
+                        net =NetUtil.getInstance();
                         try {
                             String type = userTypeSp.getSelectedItem().toString();
                             Log.d("type Test", type);

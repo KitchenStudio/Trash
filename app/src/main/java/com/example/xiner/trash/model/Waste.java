@@ -8,22 +8,29 @@ import java.io.Serializable;
 public class Waste implements Serializable {
 
     private String id;
-    private String uid;
-    private String iname;
-    private String desc;
+    //private String uid;
     private String uname;
-    private String phone;
-    private String qq;
-    private String address;
-    private String createTime;
+    private String gname;
+    private String description;
+    private String status;//0未处理1正在处理2已回收3已删除
+    private String time;//发布时间
+    private String place;//代表地点的字符串，不能用于计算
+    private double longitude;//经度
+    private double parallel;//纬度
+
+
+    private String catagory;
+    private String u_done;
+    private String d_done;
+    private String gphone;
 
     public Waste() {
 
     }
 
-    public Waste(String id, String iname) {
+    public Waste(String id, String gname) {
         this.id = id;
-        this.iname = iname;
+        this.gname = gname;
     }
 
     public Waste(String id) {
@@ -39,30 +46,6 @@ public class Waste implements Serializable {
         this.id = id;
     }
 
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
-    public String getIname() {
-        return iname;
-    }
-
-    public void setIname(String iname) {
-        this.iname = iname;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
     public String getUname() {
         return uname;
     }
@@ -71,35 +54,91 @@ public class Waste implements Serializable {
         this.uname = uname;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getGname() {
+        return gname;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setGname(String gname) {
+        this.gname = gname;
     }
 
-    public String getQq() {
-        return qq;
+    public String getDescription() {
+        return description;
     }
 
-    public void setQq(String qq) {
-        this.qq = qq;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getAddress() {
-        return address;
+    public String getStatus() {
+        return status;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getCreateTime() {
-        return createTime;
+    public String getTime() {
+        return time;
     }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getParallel() {
+        return parallel;
+    }
+
+    public void setParallel(double parallel) {
+        this.parallel = parallel;
+    }
+
+    public String getCatagory() {
+        return catagory;
+    }
+
+    public void setCatagory(String catagory) {
+        this.catagory = catagory;
+    }
+
+    public String getU_done() {
+        return u_done;
+    }
+
+    public void setU_done(String u_done) {
+        this.u_done = u_done;
+    }
+
+    public String getD_done() {
+        return d_done;
+    }
+
+    public void setD_done(String d_done) {
+        this.d_done = d_done;
+    }
+
+    public String getGphone() {
+        return gphone;
+    }
+
+    public void setGphone(String gphone) {
+        this.gphone = gphone;
     }
 }

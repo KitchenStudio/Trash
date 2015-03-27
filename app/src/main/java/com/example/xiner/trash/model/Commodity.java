@@ -8,17 +8,18 @@ import java.io.Serializable;
 public class Commodity implements Serializable {
 
     private String id;
-    private String uid;
+    //private String uid;
+    private String uname;
     private String iname;
     private String price;
-    private String recency;
-    private String desc;
-    private String uname;
-    private String phone;
-    private String qq;
-    private String address;
-    private String createTime;
+    private String old;//新旧程度recency
+    private String place;
     private String catagory;
+    private String uphone;
+    private String qq;
+    private String description;
+    private String time;
+
 
     public Commodity() {
 
@@ -30,20 +31,6 @@ public class Commodity implements Serializable {
 
     }
 
-    public Commodity(String id, String iname, String price, String desc, String uname, String phone,
-                     String qq, String address, String catagory, String recency) {
-        this.id = id;
-        this.iname = iname;
-        this.price = price;
-        this.desc = desc;
-        this.uname = uname;
-        this.phone = phone;
-        this.qq = qq;
-        this.address = address;
-        this.catagory = catagory;
-        this.recency = recency;
-    }
-
     public String getId() {
         return id;
     }
@@ -52,12 +39,12 @@ public class Commodity implements Serializable {
         this.id = id;
     }
 
-    public String getUid() {
-        return uid;
+    public String getUname() {
+        return uname;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setUname(String uname) {
+        this.uname = uname;
     }
 
     public String getIname() {
@@ -76,52 +63,20 @@ public class Commodity implements Serializable {
         this.price = price;
     }
 
-    public String getRecency() {
-        return recency;
+    public String getOld() {
+        return old;
     }
 
-    public void setRecency(String recency) {
-        this.recency = recency;
+    public void setOld(String old) {
+        this.old = old;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getPlace() {
+        return place;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public String getUname() {
-        return uname;
-    }
-
-    public void setUname(String uname) {
-        this.uname = uname;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getQq() {
-        return qq;
-    }
-
-    public void setQq(String qq) {
-        this.qq = qq;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setPlace(String place) {
+        this.place = place;
     }
 
     public String getCatagory() {
@@ -132,12 +87,36 @@ public class Commodity implements Serializable {
         this.catagory = catagory;
     }
 
-    public String getCreateTime() {
-        return createTime;
+    public String getUphone() {
+        return uphone;
     }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+    public void setUphone(String uphone) {
+        this.uphone = uphone;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }
 

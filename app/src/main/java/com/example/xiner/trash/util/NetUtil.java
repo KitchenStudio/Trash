@@ -40,18 +40,30 @@ import java.util.List;
  * Created by peng on 15-3-13.
  */
 public class NetUtil {
+    private static final String TAG = "NetUtil";
+    private static final String HEAD = "http://211.87.226.173/Green/";
+    private static final String LOGIN_URL = HEAD + "user/logcheck";
+    private static final String REGISTER_URL = HEAD + "user/reg";
+    private static final String SECONDHAND_REALEASE_URL = HEAD + "items/output";
+    private static final String WASTE_REALEASE_URL = HEAD + "garbage/put";
+    private static final String UPLOADPICTURE_URL = HEAD + "";
+    private static final String GET_COMMODITY_URL = HEAD + "";
+    private static final String GET_WASTE_URL = HEAD + "";
 
-    private static final String LOGIN_URL = "http://211.87.226.173/Green/user/logcheck";
-    private static final String REGISTER_URL = "http://211.87.226.173/Green/user/reg";
-    private static final String SECONDHAND_REALEASE_URL = "http://211.87.226.173/Green/items/output";
-    private static final String WASTE_REALEASE_URL = "http://211.87.226.173/Green/garbage/put";
+    private static NetUtil netUtil =null;
     private HttpPost httpRequest;
     private HttpResponse httpResponse;
-    private Context context;
     int serverResponseCode = 0;
-    private static final String WASTE_REALEASE_URL = "http://211.87.226.173/Green/garbage/put";
-    public NetUtil(Context context) {
-        this.context = context;
+
+    private NetUtil() {
+
+    }
+
+    public synchronized static NetUtil getInstance(){
+        if(netUtil == null){
+            netUtil = new NetUtil();
+        }
+        return netUtil;
     }
 
 
@@ -180,9 +192,6 @@ public class NetUtil {
     }
 
 
-
-
-
     public void wasteRealeaseReq(JSONObject jsonObject) {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         Iterator<?> keys = jsonObject.keys();
@@ -222,7 +231,7 @@ public class NetUtil {
     }
 
 
-    public void uploadInfo(JSONObject jsonObject){
+    public void uploadInfo(JSONObject jsonObject) {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         Iterator<?> keys = jsonObject.keys();
 
@@ -307,7 +316,7 @@ public class NetUtil {
 
                 dos.writeBytes(twoHyphens + boundary + lineEnd);
                 dos.writeBytes("Content-Disposition: form-data; name=\"uploadfile\";filename=\""
-                        + fileName+ "\"" + lineEnd);
+                        + fileName + "\"" + lineEnd);
 
                 dos.writeBytes(lineEnd);
 
@@ -340,7 +349,7 @@ public class NetUtil {
                 Log.i("uploadFile", "HTTP Response is : "
                         + serverResponseMessage + ": " + serverResponseCode);
 
-                                //关闭流//
+                //关闭流//
                 fileInputStream.close();
                 dos.flush();
                 dos.close();

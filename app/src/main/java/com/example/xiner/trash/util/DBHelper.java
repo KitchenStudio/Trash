@@ -45,7 +45,8 @@ public class DBHelper extends SQLiteOpenHelper {
             "catagory VARCHAR(10) );";
 
     private Context context;
-    SQLiteDatabase db;
+    private SQLiteDatabase db;
+    private static DBHelper helper = null;
 
     public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -54,6 +55,13 @@ public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
+    }
+
+    public static synchronized DBHelper getInstance(Context context){
+        if(helper == null){
+            helper = new DBHelper(context);
+        }
+        return helper;
     }
 
     @Override
@@ -69,42 +77,42 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public void addCommodity(Commodity commodity) {
-        String id = commodity.getId();
-        String uid = commodity.getUid();
-        String iname = commodity.getIname();
-        String price = commodity.getPrice();
-        String recency = commodity.getRecency();
-        String desc = commodity.getDesc();
-        String uname = commodity.getUname();
-        String phone = commodity.getPhone();
-        String qq = commodity.getQq();
-        String address = commodity.getAddress();
-        String catagory = commodity.getCatagory();
-        String createTime = commodity.getCreateTime();
-
-        String sql = "INSERT INTO commodityTable VALUES ('" + id + "', '" + uid + "', '" + iname + "' ,'" + price + "', '"
-                + recency + "', '" + desc + "', '" + uname + "', '" + phone + "', '" + qq + "', '" + address + "', '" + catagory +
-                "', '" + createTime + "');";
-        db.execSQL(sql);
-    }
-
-    public void addWaste(Waste waste) {
-        String id = waste.getId();
-        String uid = waste.getUid();
-        String iname = waste.getIname();
-        String desc = waste.getDesc();
-        String uname = waste.getUname();
-        String phone = waste.getPhone();
-        String qq = waste.getQq();
-        String address = waste.getAddress();
-        String createTime = waste.getCreateTime();
-
-        String sql = "INSERT INTO commodityTable VALUES ('" + id + "', '" + uid + "', '" + iname + "' ,'"
-                + desc + "', '" + uname + "', '" + phone + "', '" + qq + "', '" + address + "', '" + createTime
-                + "');";
-        db.execSQL(sql);
-    }
+//    public void addCommodity(Commodity commodity) {
+//        String id = commodity.getId();
+//        String uid = commodity.getUid();
+//        String iname = commodity.getIname();
+//        String price = commodity.getPrice();
+//        String recency = commodity.getRecency();
+//        String desc = commodity.getDesc();
+//        String uname = commodity.getUname();
+//        String phone = commodity.getPhone();
+//        String qq = commodity.getQq();
+//        String address = commodity.getAddress();
+//        String catagory = commodity.getCatagory();
+//        String createTime = commodity.getCreateTime();
+//
+//        String sql = "INSERT INTO commodityTable VALUES ('" + id + "', '" + uid + "', '" + iname + "' ,'" + price + "', '"
+//                + recency + "', '" + desc + "', '" + uname + "', '" + phone + "', '" + qq + "', '" + address + "', '" + catagory +
+//                "', '" + createTime + "');";
+//        db.execSQL(sql);
+//    }
+//
+//    public void addWaste(Waste waste) {
+//        String id = waste.getId();
+//        String uid = waste.getUid();
+//        String iname = waste.getIname();
+//        String desc = waste.getDesc();
+//        String uname = waste.getUname();
+//        String phone = waste.getPhone();
+//        String qq = waste.getQq();
+//        String address = waste.getAddress();
+//        String createTime = waste.getCreateTime();
+//
+//        String sql = "INSERT INTO commodityTable VALUES ('" + id + "', '" + uid + "', '" + iname + "' ,'"
+//                + desc + "', '" + uname + "', '" + phone + "', '" + qq + "', '" + address + "', '" + createTime
+//                + "');";
+//        db.execSQL(sql);
+//    }
 
     public void open() {
         db = getWritableDatabase();
