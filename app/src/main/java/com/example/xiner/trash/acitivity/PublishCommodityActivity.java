@@ -9,29 +9,43 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.example.xiner.trash.R;
+import com.example.xiner.trash.adapter.GalleryAdapter;
 import com.example.xiner.trash.main.Main;
+import com.example.xiner.trash.model.CustomGallery;
+import com.example.xiner.trash.util.Action;
 import com.example.xiner.trash.util.NetUtil;
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
 public class PublishCommodityActivity extends ActionBarActivity {
-
+    GalleryAdapter adapter;
+    ArrayList<CustomGallery>dataT;
+    ImageLoader imageLoader;
     private EditText inameEt;
     private EditText priceEt;
     private EditText descEt;
@@ -56,6 +70,7 @@ public class PublishCommodityActivity extends ActionBarActivity {
         setContentView(R.layout.activity_publish_commodity);
         net = NetUtil.getInstance();
         app = Main.getInstance();
+        initImageLoader();
         init();
 
     }
@@ -84,7 +99,21 @@ public class PublishCommodityActivity extends ActionBarActivity {
             }
         });
     }
+    /*
+    * 初始化加载图画类库
+    * */
+    private void initImageLoader() {
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                .cacheOnDisc().imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                .bitmapConfig(Bitmap.Config.RGB_565).build();
+        ImageLoaderConfiguration.Builder builder = new ImageLoaderConfiguration.Builder(
+                this).defaultDisplayImageOptions(defaultOptions).memoryCache(
+                new WeakMemoryCache());
 
+        ImageLoaderConfiguration config = builder.build();
+        imageLoader = ImageLoader.getInstance();
+        imageLoader.init(config);
+    }
     private class picUploadThread extends Thread {
         @Override
         public void run() {
@@ -142,11 +171,11 @@ public class PublishCommodityActivity extends ActionBarActivity {
 
         @Override
         public void onClick(View v) {
-            picGet();
+            picGet(4,3);
         }
     }
 
-    private void picGet(){
+    private void picGet(final int selectcase,final int tookcase ){
         new android.app.AlertDialog.Builder(this)
                 .setTitle("头像选择")
                 .setNegativeButton("相册选取",
@@ -157,13 +186,14 @@ public class PublishCommodityActivity extends ActionBarActivity {
                                                 int which) {
                                 dialog.cancel();
                                 Intent intent1 = new Intent(
-                                        Intent.ACTION_PICK, null);
+                                        Action.ACTION_MULTIPLE_PICK);
 
-                                startActivityForResult(intent1, 3);
+                                startActivityForResult(intent1, selectcase);
                             }
                         })
                 .setPositiveButton("相机拍照",
                         new DialogInterface.OnClickListener() {
+//                            final int a = diffcase;
 
                             @Override
                             public void onClick(DialogInterface dialog,
@@ -175,7 +205,7 @@ public class PublishCommodityActivity extends ActionBarActivity {
                                         .equals(Environment.MEDIA_MOUNTED)) {// 判断是否有SD卡
                                     Intent intent2 = new Intent(
                                             MediaStore.ACTION_IMAGE_CAPTURE);
-                                    startActivityForResult(intent2, 3);// 采用ForResult打开
+                                    startActivityForResult(intent2, tookcase);// 采用ForResult打开
                                 }
                             }
                         }).show();
@@ -184,6 +214,23 @@ public class PublishCommodityActivity extends ActionBarActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
+            case 1:
+                if (resultCode == RESULT_OK){
+                    String[] all_path = data.getStringArrayExtra("all_path");
+
+                    dataT = new ArrayList<CustomGallery>();
+
+                    for (String string : all_path) {
+                        CustomGallery item = new CustomGallery();
+                        item.sdcardPath = string;
+                        dataT.add(item);
+                    }
+                    adapter.append(dataT);
+                }
+                break;
+            case 2:
+
+                break;
 
             case 3:
                 if (resultCode == RESULT_OK) {
@@ -203,6 +250,47 @@ public class PublishCommodityActivity extends ActionBarActivity {
                             goodimage.setImageBitmap(goodbitmap);// 用ImageView显示出来
                         }
                     }
+                }
+                break;
+            case 4:
+                if (resultCode == RESULT_OK) {
+                    GridView gridView = (GridView) findViewById(R.id.gridGallery);
+                    if (data != null) {
+                        goodimage.setVisibility(View.GONE);
+                        gridView.setVisibility(View.VISIBLE);
+
+                        gridView.setFastScrollEnabled(true);
+                        adapter = new GalleryAdapter(getApplicationContext(), imageLoader);
+                        adapter.setActionMultiplePick(false);
+                        gridView.setAdapter(adapter);
+
+                    }
+                    String[] all_path = data.getStringArrayExtra("all_path");
+
+                    dataT = new ArrayList<CustomGallery>();
+
+                    for (String string : all_path) {
+                        CustomGallery item = new CustomGallery();
+                        item.sdcardPath = string;
+                        dataT.add(item);
+                    }
+
+//                    viewSwitcher.setDisplayedChild(0);
+                    adapter.addAll(dataT);
+                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            if (position==dataT.size()){
+                                picGet(1,2);
+                            }
+                        }
+                    });
+//                    if (all_path.length != 0) {
+//                        allPictures.clear();
+//                        for (int i = 0; i < all_path.length; i++) {
+//                            allPictures.add("file://"+all_path[i]);
+//                        }
+//                    }
                 }
                 break;
             default:

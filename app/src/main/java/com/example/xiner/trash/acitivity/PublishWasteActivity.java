@@ -1,22 +1,39 @@
 package com.example.xiner.trash.acitivity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.example.xiner.trash.R;
+import com.example.xiner.trash.adapter.GalleryAdapter;
+import com.example.xiner.trash.model.CustomGallery;
+import com.example.xiner.trash.util.Action;
 import com.example.xiner.trash.util.NetUtil;
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class PublishWasteActivity extends ActionBarActivity {
@@ -28,15 +45,35 @@ public class PublishWasteActivity extends ActionBarActivity {
     private EditText addressEt;
     private Button releaseBtn;
     private Spinner typeSp;
+    ImageView picImage;
+    GalleryAdapter adapter;
+    ImageLoader imageLoader;
+    ArrayList<CustomGallery> dataT;
+//    GridView gridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_waste);
+        initImageLoader();
         init();
     }
+    private void initImageLoader() {
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                .cacheOnDisc().imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                .bitmapConfig(Bitmap.Config.RGB_565).build();
+        ImageLoaderConfiguration.Builder builder = new ImageLoaderConfiguration.Builder(
+                this).defaultDisplayImageOptions(defaultOptions).memoryCache(
+                new WeakMemoryCache());
 
+        ImageLoaderConfiguration config = builder.build();
+        imageLoader = ImageLoader.getInstance();
+        imageLoader.init(config);
+    }
     private void init() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
         inameEt = (EditText) findViewById(R.id.publish_waste_et_iname);
         descEt = (EditText) findViewById(R.id.publish_waste_et_iname);
         unameEt = (EditText) findViewById(R.id.publish_waste_et_iname);
@@ -44,6 +81,9 @@ public class PublishWasteActivity extends ActionBarActivity {
         addressEt = (EditText) findViewById(R.id.publish_waste_et_iname);
         releaseBtn = (Button) findViewById(R.id.publish_waste_btn_release);
         typeSp = (Spinner) findViewById(R.id.publish_waste_sp_type);
+        picImage=(ImageView)findViewById(R.id.publictrash);
+        ClickListener clickListener = new ClickListener();
+        picImage.setOnClickListener(clickListener);
         releaseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,10 +95,99 @@ public class PublishWasteActivity extends ActionBarActivity {
     }
 
 
+    private void picGet(final int selectcase,final int tookcase ){
+        new android.app.AlertDialog.Builder(this)
+                .setTitle("头像选择")
+                .setNegativeButton("相册选取",
+                        new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                dialog.cancel();
+                                Intent intent1 = new Intent(
+                                        Action.ACTION_MULTIPLE_PICK);
+
+                                startActivityForResult(intent1, selectcase);
+                            }
+                        })
+                .setPositiveButton("相机拍照",
+                        new DialogInterface.OnClickListener() {
+//                            final int a = diffcase;
+
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                dialog.cancel();
+                                String status = Environment
+                                        .getExternalStorageState();
+                                if (status
+                                        .equals(Environment.MEDIA_MOUNTED)) {// 判断是否有SD卡
+                                    Intent intent2 = new Intent(
+                                            MediaStore.ACTION_IMAGE_CAPTURE);
+                                    startActivityForResult(intent2, tookcase);// 采用ForResult打开
+                                }
+                            }
+                        }).show();
+    }
+    class ClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.publictrash:
+                    picGet(1,2);
+                    break;
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 1:
+                if (resultCode == RESULT_OK) {
+                    GridView gridView = (GridView) findViewById(R.id.gridGallery);
+                    if (data != null) {
+                        picImage.setVisibility(View.GONE);
+                        gridView.setVisibility(View.VISIBLE);
+
+                        gridView.setFastScrollEnabled(true);
+                        adapter = new GalleryAdapter(getApplicationContext(), imageLoader);
+                        adapter.setActionMultiplePick(false);
+                        gridView.setAdapter(adapter);
+
+                    }
+                    String[] all_path = data.getStringArrayExtra("all_path");
+
+                    dataT = new ArrayList<CustomGallery>();
+
+                    for (String string : all_path) {
+                        CustomGallery item = new CustomGallery();
+                        item.sdcardPath = string;
+                        dataT.add(item);
+                    }
+
+//                    viewSwitcher.setDisplayedChild(0);
+                    adapter.addAll(dataT);
+                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            if (position == dataT.size()) {
+                                picGet(1, 2);
+                            }
+                        }
+                    });
+                }
+                break;
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_publictrash, menu);
+
         return true;
     }
 
@@ -70,8 +199,8 @@ public class PublishWasteActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == android.R.id.home) {
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

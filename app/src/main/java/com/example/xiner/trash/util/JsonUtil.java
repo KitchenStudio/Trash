@@ -54,13 +54,20 @@ public class JsonUtil {
     public ArrayList<Commodity> getCommodities(String json) {
         Gson gson = new Gson();
         JsonParser parser = new JsonParser();
-        JsonArray array = parser.parse(json).getAsJsonArray();
-        ArrayList<Commodity> list = new ArrayList<Commodity>();
-        for (JsonElement e : array) {
-            Commodity item = gson.fromJson(e, Commodity.class);
-            list.add(item);
+        JsonArray array = null;
+        if (parser.parse(json).isJsonArray()) {
+            array = parser.parse(json).getAsJsonArray();
+
+            ArrayList<Commodity> list = new ArrayList<Commodity>();
+            for (JsonElement e : array) {
+                Commodity item = gson.fromJson(e, Commodity.class);
+                list.add(item);
+            }
+
+            return list;
+        }else{
+            return new ArrayList<>();
         }
-        return list;
     }
 
 

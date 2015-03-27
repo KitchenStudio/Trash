@@ -41,7 +41,7 @@ public class AllCommoditiesActivity extends ActionBarActivity {
     private AllCommoditiesAdapter allCommoditiesAdapter;
     private Spinner timeSpin, distanceSpin, moneySpin;
     private ImageView personImage;
-    //private ImageView publishCommodityImage;
+    private ImageView publishCommodityImage;
     private String[] time = {"时间", "由近到远", "由远到近"};
     private String[] distance = {"距离", "一千米之内", "两千米之内", "三千米之内", "三千米之外"};
     private String[] money = {"价格", "一百元一下", "两百元以下", "两百元以上"};
@@ -108,8 +108,8 @@ public class AllCommoditiesActivity extends ActionBarActivity {
         Listener listener = new Listener();
         personImage = (ImageView) findViewById(R.id.person_image);
         personImage.setOnClickListener(listener);
-        //publishCommodityImage = (ImageView) findViewById(R.id.publicgood);
-        //publishCommodityImage.setOnClickListener(new publicgoodListener());
+        publishCommodityImage = (ImageView) findViewById(R.id.publicgoodallgood);
+        publishCommodityImage.setOnClickListener(listener);
         wasteLinear = (LinearLayout) findViewById(R.id.waste_linear);
         wasteLinear.setOnClickListener(listener);
     }
@@ -131,7 +131,7 @@ public class AllCommoditiesActivity extends ActionBarActivity {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.commodity_linear:
+                case R.id.publicgoodallgood:
                     if (!app.isLogin()) {
                         Login();
                     } else {
@@ -144,18 +144,18 @@ public class AllCommoditiesActivity extends ActionBarActivity {
                     if (!app.isLogin()) {
                         Login();
                     } else {
-                        Intent intent = new Intent();
-                        intent.setClass(AllCommoditiesActivity.this, PersonActivity.class);
-                        startActivity(intent);
+                        Intent intent1 = new Intent();
+                        intent1.setClass(AllCommoditiesActivity.this, PersonActivity.class);
+                        startActivity(intent1);
                     }
                     break;
                 case R.id.waste_linear:
                     if (!app.isLogin()) {
                         Login();
                     } else {
-                        Intent intent = new Intent();
-                        intent.setClass(AllCommoditiesActivity.this, WasteActivity.class);
-                        startActivity(intent);
+                        Intent intent2 = new Intent();
+                        intent2.setClass(AllCommoditiesActivity.this, WasteActivity.class);
+                        startActivity(intent2);
                     }
                     break;
             }

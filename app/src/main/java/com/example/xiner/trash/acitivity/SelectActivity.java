@@ -1,6 +1,7 @@
 package com.example.xiner.trash.acitivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,26 +13,53 @@ import com.example.xiner.trash.R;
 
 public class SelectActivity extends ActionBarActivity {
     Button twohandButton;
+    Button trashrecycleButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.select_customview);
-        twohandButton =(Button)findViewById(R.id.trash_recycle);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowCustomEnabled(true);
+//        getSupportActionBar().setCustomView(R.layout.select_customview);
+        twohandButton =(Button)findViewById(R.id.twohandbutton);
         twohandButton.setOnClickListener(new twoHandListener());
+        trashrecycleButton=(Button)findViewById(R.id.trash_recycle);
+        trashrecycleButton.setOnClickListener(new trashListener());
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        trashrecycleButton.setTextColor(getResources().getColor(R.color.grey));
+        twohandButton.setTextColor(getResources().getColor(R.color.grey));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 
     class twoHandListener implements View.OnClickListener{
 
         @Override
         public void onClick(View v) {
+            trashrecycleButton.setTextColor(getResources().getColor(R.color.grey));
+            twohandButton.setTextColor(getResources().getColor(R.color.green));
             Intent intent = new Intent();
             intent.setClass(SelectActivity.this,AllCommoditiesActivity.class);
             startActivity(intent);
 
+        }
+    }
+    class trashListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            twohandButton.setTextColor(getResources().getColor(R.color.grey));
+            trashrecycleButton.setTextColor(getResources().getColor(R.color.green));
+            Intent intent = new Intent();
+            intent.setClass(SelectActivity.this,WasteActivity.class);
+            startActivity(intent);
         }
     }
     @Override

@@ -7,6 +7,7 @@
     tools:context="com.example.xiner.trash.acitivity.SelectActivity">
 
     <Button
+        android:id="@+id/twohandbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/trash_recycle"
@@ -17,9 +18,10 @@
         android:paddingRight="10dp"
         android:paddingTop="5dp"
         android:text="二手交易"
-        android:textColor="#3ecb55" />
+       />
 
     <Button
+        android:textColor="@android:color/white"
         android:id="@+id/trash_recycle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

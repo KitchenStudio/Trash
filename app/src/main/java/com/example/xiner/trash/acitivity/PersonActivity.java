@@ -26,6 +26,7 @@ public class PersonActivity extends ActionBarActivity {
     private TextView settingsTv;
     private TextView secondHandTradeTv;
     private TextView wasteRecycleTv;
+    private LinearLayout trashrecycle,twohan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,8 @@ public class PersonActivity extends ActionBarActivity {
         settingsTv = (TextView) findViewById(R.id.person_tv_settings);
         secondHandTradeTv = (TextView) findViewById(R.id.person_tv_secondhand_trade);
         wasteRecycleTv = (TextView) findViewById(R.id.person_tv_waste_recycle);
+        trashrecycle =(LinearLayout)findViewById(R.id.person_ll_trash);
+        twohan=(LinearLayout)findViewById(R.id.person_ll_secondhand);
 
         //添加监听事件
         secondHandReleaseTv.setOnClickListener(listener);
@@ -66,6 +69,8 @@ public class PersonActivity extends ActionBarActivity {
         settingsTv.setOnClickListener(listener);
         secondHandTradeTv.setOnClickListener(listener);
         wasteRecycleTv.setOnClickListener(listener);
+        trashrecycle.setOnClickListener(listener);
+        twohan.setOnClickListener(listener);
 
     }
 
@@ -123,6 +128,16 @@ public class PersonActivity extends ActionBarActivity {
                 case R.id.person_tv_waste_recycle://ok
                     intent = new Intent();
                     intent.setClass(PersonActivity.this, PublishWasteActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.person_ll_secondhand:
+                    intent = new Intent();
+                    intent.setClass(PersonActivity.this,AllCommoditiesActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.person_ll_trash:
+                    intent = new Intent();
+                    intent.setClass(PersonActivity.this,WasteActivity.class);
                     startActivity(intent);
                     break;
 

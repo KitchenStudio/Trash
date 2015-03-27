@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="25dp"
-        android:background="@drawable/searchall" />
+        android:background="@drawable/search" />
 
     <android.support.v7.widget.RecyclerView
 

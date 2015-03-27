@@ -28,13 +28,12 @@
                 android:textSize="9pt" />
 
             <TextView
-                android:id="@+id/list_commodity_tv_num"
+                android:id="@+id/list_commodity_tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="[4图]"
-                android:textColor="#1bcd6e"
-                android:textSize="7pt" />
+                android:text="1280元"
+                android:textColor="#ee2222" />
         </RelativeLayout>
 
         <TextView
@@ -44,7 +43,7 @@
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="描述" />
+            android:text="详细信息我就单独写了一个Demo来测试，结果还是灰显。其实，答案很简单，就错在mTextDisp.setTextColor(R.color.red);这行代码上" />
 
         <ImageView
             android:layout_marginLeft="5dp"
@@ -70,12 +69,15 @@
                 android:text="创建日期" />
 
             <TextView
-                android:id="@+id/list_commodity_tv_price"
+                android:id="@+id/list_commodity_tv_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="1280元"
-                android:textColor="#ee2222" />
+                android:text="[4图]"
+                android:textColor="#1bcd6e"
+                android:textSize="7pt" />
+
+
         </RelativeLayout>
     </LinearLayout>
 

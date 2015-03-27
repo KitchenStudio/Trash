@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="horizontal"
+    android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
-    android:layout_height="wrap_content">
+    android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -16,32 +16,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="北京"
-            android:textSize="9pt"
+            android:textSize="8pt"
 
             />
 
         <ImageView
-            android:layout_marginLeft="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dp"
             android:src="@drawable/arrowdown" />
     </LinearLayout>
 
     <EditText
-        android:layout_marginLeft="3dp"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="3dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="5dp"
         android:layout_weight="1"
         android:background="@drawable/search"
-      />
+        android:paddingLeft="35dp"
+        android:singleLine="true" />
 
     <ImageView
         android:id="@+id/publicgoodallgood"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:layout_marginRight="5dp"
-        android:src="@drawable/publicgood" />
+
+       android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:src="@drawable/fabu" />
 </LinearLayout>
