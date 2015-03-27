@@ -40,13 +40,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".acitivity.AllGoodsActivity"
-            android:label="@string/title_activity_all_goods"
-            android:theme="@style/haveaddressstyle" />
-        <activity
-            android:name=".acitivity.GoodDetailActivity"
-            android:label="@string/title_activity_good_detail" />
+
         <activity
             android:name=".acitivity.SettingActivity"
             android:label="@string/title_activity_setting" />
@@ -66,9 +60,7 @@
         <activity
             android:name=".acitivity.FragmentTabsPager"
             android:label="@string/title_activity_my_release" />
-        <activity
-            android:name=".acitivity.EditGoodActivity"
-            android:label="@string/title_activity_edit_good" />
+
         <activity
             android:name=".acitivity.EditCommodityActivity"
             android:label="@string/title_activity_edit_good" />
