@@ -41,7 +41,7 @@ import java.util.List;
  */
 public class NetUtil {
     private static final String TAG = "NetUtil";
-    private static final String HEAD = "http://211.87.226.173/Green/";
+    private static final String HEAD = "http://211.87.226.219/Green/";
     private static final String LOGIN_URL = HEAD + "user/logcheck";
     private static final String REGISTER_URL = HEAD + "user/reg";
     private static final String SECONDHAND_REALEASE_URL = HEAD + "items/output";
