@@ -53,7 +53,6 @@ public class AllCommoditiesAdapter extends RecyclerView.Adapter<AllCommoditiesAd
            // viewHolder.descTv.setText(item.getDesc());
            // viewHolder.dateTv.setText(item.getCreateTime());
             viewHolder.priceTv.setText(item.getPrice());
-
         }
 
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -61,10 +60,13 @@ public class AllCommoditiesAdapter extends RecyclerView.Adapter<AllCommoditiesAd
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(context, CommodityDetailActivity.class);
+                intent.putExtra("id", commodities.get(i).getId());
                 context.startActivity(intent);
             }
         });
     }
+
+
 
     @Override
     public int getItemCount() {

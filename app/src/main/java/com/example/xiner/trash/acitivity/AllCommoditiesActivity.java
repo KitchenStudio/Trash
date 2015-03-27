@@ -63,7 +63,7 @@ public class AllCommoditiesActivity extends ActionBarActivity {
 
         app = Main.getInstance();
         init();
-        net =NetUtil.getInstance();
+        net = NetUtil.getInstance();
         json = new JsonUtil();
 
         new Thread(new Runnable() {
