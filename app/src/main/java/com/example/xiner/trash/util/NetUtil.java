@@ -311,6 +311,7 @@ public class NetUtil {
                 dos.writeBytes("Content-Disposition: form-data; name=\"uploadfile\";filename=\""
                         + fileName+ "\"" + lineEnd);
 
+
                 dos.writeBytes(lineEnd);
 
                 // 创建一个缓冲区
