@@ -24,7 +24,9 @@ public class GalleryAdapter extends BaseAdapter {
     LayoutInflater infalter;
     Context mContext;
     ImageLoader imageLoader;
-    private ArrayList<CustomGallery> data = new ArrayList<CustomGallery>();
+    public ArrayList<CustomGallery> data = new ArrayList<CustomGallery>();
+    private static final int SECOND_BACK=2;
+    private static final int FIRST_BACK=2;
 
     public boolean isActionMultiplePick() {
         return isActionMultiplePick;
@@ -71,45 +73,45 @@ public class GalleryAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final ViewHolder holder;
-
-        if(convertView==null){
+//        final ViewHolder holder;
+        final ImageView imgQueue;
+        ImageView imgQueueMultiSelected;
+//        if(convertView==null){
             convertView = infalter.inflate(R.layout.gallery_item,null);
-            holder = new ViewHolder();
-            holder.imgQueue=(ImageView)convertView.findViewById(R.id.imgQueue);
-            holder.imgQueueMultiSelected =(ImageView)convertView.findViewById(R.id.imgQueueMultiSelected);
+//            holder = new ViewHolder();
+            imgQueue=(ImageView)convertView.findViewById(R.id.imgQueue);
+            imgQueueMultiSelected =(ImageView)convertView.findViewById(R.id.imgQueueMultiSelected);
             if(isActionMultiplePick){
-                holder.imgQueueMultiSelected.setVisibility(View.VISIBLE);
+               imgQueueMultiSelected.setVisibility(View.VISIBLE);
 
             }else {
-                holder.imgQueueMultiSelected.setVisibility(View.GONE);
+                imgQueueMultiSelected.setVisibility(View.GONE);
             }
-            convertView.setTag(holder);
+//            convertView.setTag(holder);
 
-        }else {
-            holder=(ViewHolder)convertView.getTag();
-        }
-        holder.imgQueue.setTag(position);
+//        }else {
+//            holder=(ViewHolder)convertView.getTag();
+//        }
+        imgQueue.setTag(position);
         try {
             if (position!=data.size()) {
                 Log.v("TAG", imageLoader + "imageloader");
                 imageLoader.displayImage("file://" + data.get(position).sdcardPath,
-                        holder.imgQueue, new SimpleImageLoadingListener() {
+                        imgQueue, new SimpleImageLoadingListener() {
                             @Override
                             public void onLoadingStarted(String imageUri, View view) {
-                                holder.imgQueue
+                                imgQueue
                                         .setImageResource(R.drawable.no_media);
                                 super.onLoadingStarted(imageUri, view);
                             }
                         });
             }else {
-                Log.v("GalleryAdatper","执行力position"+position);
-                holder.imgQueue.setImageResource(R.drawable.addgoodpic);
-                
+                imgQueue.setImageResource(R.drawable.addgoodpic);
+
             }
             if (isActionMultiplePick) {
 
-                holder.imgQueueMultiSelected
+                imgQueueMultiSelected
                         .setSelected(data.get(position).isSeleted);
 
             }
@@ -120,23 +122,21 @@ public class GalleryAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public void append(ArrayList<CustomGallery> files) {
-        Log.v("GalleryAdapter","methodmethod");
-        try {
-
-            this.data.addAll(files);
-            Log.v("GalleryAdapter",data.size()+"size");
-        } catch (Exception e) {
-            e.printStackTrace();
+    @Override
+    public int getItemViewType(int position) {
+        super.getItemViewType(position);
+        if (position == data.size()){
+            return SECOND_BACK;
+        }else{
+            return FIRST_BACK;
         }
 
-        notifyDataSetChanged();
     }
+
 
     public void addAll(ArrayList<CustomGallery> files) {
 
         try {
-            this.data.clear();
             this.data.addAll(files);
 
         } catch (Exception e) {

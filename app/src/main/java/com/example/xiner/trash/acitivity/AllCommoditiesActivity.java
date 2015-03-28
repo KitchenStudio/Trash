@@ -66,17 +66,17 @@ public class AllCommoditiesActivity extends ActionBarActivity {
         net = NetUtil.getInstance();
         json = new JsonUtil();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ArrayList<Commodity> list = json.getCommodities(net.commodityReq(0));
-                allCommoditiesAdapter.setCommodities(list);
-                Message msg = new Message();
-                msg.what = 11;
-                handler.sendMessage(msg);
-                //allCommoditiesAdapter.notifyDataSetChanged();
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                ArrayList<Commodity> list = json.getCommodities(net.commodityReq(0));
+//                allCommoditiesAdapter.setCommodities(list);
+//                Message msg = new Message();
+//                msg.what = 11;
+//                handler.sendMessage(msg);
+//                //allCommoditiesAdapter.notifyDataSetChanged();
+//            }
+//        }).start();
 
     }
 

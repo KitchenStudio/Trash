@@ -44,7 +44,8 @@ import java.util.Date;
 
 public class PublishCommodityActivity extends ActionBarActivity {
     GalleryAdapter adapter;
-    ArrayList<CustomGallery>dataT;
+    ArrayList<CustomGallery> dataT;
+
     ImageLoader imageLoader;
     private EditText inameEt;
     private EditText priceEt;
@@ -58,11 +59,13 @@ public class PublishCommodityActivity extends ActionBarActivity {
     private Button publishBtn;
     private ImageView goodimage;
     private Bitmap goodbitmap;
+    int filei;
+    GridView gridView;
     NetUtil net;
     Main app;
     private final static String path = Environment.getExternalStorageDirectory() + "/trash/good";// sd路径
     private String TAG = "Publc";
-    String filename = "/good.jpg";
+    String filename = "/good";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +101,16 @@ public class PublishCommodityActivity extends ActionBarActivity {
                 new picUploadThread().start();
             }
         });
+
+        gridView = (GridView) findViewById(R.id.gridGallery);
+
+
+        gridView.setFastScrollEnabled(true);
+        adapter = new GalleryAdapter(getApplicationContext(), imageLoader);
+        adapter.setActionMultiplePick(false);
+        gridView.setAdapter(adapter);
     }
+
     /*
     * 初始化加载图画类库
     * */
@@ -114,6 +126,7 @@ public class PublishCommodityActivity extends ActionBarActivity {
         imageLoader = ImageLoader.getInstance();
         imageLoader.init(config);
     }
+
     private class picUploadThread extends Thread {
         @Override
         public void run() {
@@ -171,11 +184,11 @@ public class PublishCommodityActivity extends ActionBarActivity {
 
         @Override
         public void onClick(View v) {
-            picGet(4,3);
+            picGet(2, 1);
         }
     }
 
-    private void picGet(final int selectcase,final int tookcase ){
+    private void picGet(final int selectcase, final int tookcase) {
         new android.app.AlertDialog.Builder(this)
                 .setTitle("头像选择")
                 .setNegativeButton("相册选取",
@@ -193,8 +206,6 @@ public class PublishCommodityActivity extends ActionBarActivity {
                         })
                 .setPositiveButton("相机拍照",
                         new DialogInterface.OnClickListener() {
-//                            final int a = diffcase;
-
                             @Override
                             public void onClick(DialogInterface dialog,
                                                 int which) {
@@ -210,29 +221,16 @@ public class PublishCommodityActivity extends ActionBarActivity {
                             }
                         }).show();
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        goodimage.setVisibility(View.GONE);
+        gridView.setVisibility(View.VISIBLE);
         switch (requestCode) {
+
             case 1:
-                if (resultCode == RESULT_OK){
-                    String[] all_path = data.getStringArrayExtra("all_path");
 
-                    dataT = new ArrayList<CustomGallery>();
-
-                    for (String string : all_path) {
-                        CustomGallery item = new CustomGallery();
-                        item.sdcardPath = string;
-                        dataT.add(item);
-                    }
-                    adapter.append(dataT);
-                }
-                break;
-            case 2:
-
-                break;
-
-            case 3:
                 if (resultCode == RESULT_OK) {
 
                     String sdStatus = Environment.getExternalStorageState();
@@ -245,26 +243,21 @@ public class PublishCommodityActivity extends ActionBarActivity {
                         Bundle extras = data.getExtras();
                         goodbitmap = extras.getParcelable("data");
                         if (goodbitmap != null) {
-
-                            app.setPicToView(goodbitmap, path, filename);// 保存在SD卡中
-                            goodimage.setImageBitmap(goodbitmap);// 用ImageView显示出来
+                            app.setPicToView(goodbitmap, path, filename+filei+".jpg");// 保存在SD卡中
+                            dataT = new ArrayList<CustomGallery>();
+                            CustomGallery customGallery = new CustomGallery();
+                            customGallery.sdcardPath = path + filename+filei+".jpg";
+                            Log.v(TAG, customGallery.sdcardPath + "sdPath");
+                            dataT.add(customGallery);
+                            adapter.addAll(dataT);
+                            filei++;
                         }
                     }
                 }
                 break;
-            case 4:
+            case 2:
                 if (resultCode == RESULT_OK) {
-                    GridView gridView = (GridView) findViewById(R.id.gridGallery);
-                    if (data != null) {
-                        goodimage.setVisibility(View.GONE);
-                        gridView.setVisibility(View.VISIBLE);
 
-                        gridView.setFastScrollEnabled(true);
-                        adapter = new GalleryAdapter(getApplicationContext(), imageLoader);
-                        adapter.setActionMultiplePick(false);
-                        gridView.setAdapter(adapter);
-
-                    }
                     String[] all_path = data.getStringArrayExtra("all_path");
 
                     dataT = new ArrayList<CustomGallery>();
@@ -274,29 +267,22 @@ public class PublishCommodityActivity extends ActionBarActivity {
                         item.sdcardPath = string;
                         dataT.add(item);
                     }
-
-//                    viewSwitcher.setDisplayedChild(0);
                     adapter.addAll(dataT);
-                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            if (position==dataT.size()){
-                                picGet(1,2);
-                            }
-                        }
-                    });
-//                    if (all_path.length != 0) {
-//                        allPictures.clear();
-//                        for (int i = 0; i < all_path.length; i++) {
-//                            allPictures.add("file://"+all_path[i]);
-//                        }
-//                    }
+
                 }
                 break;
             default:
                 break;
 
         }
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == adapter.data.size()) {
+                    picGet(2, 1);
+                }
+            }
+        });
     }
 
     @Override

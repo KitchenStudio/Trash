@@ -20,6 +20,7 @@ import android.widget.Spinner;
 
 import com.example.xiner.trash.R;
 import com.example.xiner.trash.adapter.GalleryAdapter;
+import com.example.xiner.trash.main.Main;
 import com.example.xiner.trash.model.CustomGallery;
 import com.example.xiner.trash.util.Action;
 import com.example.xiner.trash.util.NetUtil;
@@ -49,7 +50,13 @@ public class PublishWasteActivity extends ActionBarActivity {
     GalleryAdapter adapter;
     ImageLoader imageLoader;
     ArrayList<CustomGallery> dataT;
-//    GridView gridView;
+    private Bitmap goodbitmap;
+    GridView gridView;
+    Main app;
+    private final static String path = Environment.getExternalStorageDirectory() + "/trash/trash";// sd路径
+    private String TAG = "Publc";
+    String filename = "/trash";
+    int filei;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +78,7 @@ public class PublishWasteActivity extends ActionBarActivity {
         imageLoader.init(config);
     }
     private void init() {
+        app = Main.getInstance();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -90,7 +98,11 @@ public class PublishWasteActivity extends ActionBarActivity {
                 new wasteThread().start();
             }
         });
-
+        gridView = (GridView) findViewById(R.id.gridGallery);
+        gridView.setFastScrollEnabled(true);
+        adapter = new GalleryAdapter(getApplicationContext(), imageLoader);
+        adapter.setActionMultiplePick(false);
+        gridView.setAdapter(adapter);
 
     }
 
@@ -136,29 +148,48 @@ public class PublishWasteActivity extends ActionBarActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.publictrash:
-                    picGet(1,2);
+                    picGet(2,1);
                     break;
             }
         }
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
+        picImage.setVisibility(View.GONE);
+        gridView.setVisibility(View.VISIBLE);
+        switch (requestCode) {
+
             case 1:
+
                 if (resultCode == RESULT_OK) {
-                    GridView gridView = (GridView) findViewById(R.id.gridGallery);
-                    if (data != null) {
-                        picImage.setVisibility(View.GONE);
-                        gridView.setVisibility(View.VISIBLE);
 
-                        gridView.setFastScrollEnabled(true);
-                        adapter = new GalleryAdapter(getApplicationContext(), imageLoader);
-                        adapter.setActionMultiplePick(false);
-                        gridView.setAdapter(adapter);
+                    String sdStatus = Environment.getExternalStorageState();
+                    if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
 
+                        return;
                     }
+
+                    if (data != null) {
+                        Bundle extras = data.getExtras();
+                        goodbitmap = extras.getParcelable("data");
+                        if (goodbitmap != null) {
+                            app.setPicToView(goodbitmap, path, filename+filei+".jpg");// 保存在SD卡中
+                            dataT = new ArrayList<CustomGallery>();
+                            CustomGallery customGallery = new CustomGallery();
+                            customGallery.sdcardPath = path + filename+filei+".jpg";
+
+                            dataT.add(customGallery);
+                            adapter.addAll(dataT);
+                            filei++;
+                        }
+                    }
+                }
+                break;
+            case 2:
+                if (resultCode == RESULT_OK) {
+
                     String[] all_path = data.getStringArrayExtra("all_path");
 
                     dataT = new ArrayList<CustomGallery>();
@@ -168,22 +199,23 @@ public class PublishWasteActivity extends ActionBarActivity {
                         item.sdcardPath = string;
                         dataT.add(item);
                     }
-
-//                    viewSwitcher.setDisplayedChild(0);
                     adapter.addAll(dataT);
-                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            if (position == dataT.size()) {
-                                picGet(1, 2);
-                            }
-                        }
-                    });
+
                 }
                 break;
-        }
-    }
+            default:
+                break;
 
+        }
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == adapter.data.size()) {
+                    picGet(2, 1);
+                }
+            }
+        });
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
