@@ -1,5 +1,6 @@
 package com.example.xiner.trash.adapter;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 
 import com.example.xiner.trash.R;
 import com.example.xiner.trash.model.CustomGallery;
+import com.example.xiner.trash.util.ProgressListener;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
@@ -24,9 +27,19 @@ public class GalleryAdapter extends BaseAdapter {
     LayoutInflater infalter;
     Context mContext;
     ImageLoader imageLoader;
+
+    public boolean isIfUploadprogressDown() {
+        return ifUploadprogressDown;
+    }
+
+    public void setIfUploadprogressDown(boolean ifUploadprogressDown) {
+        this.ifUploadprogressDown = ifUploadprogressDown;
+    }
+
+    boolean ifUploadprogressDown=false;
     public ArrayList<CustomGallery> data = new ArrayList<CustomGallery>();
-    private static final int SECOND_BACK=2;
-    private static final int FIRST_BACK=2;
+    private static final int SECOND_BACK = 2;
+    private static final int FIRST_BACK = 2;
 
     public boolean isActionMultiplePick() {
         return isActionMultiplePick;
@@ -45,9 +58,10 @@ public class GalleryAdapter extends BaseAdapter {
         this.imageLoader = imageLoader;
         // clearCache();
     }
+
     @Override
     public int getCount() {
-        return data.size()+1;
+        return data.size() + 1;
     }
 
     @Override
@@ -59,6 +73,7 @@ public class GalleryAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
+
     public void changeSelection(View v, int position) {
 
         if (data.get(position).isSeleted) {
@@ -73,41 +88,42 @@ public class GalleryAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-//        final ViewHolder holder;
         final ImageView imgQueue;
+        ProgressBar progressBar;
         ImageView imgQueueMultiSelected;
-//        if(convertView==null){
-            convertView = infalter.inflate(R.layout.gallery_item,null);
-//            holder = new ViewHolder();
-            imgQueue=(ImageView)convertView.findViewById(R.id.imgQueue);
-            imgQueueMultiSelected =(ImageView)convertView.findViewById(R.id.imgQueueMultiSelected);
-            if(isActionMultiplePick){
-               imgQueueMultiSelected.setVisibility(View.VISIBLE);
+        convertView = infalter.inflate(R.layout.gallery_item, null);
+        imgQueue = (ImageView) convertView.findViewById(R.id.imgQueue);
+        imgQueueMultiSelected = (ImageView) convertView.findViewById(R.id.imgQueueMultiSelected);
+//        progressBar = (ProgressBar) convertView.findViewById(R.id.progressbar);
 
-            }else {
-                imgQueueMultiSelected.setVisibility(View.GONE);
-            }
-//            convertView.setTag(holder);
+        if (isActionMultiplePick) {
+            imgQueueMultiSelected.setVisibility(View.VISIBLE);
 
-//        }else {
-//            holder=(ViewHolder)convertView.getTag();
-//        }
+        } else {
+            imgQueueMultiSelected.setVisibility(View.GONE);
+        }
+
+
         imgQueue.setTag(position);
         try {
-            if (position!=data.size()) {
-                Log.v("TAG", imageLoader + "imageloader");
-                imageLoader.displayImage("file://" + data.get(position).sdcardPath,
-                        imgQueue, new SimpleImageLoadingListener() {
-                            @Override
-                            public void onLoadingStarted(String imageUri, View view) {
-                                imgQueue
-                                        .setImageResource(R.drawable.no_media);
-                                super.onLoadingStarted(imageUri, view);
-                            }
-                        });
+            if (ifUploadprogressDown ==false) {
+                if (position != data.size()) {
+                    Log.v("TAG", imageLoader + "imageloader");
+                    imageLoader.displayImage("file://" + data.get(position).sdcardPath,
+                            imgQueue, new SimpleImageLoadingListener() {
+                                @Override
+                                public void onLoadingStarted(String imageUri, View view) {
+                                    imgQueue
+                                            .setImageResource(R.drawable.no_media);
+                                    super.onLoadingStarted(imageUri, view);
+                                }
+                            });
+                } else {
+                    imgQueue.setImageResource(R.drawable.addgoodpic);
+
+                }
             }else {
                 imgQueue.setImageResource(R.drawable.addgoodpic);
-
             }
             if (isActionMultiplePick) {
 
@@ -125,9 +141,9 @@ public class GalleryAdapter extends BaseAdapter {
     @Override
     public int getItemViewType(int position) {
         super.getItemViewType(position);
-        if (position == data.size()){
+        if (position == data.size()) {
             return SECOND_BACK;
-        }else{
+        } else {
             return FIRST_BACK;
         }
 
@@ -157,12 +173,17 @@ public class GalleryAdapter extends BaseAdapter {
 
         return dataT;
     }
+
+
     public class ViewHolder {
         ImageView imgQueue;
         ImageView imgQueueMultiSelected;
     }
+
     public void clear() {
         data.clear();
         notifyDataSetChanged();
     }
+
+
 }

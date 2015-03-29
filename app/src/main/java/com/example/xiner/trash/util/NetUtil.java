@@ -3,7 +3,9 @@ package com.example.xiner.trash.util;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.RecoverySystem;
 import android.util.Log;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.xiner.trash.R;
@@ -19,6 +21,8 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.FileEntity;
+import org.apache.http.entity.HttpEntityWrapper;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -49,15 +53,15 @@ import java.util.concurrent.Executors;
  */
 public class NetUtil {
     private static final String TAG = "NetUtil";
-    private static final String HEAD = "http://211.87.234.180:8080/Green/";
+    private static final String HEAD = "http://211.87.226.185:8080/Green/";
     private static final String LOGIN_URL = HEAD + "user/logcheck";
     private static final String REGISTER_URL = HEAD + "user/reg";
     private static final String SECONDHAND_REALEASE_URL = HEAD + "items/output";
     private static final String ITEM_FOR_FIVE_URL = HEAD + "items/ForFive";
     private static final String WASTE_REALEASE_URL = HEAD + "garbage/put";
-    private static final String UPLOADPICTURE_URL = HEAD + "";
+    private static final String UPLOADPICTURE_URL = "http://211.87.226.181:8080/api/v1/item/file";
     private static final String GET_COMMODITY_URL = HEAD + "";
-    private static final String GET_WASTE_URL = HEAD + "";
+    private static final String GET_WASTE_URL  = HEAD + "";
 
     private static NetUtil netUtil =null;
     private HttpPost httpRequest;
@@ -111,6 +115,7 @@ public class NetUtil {
             }
         }
         try {
+
             httpRequest = new HttpPost(LOGIN_URL);
             httpRequest.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
             httpResponse = new DefaultHttpClient()
@@ -324,7 +329,8 @@ public class NetUtil {
 
         } else {
             try {
-
+//                ProgressBar progressBar = new ProgressBar();
+//                progressBar.setProgress(0);
                 // 打开URL连接
                 FileInputStream fileInputStream = new FileInputStream(sourceFile);
                 URL url = new URL(UPLOADPICTURE_URL);
@@ -359,14 +365,18 @@ public class NetUtil {
 
                 // 读写文件.
                 bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
+                int progress=0;
                 while (bytesRead > 0) {
 
                     dos.write(buffer, 0, bufferSize);
                     bytesAvailable = fileInputStream.available();
+                    progress+=bufferSize;
+                    Log.v(TAG,progress+"bytesRead");
                     bufferSize = Math.min(bytesAvailable, maxBufferSize);
                     bytesRead = fileInputStream.read(buffer, 0, bufferSize);
 
+//                    listener.onProgress((int) ((progress / (float) bytesAvailable) * 100));
+//                    progressBar.setProgress((int) ((progress / (float) bytesAvailable) * 100));
                 }
 
 //                // 上传文件之后上传字符串
@@ -386,8 +396,6 @@ public class NetUtil {
                 dos.close();
 
             } catch (MalformedURLException ex) {
-
-
                 Log.e("Upload file to server", "error: " + ex.getMessage(), ex);
             } catch (Exception e) {
 

@@ -1,15 +1,15 @@
 package com.example.xiner.trash.acitivity;
 
-import android.app.Activity;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,13 +20,16 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.xiner.trash.R;
 import com.example.xiner.trash.adapter.GalleryAdapter;
 import com.example.xiner.trash.main.Main;
 import com.example.xiner.trash.model.CustomGallery;
 import com.example.xiner.trash.util.Action;
+import com.example.xiner.trash.util.LoadingDialog;
 import com.example.xiner.trash.util.NetUtil;
+import com.example.xiner.trash.util.ProgressListener;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -36,7 +39,6 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -61,6 +63,7 @@ public class PublishCommodityActivity extends ActionBarActivity {
     private Bitmap goodbitmap;
     int filei;
     GridView gridView;
+    Dialog loadingDialog;
     NetUtil net;
     Main app;
     private final static String path = Environment.getExternalStorageDirectory() + "/trash/good";// sd路径
@@ -97,7 +100,10 @@ public class PublishCommodityActivity extends ActionBarActivity {
         publishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new secondHandThread().start();
+                loadingDialog = LoadingDialog.createDialog(PublishCommodityActivity.this, "正在上传，请稍后....");
+                loadingDialog.show();
+//                new secondHandThread().start();
+
                 new picUploadThread().start();
             }
         });
@@ -127,10 +133,39 @@ public class PublishCommodityActivity extends ActionBarActivity {
         imageLoader.init(config);
     }
 
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    loadingDialog.dismiss();
+                    Toast.makeText(PublishCommodityActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
+                    finish();
+                    break;
+            }
+        }
+    };
+
+
     private class picUploadThread extends Thread {
         @Override
         public void run() {
-            net.uploadFile(path + filename);
+            for (int i = 0; i < adapter.data.size(); i++) {
+                Log.v(TAG, "method excuted");
+
+                int code = net.uploadFile(adapter.data.get(i).sdcardPath);
+                if (code != 200) {
+                    return;
+                }
+
+            }
+            Message message = new Message();
+            message.what = 1;
+            handler.sendMessage(message);
+
+
         }
     }
 
@@ -198,10 +233,9 @@ public class PublishCommodityActivity extends ActionBarActivity {
                             public void onClick(DialogInterface dialog,
                                                 int which) {
                                 dialog.cancel();
-                                Intent intent1 = new Intent(
+                                Intent i = new Intent(
                                         Action.ACTION_MULTIPLE_PICK);
-
-                                startActivityForResult(intent1, selectcase);
+                                startActivityForResult(i, selectcase);
                             }
                         })
                 .setPositiveButton("相机拍照",
@@ -243,10 +277,10 @@ public class PublishCommodityActivity extends ActionBarActivity {
                         Bundle extras = data.getExtras();
                         goodbitmap = extras.getParcelable("data");
                         if (goodbitmap != null) {
-                            app.setPicToView(goodbitmap, path, filename+filei+".jpg");// 保存在SD卡中
+                            app.setPicToView(goodbitmap, path, filename + filei + ".jpg");// 保存在SD卡中
                             dataT = new ArrayList<CustomGallery>();
                             CustomGallery customGallery = new CustomGallery();
-                            customGallery.sdcardPath = path + filename+filei+".jpg";
+                            customGallery.sdcardPath = path + filename + filei + ".jpg";
                             Log.v(TAG, customGallery.sdcardPath + "sdPath");
                             dataT.add(customGallery);
                             adapter.addAll(dataT);

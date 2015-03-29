@@ -80,7 +80,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="30dp"
-            android:background="#33b5e5"
+            android:background="@color/green"
             android:text="注册"
             android:textColor="@android:color/white" />
 
@@ -101,7 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="《xxx条款》"
-                android:textColor="#33b5e5" />
+                android:textColor="@color/green" />
         </LinearLayout>
     </LinearLayout>
 

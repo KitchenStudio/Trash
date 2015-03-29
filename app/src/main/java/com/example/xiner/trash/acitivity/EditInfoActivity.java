@@ -1,12 +1,15 @@
 package com.example.xiner.trash.acitivity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -19,9 +22,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.xiner.trash.R;
 import com.example.xiner.trash.main.Main;
+import com.example.xiner.trash.util.LoadingDialog;
 import com.example.xiner.trash.util.NetUtil;
 
 import org.json.JSONException;
@@ -42,7 +47,7 @@ public class EditInfoActivity extends ActionBarActivity {
     EditText nickname, phonecall, qqnumber;
     private final static String path = Environment.getExternalStorageDirectory() + "/trash/head";// sd路径
     NetUtil net = NetUtil.getInstance();
-//    String filepath = Environment.getExternalStorageDirectory() + "/trash/head/head.jpg";
+    Dialog loadingDialog;
     RadioGroup group;
     RadioButton man, woman;
     String filename = "/head.jpg";
@@ -58,6 +63,8 @@ public class EditInfoActivity extends ActionBarActivity {
 
 
     private void init() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
         EditListener editListener = new EditListener();
         head = (ImageView) findViewById(R.id.person_edit_head);
         head.setOnClickListener(editListener);
@@ -107,6 +114,8 @@ public class EditInfoActivity extends ActionBarActivity {
                    picGet();
                     break;
                 case R.id.save_edit:
+                    loadingDialog = LoadingDialog.createDialog(EditInfoActivity.this, "正在上传，请稍后....");
+                    loadingDialog.show();
                     app.getDataStore().edit().putString("nickname", nickname.getText().toString()).commit();
                     app.getDataStore().edit().putString("phonecall", phonecall.getText().toString()).commit();
                     app.getDataStore().edit().putString("qqnumber", qqnumber.getText().toString()).commit();
@@ -169,11 +178,27 @@ public class EditInfoActivity extends ActionBarActivity {
         public void run() {
 
             int code = net.uploadFile(path + "/head.jpg");
-            if (code == 200) {
-                finish();
+            if (code != 200) {
+                return;
             }
+            Message message = new Message();
+            message.what = 1;
+            handler.sendMessage(message);
         }
     }
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    loadingDialog.dismiss();
+                    Toast.makeText(EditInfoActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
+                    finish();
+                    break;
+            }
+        }
+    };
 
     class uploadInfo extends Thread {
         @Override
@@ -239,34 +264,6 @@ public class EditInfoActivity extends ActionBarActivity {
         }
     }
 
-    //保存头像
-//    private void setPicToView(Bitmap mBitmap) {
-//        Log.v(TAG,"保存头像");
-//        String sdStatus = Environment.getExternalStorageState();
-//        if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
-//            return;
-//        }
-//        FileOutputStream b = null;
-//        File file = new File(path);
-//        file.mkdirs();// 创建文件夹
-//        String fileName = path + "/head.jpg";// 图片名字
-//        try {
-//            b = new FileOutputStream(fileName);
-//            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);// 把数据写入文件
-//
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                // 关闭流
-//                b.flush();
-//                b.close();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
-//    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -278,7 +275,10 @@ public class EditInfoActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
-
+        int id = item.getItemId();
+        if (id==android.R.id.home){
+            finish();
+        }
 
         return super.onOptionsItemSelected(item);
     }

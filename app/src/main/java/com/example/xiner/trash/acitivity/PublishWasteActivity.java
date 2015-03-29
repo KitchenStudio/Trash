@@ -1,9 +1,12 @@
 package com.example.xiner.trash.acitivity;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -17,12 +20,14 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.xiner.trash.R;
 import com.example.xiner.trash.adapter.GalleryAdapter;
 import com.example.xiner.trash.main.Main;
 import com.example.xiner.trash.model.CustomGallery;
 import com.example.xiner.trash.util.Action;
+import com.example.xiner.trash.util.LoadingDialog;
 import com.example.xiner.trash.util.NetUtil;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -57,11 +62,14 @@ public class PublishWasteActivity extends ActionBarActivity {
     private String TAG = "Publc";
     String filename = "/trash";
     int filei;
+    Dialog loadingDialog;
+    NetUtil net;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_waste);
+        net = NetUtil.getInstance();
         initImageLoader();
         init();
     }
@@ -95,7 +103,10 @@ public class PublishWasteActivity extends ActionBarActivity {
         releaseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadingDialog = LoadingDialog.createDialog(PublishWasteActivity.this, "正在上传，请稍后....");
+                loadingDialog.show();
                 new wasteThread().start();
+                new uploadpicThread().start();
             }
         });
         gridView = (GridView) findViewById(R.id.gridGallery);
@@ -154,6 +165,36 @@ public class PublishWasteActivity extends ActionBarActivity {
         }
     }
 
+    class uploadpicThread extends Thread{
+        @Override
+        public void run() {
+            for (int i = 0; i < adapter.data.size(); i++) {
+                Log.v(TAG, "method excuted");
+
+                int code = net.uploadFile(adapter.data.get(i).sdcardPath);
+                if (code != 200) {
+                    return;
+                }
+
+            }
+            Message message = new Message();
+            message.what = 1;
+            handler.sendMessage(message);
+        }
+    }
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    loadingDialog.dismiss();
+                    Toast.makeText(PublishWasteActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
+                    finish();
+                    break;
+            }
+        }
+    };
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
