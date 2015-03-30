@@ -60,7 +60,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:background="@android:color/white"
-                android:hint="物品名称" />
+                android:hint="物品名称"
+                android:singleLine="true" />
 
 
         </LinearLayout>
@@ -156,7 +157,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:background="@android:color/white"
-                android:hint="输入姓名" />
+                android:hint="输入姓名"
+                android:singleLine="true" />
 
 
         </LinearLayout>
@@ -189,7 +191,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:background="@android:color/white"
-                android:hint="输入联系电话" />
+                android:hint="输入联系电话"
+                android:singleLine="true" />
 
         </LinearLayout>
 
@@ -221,7 +224,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:background="@android:color/white"
-                android:hint="所在区域 " />
+                android:hint="所在区域 "
+                android:singleLine="true" />
 
         </LinearLayout>
 

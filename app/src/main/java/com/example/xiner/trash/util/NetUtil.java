@@ -59,7 +59,9 @@ public class NetUtil {
     private static final String SECONDHAND_REALEASE_URL = HEAD + "items/output";
     private static final String ITEM_FOR_FIVE_URL = HEAD + "items/ForFive";
     private static final String WASTE_REALEASE_URL = HEAD + "garbage/put";
-    private static final String UPLOADPICTURE_URL = "http://211.87.226.181:8080/api/v1/item/file";
+    private static final String UPLOADPICTURE_URL = "http://211.87.226.152:8080/annotations/register.action";
+//    private static final String UPLOADPICTURE_URL = "http://211.87.226.147/Green/upload";
+//    private static final String UPLOADPICTURE_URL = "http://211.87.226.181:8080/api/v1/item/file";
     private static final String GET_COMMODITY_URL = HEAD + "";
     private static final String GET_WASTE_URL  = HEAD + "";
 
@@ -67,6 +69,7 @@ public class NetUtil {
     private HttpPost httpRequest;
     private HttpResponse httpResponse;
     int serverResponseCode = 0;
+    private static final int BUFFER_SIZE=1024;
 
     private NetUtil() {
 
@@ -316,9 +319,9 @@ public class NetUtil {
         String lineEnd = "\r\n";
         String twoHyphens = "--";
         String boundary = "*****";
-        int bytesRead, bytesAvailable, bufferSize;
+        int bytesRead;
         byte[] buffer;
-        int maxBufferSize = 1 * 1024 * 1024;
+
         File sourceFile = new File(sourceFileUri);
 
         if (!sourceFile.isFile()) {
@@ -344,39 +347,26 @@ public class NetUtil {
                 conn.setUseCaches(false); //不使用缓存复制
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Connection", "Keep-Alive");
-                conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                conn.setChunkedStreamingMode(0);
                 conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-//                conn.setRequestProperty("uploadfile", fileName);
 
                 dos = new DataOutputStream(conn.getOutputStream());
 
                 dos.writeBytes(twoHyphens + boundary + lineEnd);
-                dos.writeBytes("Content-Disposition: form-data; name=\"uploadfile\";filename=\""
+                dos.writeBytes("Content-Disposition:form-data;name=\"file\";filename=\""
                         + fileName + "\"" + lineEnd);
+                dos.writeBytes("Content-Type:application/octet-stream" + lineEnd );
 
 
                 dos.writeBytes(lineEnd);
 
-                // 创建一个缓冲区
-                bytesAvailable = fileInputStream.available();
-
-                bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                buffer = new byte[bufferSize];
+                // 创建一个缓冲区,文件上传是从一个地方读到缓冲区中，然后再从缓冲区写到另一个位置
+                buffer = new byte[BUFFER_SIZE];
 
                 // 读写文件.
-                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-                int progress=0;
-                while (bytesRead > 0) {
-
-                    dos.write(buffer, 0, bufferSize);
-                    bytesAvailable = fileInputStream.available();
-                    progress+=bufferSize;
-                    Log.v(TAG,progress+"bytesRead");
-                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
-//                    listener.onProgress((int) ((progress / (float) bytesAvailable) * 100));
-//                    progressBar.setProgress((int) ((progress / (float) bytesAvailable) * 100));
+                while ((bytesRead = fileInputStream.read(buffer, 0, BUFFER_SIZE)) != -1) {
+                    dos.write(buffer, 0, bytesRead);
+                    Log.v(TAG,bytesRead+"bytesRead");
                 }
 
 //                // 上传文件之后上传字符串
@@ -400,6 +390,7 @@ public class NetUtil {
             } catch (Exception e) {
 
             }
+
             return serverResponseCode;
 
         }

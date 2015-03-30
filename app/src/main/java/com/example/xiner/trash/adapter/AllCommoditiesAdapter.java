@@ -60,7 +60,7 @@ public class AllCommoditiesAdapter extends RecyclerView.Adapter<AllCommoditiesAd
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(context, CommodityDetailActivity.class);
-                intent.putExtra("id", commodities.get(i).getId());
+//                intent.putExtra("id", commodities.get(i).getId());
                 context.startActivity(intent);
             }
         });

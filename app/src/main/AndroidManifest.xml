@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.xiner.trash" >
+    package="com.example.xiner.trash">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -12,16 +12,15 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".acitivity.RegisterActivity"
             android:label="@string/app_name"
-            android:theme="@style/registerstyle" >
-        </activity>
+            android:theme="@style/registerstyle"></activity>
         <activity
             android:name=".acitivity.PublishCommodityActivity"
-
-            android:label="@string/title_activity_person" />
+            android:label="@string/title_activity_person"
+            android:theme="@style/registerstyle" />
         <activity
             android:name=".acitivity.PersonActivity"
             android:label="@string/title_activity_publiccommodity"
@@ -29,12 +28,12 @@
         <activity android:name=".acitivity.CommodityDetailActivity" />
         <activity
             android:name=".acitivity.LoginActivity"
-            android:label="@string/title_activity_login" >
-        </activity>
+            android:label="@string/title_activity_login"
+            android:theme="@style/registerstyle"></activity>
         <activity
             android:name=".acitivity.SelectActivity"
             android:label="@string/title_activity_all_goods"
-            android:theme="@style/haveaddressstyle.NoActionBar" >
+            android:theme="@style/haveaddressstyle.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -71,22 +70,20 @@
             android:theme="@style/haveaddressstyle" />
         <activity
             android:name=".acitivity.PublishWasteActivity"
-            android:label="@string/title_activity_publictrash" />
+            android:label="@string/title_activity_publictrash"
+            android:theme="@style/registerstyle" />
         <activity
             android:name=".acitivity.WasteDetailActivity"
             android:label="@string/title_activity_trash_detail" />
         <activity
             android:name=".acitivity.MyInformationActivity"
-            android:label="@string/title_activity_my_information" >
-        </activity>
+            android:label="@string/title_activity_my_information"></activity>
         <activity
             android:name=".acitivity.EditInfoActivity"
-            android:label="@string/title_activity_edit_info" >
-        </activity>
+            android:label="@string/title_activity_edit_info"></activity>
         <activity
             android:name=".acitivity.ChangePasswordActivity"
-            android:label="@string/title_activity_change_password" >
-        </activity>
+            android:label="@string/title_activity_change_password"></activity>
     </application>
 
 </manifest>

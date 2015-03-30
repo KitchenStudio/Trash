@@ -83,6 +83,7 @@ public class PublishCommodityActivity extends ActionBarActivity {
 
     private void init() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.whitearrow);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         goodimage = (ImageView) findViewById(R.id.addgoodpic);
@@ -102,15 +103,12 @@ public class PublishCommodityActivity extends ActionBarActivity {
             public void onClick(View v) {
                 loadingDialog = LoadingDialog.createDialog(PublishCommodityActivity.this, "正在上传，请稍后....");
                 loadingDialog.show();
-//                new secondHandThread().start();
 
                 new picUploadThread().start();
             }
         });
 
         gridView = (GridView) findViewById(R.id.gridGallery);
-
-
         gridView.setFastScrollEnabled(true);
         adapter = new GalleryAdapter(getApplicationContext(), imageLoader);
         adapter.setActionMultiplePick(false);
@@ -150,10 +148,11 @@ public class PublishCommodityActivity extends ActionBarActivity {
 
 
     private class picUploadThread extends Thread {
+
         @Override
         public void run() {
+            uploadInfo();
             for (int i = 0; i < adapter.data.size(); i++) {
-                Log.v(TAG, "method excuted");
 
                 int code = net.uploadFile(adapter.data.get(i).sdcardPath);
                 if (code != 200) {
@@ -169,50 +168,49 @@ public class PublishCommodityActivity extends ActionBarActivity {
         }
     }
 
-    private class secondHandThread extends Thread {
-        private NetUtil net;
-        private JSONObject jsonObject;
-        private String iname, price, desc, uname, phone, qq, address, sort, recency;
+    //    private class secondHandThread extends Thread {
+    private void uploadInfo() {
+        NetUtil net = null;
+        JSONObject jsonObject = null;
+        String iname, price, desc, uname, phone, qq, address, sort, recency;
 
-        @Override
-        public void run() {
-            iname = inameEt.getText().toString();
-            price = priceEt.getText().toString();
-            desc = descEt.getText().toString();
-            uname = unameEt.getText().toString();
-            phone = phoneEt.getText().toString();
-            qq = qqEt.getText().toString();
-            address = addressEt.getText().toString();
-            sort = commoditySortSp.getSelectedItem().toString();
-            recency = recencySp.getSelectedItem().toString();
-            //Log.d("DataTest",iname+price+desc+uname+phone+qq+address+sort+recency);
-            try {
-                net = NetUtil.getInstance();
-                jsonObject = new JSONObject();
+        iname = inameEt.getText().toString();
+        price = priceEt.getText().toString();
+        desc = descEt.getText().toString();
+        uname = unameEt.getText().toString();
+        phone = phoneEt.getText().toString();
+        qq = qqEt.getText().toString();
+        address = addressEt.getText().toString();
+        sort = commoditySortSp.getSelectedItem().toString();
+        recency = recencySp.getSelectedItem().toString();
+        //Log.d("DataTest",iname+price+desc+uname+phone+qq+address+sort+recency);
+        try {
+            net = NetUtil.getInstance();
+            jsonObject = new JSONObject();
 
-                jsonObject.put("i.iname", iname);
-                jsonObject.put("i.price", price);
-                jsonObject.put("i.description", desc);
-                jsonObject.put("i.uname", uname);
-                jsonObject.put("i.uphone", phone);
-                jsonObject.put("i.qq", qq);
-                jsonObject.put("i.place", address);
-                jsonObject.put("i.catagory", sort);
-                jsonObject.put("i.old", recency);
-                Date date = new Date();
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String time = format.format(date).toString();
-                jsonObject.put("i.time", time);
-                //jsonObject.put("i.time",new Date(udate.getTime()));
-                Log.d("DateTest", time);
-
-                net.secondhandRealeaseReq(jsonObject);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            jsonObject.put("i.iname", iname);
+            jsonObject.put("i.price", price);
+            jsonObject.put("i.description", desc);
+            jsonObject.put("i.uname", uname);
+            jsonObject.put("i.uphone", phone);
+            jsonObject.put("i.qq", qq);
+            jsonObject.put("i.place", address);
+            jsonObject.put("i.catagory", sort);
+            jsonObject.put("i.old", recency);
+            Date date = new Date();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String time = format.format(date).toString();
+            jsonObject.put("i.time", time);
+            //jsonObject.put("i.time",new Date(udate.getTime()));
+            Log.d("DateTest", time);
 
             net.secondhandRealeaseReq(jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
+        net.secondhandRealeaseReq(jsonObject);
+
     }
 
     class picListener implements View.OnClickListener {

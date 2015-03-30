@@ -88,7 +88,7 @@ public class PublishWasteActivity extends ActionBarActivity {
     private void init() {
         app = Main.getInstance();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.whitearrow);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         inameEt = (EditText) findViewById(R.id.publish_waste_et_iname);
         descEt = (EditText) findViewById(R.id.publish_waste_et_iname);
@@ -105,7 +105,7 @@ public class PublishWasteActivity extends ActionBarActivity {
             public void onClick(View v) {
                 loadingDialog = LoadingDialog.createDialog(PublishWasteActivity.this, "正在上传，请稍后....");
                 loadingDialog.show();
-                new wasteThread().start();
+//                new wasteThread().start();
                 new uploadpicThread().start();
             }
         });
@@ -168,9 +168,8 @@ public class PublishWasteActivity extends ActionBarActivity {
     class uploadpicThread extends Thread{
         @Override
         public void run() {
+            uploadInfo();
             for (int i = 0; i < adapter.data.size(); i++) {
-                Log.v(TAG, "method excuted");
-
                 int code = net.uploadFile(adapter.data.get(i).sdcardPath);
                 if (code != 200) {
                     return;
@@ -279,14 +278,14 @@ public class PublishWasteActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class wasteThread extends Thread {
-        private NetUtil net;
-        private JSONObject object;
-        private String iname, uname, desc, phone, place, catagory, time;
+//    private class wasteThread extends Thread {
+    private void uploadInfo(){
+         NetUtil net;
+         JSONObject object;
+         String iname, uname, desc, phone, place, catagory, time;
         //private double longitude,parallel;扩展使用的经纬度
 
-        @Override
-        public void run() {
+
             iname = inameEt.getText().toString();
             uname = unameEt.getText().toString();
             desc = descEt.getText().toString();
@@ -307,7 +306,7 @@ public class PublishWasteActivity extends ActionBarActivity {
 
                 Date date = new Date();
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String time = format.format(date).toString();
+                time = format.format(date).toString();
                 object.put("g.time", time);
                 net.wasteRealeaseReq(object);
 
@@ -316,5 +315,5 @@ public class PublishWasteActivity extends ActionBarActivity {
             }
 
         }
-    }
+
 }

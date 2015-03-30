@@ -125,7 +125,7 @@ public class EditInfoActivity extends ActionBarActivity {
 
                     new uploadHeadThread().start();
 
-                    new uploadInfo().start();
+//                    new uploadInfo().start();
 
                     break;
             }
@@ -176,7 +176,7 @@ public class EditInfoActivity extends ActionBarActivity {
     class uploadHeadThread extends Thread {
         @Override
         public void run() {
-
+            uploadInfo();
             int code = net.uploadFile(path + "/head.jpg");
             if (code != 200) {
                 return;
@@ -200,10 +200,10 @@ public class EditInfoActivity extends ActionBarActivity {
         }
     };
 
-    class uploadInfo extends Thread {
-        @Override
-        public void run() {
-
+//    class uploadInfo extends Thread {
+//        @Override
+//        public void run() {
+        private void uploadInfo(){
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("i.nickname", nickname.getText().toString());
@@ -213,7 +213,7 @@ public class EditInfoActivity extends ActionBarActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
+
     }
 
     public void cropPhoto(Uri uri) {

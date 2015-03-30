@@ -10,6 +10,8 @@
 
     <style name="Allstyle" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="actionBarSize">45dp</item>
+
+
     </style>
     <style name="green" >
         <item name="colorPrimary">#1bcd6e</item>
@@ -18,7 +20,8 @@
 
     <style name="registerstyle" parent="Allstyle">
         <item name="actionBarTheme">@style/green</item>
-
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="homeAsUpIndicator">@drawable/abc_ic_ab_back_mtrl_am_alpha</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -49,6 +52,7 @@
 
     <style name="haveaddressstyle.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="actionBarSize">45dp</item>
+
     </style>
 
     <style name="grey" >

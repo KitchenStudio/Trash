@@ -120,16 +120,16 @@ public class PersonActivity extends ActionBarActivity {
                     intent.setClass(PersonActivity.this, SettingActivity.class);
                     startActivity(intent);
                     break;
-                case R.id.person_tv_secondhand_trade://ok
-                    intent = new Intent();
-                    intent.setClass(PersonActivity.this, PublishCommodityActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.person_tv_waste_recycle://ok
-                    intent = new Intent();
-                    intent.setClass(PersonActivity.this, PublishWasteActivity.class);
-                    startActivity(intent);
-                    break;
+//                case R.id.person_tv_secondhand_trade://ok
+//                    intent = new Intent();
+//                    intent.setClass(PersonActivity.this, PublishCommodityActivity.class);
+//                    startActivity(intent);
+//                    break;
+//                case R.id.person_tv_waste_recycle://ok
+//                    intent = new Intent();
+//                    intent.setClass(PersonActivity.this, PublishWasteActivity.class);
+//                    startActivity(intent);
+//                    break;
                 case R.id.person_ll_secondhand:
                     intent = new Intent();
                     intent.setClass(PersonActivity.this,AllCommoditiesActivity.class);
