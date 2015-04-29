@@ -50,8 +50,8 @@ public class AllCommoditiesAdapter extends RecyclerView.Adapter<AllCommoditiesAd
 
         for (Commodity item : commodities) {
             viewHolder.inameTv.setText(item.getIname());
-           // viewHolder.descTv.setText(item.getDesc());
-           // viewHolder.dateTv.setText(item.getCreateTime());
+            viewHolder.descTv.setText(item.getDescription());
+            viewHolder.dateTv.setText(item.getTime());
             viewHolder.priceTv.setText(item.getPrice());
         }
 
@@ -60,7 +60,7 @@ public class AllCommoditiesAdapter extends RecyclerView.Adapter<AllCommoditiesAd
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(context, CommodityDetailActivity.class);
-//                intent.putExtra("id", commodities.get(i).getId());
+                intent.putExtra("id", commodities.get(i).getId());
                 context.startActivity(intent);
             }
         });

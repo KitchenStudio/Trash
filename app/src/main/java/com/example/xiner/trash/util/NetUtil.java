@@ -53,16 +53,16 @@ import java.util.concurrent.Executors;
  */
 public class NetUtil {
     private static final String TAG = "NetUtil";
-    private static final String HEAD = "http://211.87.226.185:8080/Green/";
+    private static final String HEAD = "http://211.87.226.164:8080/Green/";
     private static final String LOGIN_URL = HEAD + "user/logcheck";
     private static final String REGISTER_URL = HEAD + "user/reg";
     private static final String SECONDHAND_REALEASE_URL = HEAD + "items/output";
     private static final String ITEM_FOR_FIVE_URL = HEAD + "items/ForFive";
     private static final String WASTE_REALEASE_URL = HEAD + "garbage/put";
-    private static final String UPLOADPICTURE_URL = "http://211.87.226.152:8080/annotations/register.action";
+    private static final String UPLOADPICTURE_URL = "http://211.87.226.164:8080/annotations/register.action";
 //    private static final String UPLOADPICTURE_URL = "http://211.87.226.147/Green/upload";
 //    private static final String UPLOADPICTURE_URL = "http://211.87.226.181:8080/api/v1/item/file";
-    private static final String GET_COMMODITY_URL = HEAD + "";
+    private static final String GET_COMMODITY_URL = HEAD + "items/ForFive";
     private static final String GET_WASTE_URL  = HEAD + "";
 
     private static NetUtil netUtil =null;

@@ -1,5 +1,7 @@
 package com.example.xiner.trash.util;
 
+import android.util.Log;
+
 import com.example.xiner.trash.model.Commodity;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -18,6 +20,8 @@ import java.util.List;
  * Created by peng on 15-3-12.
  */
 public class JsonUtil {
+
+    private static final String TAG = "JsonUtil" ;
 
     public List<?> stringFormJson(String jsonData) {
         Type listType = new TypeToken<List<?>>() {
@@ -55,6 +59,7 @@ public class JsonUtil {
         Gson gson = new Gson();
         JsonParser parser = new JsonParser();
         JsonArray array = null;
+        Log.v(TAG,json+"jsonjson");
         if (parser.parse(json).isJsonArray()) {
             array = parser.parse(json).getAsJsonArray();
 
