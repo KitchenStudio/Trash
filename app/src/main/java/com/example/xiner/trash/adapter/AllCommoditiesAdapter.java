@@ -2,6 +2,7 @@ package com.example.xiner.trash.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.CardView;
@@ -27,6 +28,11 @@ public class AllCommoditiesAdapter extends RecyclerView.Adapter<AllCommoditiesAd
 
     private static final String TAG = "AllCommoditiesAdapter";
     private Context context;
+
+    public ArrayList<Commodity> getCommodities() {
+        return commodities;
+    }
+
     private ArrayList<Commodity> commodities = new ArrayList<Commodity>();
 
     public AllCommoditiesAdapter(Context context) {
@@ -48,19 +54,23 @@ public class AllCommoditiesAdapter extends RecyclerView.Adapter<AllCommoditiesAd
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int i) {
 
-        for (Commodity item : commodities) {
-            viewHolder.inameTv.setText(item.getIname());
-            viewHolder.descTv.setText(item.getDescription());
-            viewHolder.dateTv.setText(item.getTime());
-            viewHolder.priceTv.setText(item.getPrice());
-        }
+//        for (Commodity item : commodities) {
+            viewHolder.inameTv.setText(commodities.get(i).getIname());
+            viewHolder.descTv.setText(commodities.get(i).getDescription());
+//            Log.v(TAG,item.getDescription()+"getDescriptiongetDescription");
+            viewHolder.dateTv.setText(commodities.get(i).getTime());
+            viewHolder.priceTv.setText(commodities.get(i).getPrice());
+
+//        }
 
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(context, CommodityDetailActivity.class);
-                intent.putExtra("id", commodities.get(i).getId());
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("commodities",commodities.get(i));
+                intent.putExtras(bundle);
                 context.startActivity(intent);
             }
         });
@@ -70,7 +80,7 @@ public class AllCommoditiesAdapter extends RecyclerView.Adapter<AllCommoditiesAd
 
     @Override
     public int getItemCount() {
-        return 5;
+        return commodities.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

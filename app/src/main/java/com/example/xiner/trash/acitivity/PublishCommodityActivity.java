@@ -152,14 +152,14 @@ public class PublishCommodityActivity extends ActionBarActivity {
         @Override
         public void run() {
             uploadInfo();
-            for (int i = 0; i < adapter.data.size(); i++) {
-
-                int code = net.uploadFile(adapter.data.get(i).sdcardPath);
-                if (code != 200) {
-                    return;
-                }
-
-            }
+//            for (int i = 0; i < adapter.data.size(); i++) {
+//
+//                int code = net.uploadFile(adapter.data.get(i).sdcardPath);
+//                if (code != 200) {
+//                    return;
+//                }
+//
+//            }
             Message message = new Message();
             message.what = 1;
             handler.sendMessage(message);
@@ -209,7 +209,7 @@ public class PublishCommodityActivity extends ActionBarActivity {
             e.printStackTrace();
         }
 
-        net.secondhandRealeaseReq(jsonObject);
+//        net.secondhandRealeaseReq(jsonObject);
 
     }
 

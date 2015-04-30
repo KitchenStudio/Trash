@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.xiner.trash.R;
@@ -34,6 +36,7 @@ public class AllCommoditiesActivity extends ActionBarActivity {
 
     private Main app;
     private RecyclerView mRecyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     //private SwipeRefreshLayout swipeRefreshLayout;
     private LinearLayout secondHandLinear;
     private LinearLayout wasteLinear;
@@ -41,6 +44,7 @@ public class AllCommoditiesActivity extends ActionBarActivity {
     private AllCommoditiesAdapter allCommoditiesAdapter;
     private Spinner timeSpin, distanceSpin, moneySpin;
     private ImageView personImage;
+    TextView address;
     private ImageView publishCommodityImage;
     private String[] time = {"时间", "由近到远", "由远到近"};
     private String[] distance = {"距离", "一千米之内", "两千米之内", "三千米之内", "三千米之外"};
@@ -50,6 +54,7 @@ public class AllCommoditiesActivity extends ActionBarActivity {
     private NetUtil net;
     private JsonUtil json;
     private mHandler handler = new mHandler();
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +86,12 @@ public class AllCommoditiesActivity extends ActionBarActivity {
     }
 
     private void init() {
+        swipeRefreshLayout =(SwipeRefreshLayout)findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(new RefreshListener());
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light, android.R.color.holo_green_light,
+                android.R.color.holo_blue_bright, android.R.color.holo_orange_light);
+        address =(TextView)findViewById(R.id.address);
+        address.setText(Main.getInstance().getDataStore().getString("location","济南市"));
         // SpinnerListener spListener = new SpinnerListener();
         timeSpin = (Spinner) findViewById(R.id.time_spinner);
         distanceSpin = (Spinner) findViewById(R.id.distance_spinner);
@@ -112,6 +123,29 @@ public class AllCommoditiesActivity extends ActionBarActivity {
         publishCommodityImage.setOnClickListener(listener);
         wasteLinear = (LinearLayout) findViewById(R.id.waste_linear);
         wasteLinear.setOnClickListener(listener);
+        imageView=(ImageView)findViewById(R.id.searchimage);
+        imageView.setOnClickListener(listener);
+    }
+
+    class RefreshListener implements SwipeRefreshLayout.OnRefreshListener{
+
+        @Override
+        public void onRefresh() {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    ArrayList<Commodity> list = json.getCommodities(net.commodityReq(0));
+                    allCommoditiesAdapter.setCommodities(list);
+                    Message msg = new Message();
+                    msg.what = 12;
+                    handler.sendMessage(msg);
+//                allCommoditiesAdapter.notifyDataSetChanged();
+                }
+            }).start();
+
+        }
+
+
     }
 
     private void Login() {
@@ -158,6 +192,15 @@ public class AllCommoditiesActivity extends ActionBarActivity {
                         startActivity(intent2);
                     }
                     break;
+                case R.id.searchimage:
+                    if (!app.isLogin()) {
+                        Login();
+                    } else {
+                        Intent intent2 = new Intent();
+                        intent2.setClass(AllCommoditiesActivity.this, SearchActivity.class);
+                        startActivity(intent2);
+                    }
+                    break;
             }
         }
     }
@@ -168,6 +211,10 @@ public class AllCommoditiesActivity extends ActionBarActivity {
             switch (msg.what) {
                 case 11:
                     allCommoditiesAdapter.notifyDataSetChanged();
+                    break;
+                case 12:
+                    allCommoditiesAdapter.notifyDataSetChanged();
+                    swipeRefreshLayout.setRefreshing(false);
                     break;
             }
         }

@@ -61,6 +61,7 @@
                 android:layout_height="30dp"
                 android:background="@android:color/white"
                 android:hint="物品品牌型号等"
+                android:textColor="@android:color/black"
                 android:singleLine="true"
                 android:paddingLeft="5dp"
                 android:textSize="8pt" />
@@ -96,6 +97,8 @@
                 android:layout_height="30dp"
                 android:background="@android:color/white"
                 android:hint="大于0的数字"
+                android:textColor="@android:color/black"
+
                 android:numeric="decimal"
                 android:singleLine="true"
                 android:paddingLeft="5dp" />
@@ -161,6 +164,8 @@
                 android:id="@+id/publish_commodity_et_desc"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:textColor="@android:color/black"
+
                 android:background="@android:color/white"
                 android:lines="5"
                 android:paddingLeft="5dp" />
@@ -192,6 +197,8 @@
                 android:layout_height="30dp"
                 android:background="@android:color/white"
                 android:hint="输入姓名"
+                android:textColor="@android:color/black"
+
                 android:singleLine="true"
                 android:paddingLeft="5dp" />
         </LinearLayout>
@@ -226,6 +233,8 @@
                 android:layout_height="30dp"
                 android:background="@android:color/white"
                 android:hint="输入联系电话"
+                android:textColor="@android:color/black"
+
                 android:singleLine="true"
                 android:paddingLeft="5dp" />
 
@@ -261,6 +270,8 @@
                 android:layout_height="30dp"
                 android:background="@android:color/white"
                 android:hint="QQ 号码"
+                android:textColor="@android:color/black"
+
                 android:singleLine="true"
                 android:paddingLeft="5dp" />
 
@@ -296,6 +307,8 @@
                 android:layout_height="30dp"
                 android:background="@android:color/white"
                 android:hint="交易地点"
+                android:textColor="@android:color/black"
+
                 android:singleLine="true"
                 android:paddingLeft="5dp" />
 

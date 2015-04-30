@@ -53,7 +53,7 @@ import java.util.concurrent.Executors;
  */
 public class NetUtil {
     private static final String TAG = "NetUtil";
-    private static final String HEAD = "http://211.87.226.164:8080/Green/";
+    private static final String HEAD = "http://211.87.226.186:8080/Green/";
     private static final String LOGIN_URL = HEAD + "user/logcheck";
     private static final String REGISTER_URL = HEAD + "user/reg";
     private static final String SECONDHAND_REALEASE_URL = HEAD + "items/output";
@@ -64,7 +64,7 @@ public class NetUtil {
 //    private static final String UPLOADPICTURE_URL = "http://211.87.226.181:8080/api/v1/item/file";
     private static final String GET_COMMODITY_URL = HEAD + "items/ForFive";
     private static final String GET_WASTE_URL  = HEAD + "";
-
+    private static final String SEARCH_URL = HEAD+"items/SearchByName";
     private static NetUtil netUtil =null;
     private HttpPost httpRequest;
     private HttpResponse httpResponse;
@@ -149,6 +149,41 @@ public class NetUtil {
         return status;
     }
 
+    public String search(JSONObject jsonObject){
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        Iterator<?> keys = jsonObject.keys();
+        int status = -1;
+        while (keys.hasNext()) {
+            String key = keys.next().toString();
+            try {
+                params.add(new BasicNameValuePair(key, jsonObject.getString(key)));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        String jsonData="";
+        try {
+            httpRequest = new HttpPost(SEARCH_URL);
+            httpRequest.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
+            httpResponse = new DefaultHttpClient()
+                    .execute(httpRequest);
+            int result = httpResponse.getStatusLine().getStatusCode();
+            if (result == 200) {
+                InputStream is = httpResponse.getEntity().getContent();
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                String line = "";
+                while ((line = br.readLine()) != null) {
+                    jsonData += line + "\r\n";
+                }
+                jsonData = jsonData.trim();
+                Log.i("json", "测试数据：" + jsonData);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return jsonData;
+    }
+
     public int registerReq(JSONObject object) {
         int status = -1;
         List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -191,6 +226,7 @@ public class NetUtil {
     }
 
     public void secondhandRealeaseReq(JSONObject jsonObject) {
+        Log.v(TAG,"二手发布方法");
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         Iterator<?> keys = jsonObject.keys();
 
@@ -449,6 +485,7 @@ public class NetUtil {
 
         return jsonData;
     }
+
 
     public String wasteReq(int type) {
         String jsonData = "";

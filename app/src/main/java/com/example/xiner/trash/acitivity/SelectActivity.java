@@ -2,18 +2,28 @@ package com.example.xiner.trash.acitivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.Location;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.location.LocationManagerProxy;
+import com.amap.api.location.LocationProviderProxy;
 import com.example.xiner.trash.R;
+import com.example.xiner.trash.main.Main;
 
-public class SelectActivity extends ActionBarActivity {
+public class SelectActivity extends ActionBarActivity implements AMapLocationListener{
+    private static final String TAG = "SelectActivity";
     Button twohandButton;
     Button trashrecycleButton;
+    private LocationManagerProxy mLocationManagerProxy;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +35,25 @@ public class SelectActivity extends ActionBarActivity {
         twohandButton.setOnClickListener(new twoHandListener());
         trashrecycleButton=(Button)findViewById(R.id.trash_recycle);
         trashrecycleButton.setOnClickListener(new trashListener());
+        init();
     }
 
+    /**
+     * 初始化定位
+     */
+    private void init() {
+
+        mLocationManagerProxy = LocationManagerProxy.getInstance(this);
+
+        //此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
+        //注意设置合适的定位时间的间隔，并且在合适时间调用removeUpdates()方法来取消定位请求
+        //在定位结束后，在合适的生命周期调用destroy()方法
+        //其中如果间隔时间为-1，则定位只定一次
+        mLocationManagerProxy.requestLocationData(
+                LocationProviderProxy.AMapNetwork, 60*1000, 15, this);
+
+        mLocationManagerProxy.setGpsEnable(false);
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -37,6 +64,33 @@ public class SelectActivity extends ActionBarActivity {
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+        String address = aMapLocation.getProvince()+aMapLocation.getCity();
+        Log.v(TAG, aMapLocation.getProvince()+aMapLocation.getCity()+"citycitycity");
+        Main.getInstance().getDataStore().edit().putString("location",address).commit();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 
     class twoHandListener implements View.OnClickListener{

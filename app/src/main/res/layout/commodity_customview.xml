@@ -1,51 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical"
-    android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="left|center_vertical"
-        android:orientation="horizontal">
+        android:layout_gravity="center_vertical"
+        >
 
-        <TextView
-            android:id="@+id/address"
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="北京"
-            android:textSize="8pt"
+            android:layout_gravity="left|center_vertical"
+            android:orientation="horizontal">
 
-            />
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="山东省济南市"
+                android:textSize="8pt"
+
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="3dp"
+                android:src="@drawable/arrowdown" />
+        </LinearLayout>
 
         <ImageView
+            android:id="@+id/searchimage"
+            android:layout_toLeftOf="@+id/publicgoodallgood"
+            android:src="@drawable/ic_menu_search"
+            android:layout_marginTop="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="3dp"
-            android:src="@drawable/arrowdown" />
-    </LinearLayout>
+            android:layout_marginLeft="5dp"
+            android:paddingLeft="35dp"
+             />
 
-    <EditText
-        android:layout_marginTop="3dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="5dp"
-        android:layout_weight="1"
-        android:background="@drawable/search"
-        android:paddingLeft="35dp"
-        android:singleLine="true" />
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:id="@+id/publicgoodallgood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
 
-    <ImageView
-        android:id="@+id/publicgoodallgood"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-
-       android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:src="@drawable/fabu" />
-</LinearLayout>
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:src="@drawable/fabu" />
+    </RelativeLayout>

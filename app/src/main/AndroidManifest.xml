@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.xiner.trash">
+    package="com.example.xiner.trash" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
 
     <application
         android:name=".main.Main"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="3f2080df7361509c426007377e9e43a3" />
+
         <activity
             android:name=".acitivity.RegisterActivity"
             android:label="@string/app_name"
-            android:theme="@style/registerstyle"></activity>
+            android:theme="@style/registerstyle" />
         <activity
             android:name=".acitivity.PublishCommodityActivity"
             android:label="@string/title_activity_person"
@@ -29,18 +39,17 @@
         <activity
             android:name=".acitivity.LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/registerstyle"></activity>
+            android:theme="@style/registerstyle" />
         <activity
             android:name=".acitivity.SelectActivity"
             android:label="@string/title_activity_all_goods"
-            android:theme="@style/haveaddressstyle.NoActionBar">
+            android:theme="@style/haveaddressstyle.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".acitivity.SettingActivity"
             android:label="@string/title_activity_setting" />
@@ -60,7 +69,6 @@
         <activity
             android:name=".acitivity.FragmentTabsPager"
             android:label="@string/title_activity_my_release" />
-
         <activity
             android:name=".acitivity.EditCommodityActivity"
             android:label="@string/title_activity_edit_good" />
@@ -77,13 +85,19 @@
             android:label="@string/title_activity_trash_detail" />
         <activity
             android:name=".acitivity.MyInformationActivity"
-            android:label="@string/title_activity_my_information"></activity>
+            android:label="@string/title_activity_my_information" />
         <activity
             android:name=".acitivity.EditInfoActivity"
-            android:label="@string/title_activity_edit_info"></activity>
+            android:label="@string/title_activity_edit_info" />
         <activity
             android:name=".acitivity.ChangePasswordActivity"
-            android:label="@string/title_activity_change_password"></activity>
+            android:label="@string/title_activity_change_password" />
+        <activity
+            android:name=".acitivity.SearchActivity"
+            android:label="@string/title_activity_search"
+            android:theme="@style/haveaddressstyle"
+            >
+        </activity>
     </application>
 
 </manifest>

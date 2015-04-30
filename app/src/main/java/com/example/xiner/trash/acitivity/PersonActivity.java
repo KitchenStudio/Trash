@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.xiner.trash.R;
+import com.example.xiner.trash.main.Main;
 
 
 public class PersonActivity extends ActionBarActivity {
@@ -26,6 +27,7 @@ public class PersonActivity extends ActionBarActivity {
     private TextView settingsTv;
     private TextView secondHandTradeTv;
     private TextView wasteRecycleTv;
+    private TextView personlocation;
     private LinearLayout trashrecycle,twohan;
 
     @Override
@@ -58,6 +60,8 @@ public class PersonActivity extends ActionBarActivity {
         wasteRecycleTv = (TextView) findViewById(R.id.person_tv_waste_recycle);
         trashrecycle =(LinearLayout)findViewById(R.id.person_ll_trash);
         twohan=(LinearLayout)findViewById(R.id.person_ll_secondhand);
+        personlocation=(TextView)findViewById(R.id.location_person);
+        personlocation.setText(Main.getInstance().getDataStore().getString("location","山东省济南市"));
 
         //添加监听事件
         secondHandReleaseTv.setOnClickListener(listener);

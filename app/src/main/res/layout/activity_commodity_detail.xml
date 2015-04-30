@@ -29,6 +29,7 @@
                 android:src="@drawable/good" />
 
             <TextView
+                android:id="@+id/namecomd_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -41,12 +42,14 @@
                 android:layout_marginTop="3dp">
 
                 <TextView
+                    android:id="@+id/publishtimecomde_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:text="发布时间:2015-3-8" />
 
                 <TextView
+                    android:id="@+id/viewtimes_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -67,6 +70,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/moneycomd_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2000元"
@@ -80,18 +84,21 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/newoldlevel_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="8.5成新" />
 
                 <TextView
+                    android:id="@+id/categorycomd_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="平板电脑" />
 
                 <TextView
+                    android:id="@+id/addresscomd_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -107,6 +114,7 @@
                 android:background="@android:color/darker_gray" />
 
             <TextView
+                android:id="@+id/descricomd_tv"
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -129,12 +137,7 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/level" />
 
-                <TextView
-                    android:layout_marginLeft="10dp"
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="加入管家：154天" />
             </LinearLayout>
         </LinearLayout>
 
@@ -150,6 +153,7 @@
             android:background="@android:color/white">
 
             <TextView
+                android:id="@+id/contactname_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
@@ -162,6 +166,7 @@
                 android:background="@android:color/darker_gray" />
 
             <TextView
+                android:id="@+id/phonenumcomd_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
@@ -169,18 +174,6 @@
                 android:text="联系电话:18366116666" />
         </LinearLayout>
 
-        <TextView
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:paddingTop="10dp"
-            android:drawableRight="@drawable/arrowleft"
-            android:text="查看更多平板电脑" />
 
         <LinearLayout
             android:layout_width="match_parent"

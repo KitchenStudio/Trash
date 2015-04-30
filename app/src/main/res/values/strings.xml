@@ -56,4 +56,5 @@
     <string name="title_activity_edit_info">修改信息</string>
     <string name="title_activity_change_password">修改密码</string>
     <string name="btn_ok">确定</string>
+    <string name="title_activity_search">搜索</string>
 </resources>
