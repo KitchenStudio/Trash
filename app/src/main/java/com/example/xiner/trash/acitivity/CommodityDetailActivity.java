@@ -1,6 +1,7 @@
 package com.example.xiner.trash.acitivity;
 
 
+import android.content.DialogInterface;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
@@ -8,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.xiner.trash.R;
@@ -23,7 +26,8 @@ public class CommodityDetailActivity extends ActionBarActivity implements NetCal
     private Handler handler = new Handler();
     private Commodity commodity;
     private NetError error;
-    private TextView publishtime,money,address,describe,phonenum,contactname,name;
+    private ImageView collection;
+    private TextView publishtime,money,address,describe,phonenum,contactname,name,categary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +56,17 @@ public class CommodityDetailActivity extends ActionBarActivity implements NetCal
         describe=(TextView)findViewById(R.id.descricomd_tv);
         phonenum=(TextView)findViewById(R.id.phonenumcomd_tv);
         contactname=(TextView)findViewById(R.id.contactname_tv);
+        collection =(ImageView)findViewById(R.id.collection_icon);
+        categary=(TextView)findViewById(R.id.categorycomd_tv);
         name=(TextView)findViewById(R.id.namecomd_tv);
-        publishtime.setText(commodity.getTime());
+        publishtime.setText(commodity.getTime().split(" ")[0]);
         money.setText(commodity.getPrice());
         address.setText(commodity.getPlace());
         describe.setText(commodity.getDescription());
         phonenum.setText(commodity.getUphone());
         contactname.setText(commodity.getUname());
         name.setText(commodity.getIname());
+        categary.setText(commodity.getCatagory());
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,6 +105,14 @@ public class CommodityDetailActivity extends ActionBarActivity implements NetCal
                 case 1:
                     break;
             }
+        }
+    }
+
+    class ClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+
         }
     }
 }

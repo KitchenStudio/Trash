@@ -4,18 +4,23 @@
     android:layout_height="match_parent"
     tools:context="com.example.xiner.trash.acitivity.WasteActivity">
 
-    <EditText
-        android:id="@+id/search_edit"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="25dp"
-        android:background="@drawable/search" />
+        android:layout_height="match_parent"
+        >
+
+    <!--<EditText-->
+        <!--android:id="@+id/search_edit"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:paddingLeft="25dp"-->
+        <!--android:background="@drawable/search" />-->
 
     <android.support.v7.widget.RecyclerView
-
         android:id="@+id/recyclerView_waste"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/search_edit" />
-
+         />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

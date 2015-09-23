@@ -64,6 +64,8 @@ public class PublishWasteActivity extends ActionBarActivity {
     int filei;
     Dialog loadingDialog;
     NetUtil net;
+    String iname, uname, desc, phone, place, catagory, time;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class PublishWasteActivity extends ActionBarActivity {
         initImageLoader();
         init();
     }
+
     private void initImageLoader() {
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .cacheOnDisc().imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
@@ -85,25 +88,39 @@ public class PublishWasteActivity extends ActionBarActivity {
         imageLoader = ImageLoader.getInstance();
         imageLoader.init(config);
     }
+
     private void init() {
         app = Main.getInstance();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.whitearrow);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         inameEt = (EditText) findViewById(R.id.publish_waste_et_iname);
-        descEt = (EditText) findViewById(R.id.publish_waste_et_iname);
-        unameEt = (EditText) findViewById(R.id.publish_waste_et_iname);
-        phoneEt = (EditText) findViewById(R.id.publish_waste_et_iname);
-        addressEt = (EditText) findViewById(R.id.publish_waste_et_iname);
+        descEt = (EditText) findViewById(R.id.publish_waste_et_desc);
+        unameEt = (EditText) findViewById(R.id.publish_waste_et_uname);
+        phoneEt = (EditText) findViewById(R.id.publish_waste_et_phone);
+        addressEt = (EditText) findViewById(R.id.publish_waste_et_address);
         releaseBtn = (Button) findViewById(R.id.publish_waste_btn_release);
         typeSp = (Spinner) findViewById(R.id.publish_waste_sp_type);
-        picImage=(ImageView)findViewById(R.id.publictrash);
+        picImage = (ImageView) findViewById(R.id.publictrash);
         ClickListener clickListener = new ClickListener();
         picImage.setOnClickListener(clickListener);
         releaseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                iname = inameEt.getText().toString();
+                uname = unameEt.getText().toString();
+                desc = descEt.getText().toString();
+                phone = phoneEt.getText().toString();
+                place = addressEt.getText().toString();
+                catagory = typeSp.getSelectedItem().toString();
+                Log.v(TAG,place+"place is");
+
+                if (iname.equals("") || uname.equals("") || desc.equals("") || phone.equals("") || place.equals("")) {
+                    Toast.makeText(PublishWasteActivity.this,"请将信息填写完整",Toast.LENGTH_LONG).show();
+                    return;
+                }
                 loadingDialog = LoadingDialog.createDialog(PublishWasteActivity.this, "正在上传，请稍后....");
+
                 loadingDialog.show();
 //                new wasteThread().start();
                 new uploadpicThread().start();
@@ -118,7 +135,7 @@ public class PublishWasteActivity extends ActionBarActivity {
     }
 
 
-    private void picGet(final int selectcase,final int tookcase ){
+    private void picGet(final int selectcase, final int tookcase) {
         new android.app.AlertDialog.Builder(this)
                 .setTitle("头像选择")
                 .setNegativeButton("相册选取",
@@ -153,34 +170,36 @@ public class PublishWasteActivity extends ActionBarActivity {
                             }
                         }).show();
     }
-    class ClickListener implements View.OnClickListener{
+
+    class ClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.publictrash:
-                    picGet(2,1);
+                    picGet(2, 1);
                     break;
             }
         }
     }
 
-    class uploadpicThread extends Thread{
+    class uploadpicThread extends Thread {
         @Override
         public void run() {
             uploadInfo();
-            for (int i = 0; i < adapter.data.size(); i++) {
-                int code = net.uploadFile(adapter.data.get(i).sdcardPath);
-                if (code != 200) {
-                    return;
-                }
-
-            }
+//            for (int i = 0; i < adapter.data.size(); i++) {
+//                int code = net.uploadFile(adapter.data.get(i).sdcardPath);
+//                if (code != 200) {
+//                    return;
+//                }
+//
+//            }
             Message message = new Message();
             message.what = 1;
             handler.sendMessage(message);
         }
     }
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -194,6 +213,7 @@ public class PublishWasteActivity extends ActionBarActivity {
             }
         }
     };
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -215,10 +235,10 @@ public class PublishWasteActivity extends ActionBarActivity {
                         Bundle extras = data.getExtras();
                         goodbitmap = extras.getParcelable("data");
                         if (goodbitmap != null) {
-                            app.setPicToView(goodbitmap, path, filename+filei+".jpg");// 保存在SD卡中
+                            app.setPicToView(goodbitmap, path, filename + filei + ".jpg");// 保存在SD卡中
                             dataT = new ArrayList<CustomGallery>();
                             CustomGallery customGallery = new CustomGallery();
-                            customGallery.sdcardPath = path + filename+filei+".jpg";
+                            customGallery.sdcardPath = path + filename + filei + ".jpg";
 
                             dataT.add(customGallery);
                             adapter.addAll(dataT);
@@ -256,6 +276,7 @@ public class PublishWasteActivity extends ActionBarActivity {
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -278,20 +299,29 @@ public class PublishWasteActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    private class wasteThread extends Thread {
-    private void uploadInfo(){
-         NetUtil net;
-         JSONObject object;
-         String iname, uname, desc, phone, place, catagory, time;
+    //    private class wasteThread extends Thread {
+    private void uploadInfo() {
+        NetUtil net;
+        JSONObject object;
+//        String iname, uname, desc, phone, place, catagory, time;
         //private double longitude,parallel;扩展使用的经纬度
+//        Dialog dialog = LoadingDialog.createDialog(PublishWasteActivity.this,"正在上传");
 
 
-            iname = inameEt.getText().toString();
-            uname = unameEt.getText().toString();
-            desc = descEt.getText().toString();
-            phone = phoneEt.getText().toString();
-            place = addressEt.getText().toString();
-            catagory = typeSp.getSelectedItem().toString();
+//        iname = inameEt.getText().toString();
+//        uname = unameEt.getText().toString();
+//        desc = descEt.getText().toString();
+//        phone = phoneEt.getText().toString();
+//        place = addressEt.getText().toString();
+//        catagory = typeSp.getSelectedItem().toString();
+//        if (iname.equals("") || uname.equals("") || desc.equals("") || phone.equals("") || place.equals("") || catagory.equals("")) {
+////            Toast.makeText(PublishWasteActivity.this,"请将信息填写完整",Toast.LENGTH_LONG).show();
+////            dialog.dismiss();
+//            Log.v(TAG, iname + "iname is");
+//            loadingDialog.dismiss();
+//            return;
+//        } else {
+////            dialog.show();
 
             net = NetUtil.getInstance();
             object = new JSONObject();
@@ -314,6 +344,6 @@ public class PublishWasteActivity extends ActionBarActivity {
                 e.printStackTrace();
             }
 
-        }
-
+//        }
+    }
 }

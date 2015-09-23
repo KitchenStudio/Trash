@@ -1,5 +1,7 @@
 package com.example.xiner.trash.acitivity;
 
+import android.app.Dialog;
+import android.media.Image;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
@@ -12,11 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.example.xiner.trash.R;
 import com.example.xiner.trash.adapter.AllCommoditiesAdapter;
 import com.example.xiner.trash.model.Commodity;
 import com.example.xiner.trash.util.JsonUtil;
+import com.example.xiner.trash.util.LoadingDialog;
 import com.example.xiner.trash.util.NetUtil;
 
 import org.json.JSONException;
@@ -32,7 +36,9 @@ public class SearchActivity extends ActionBarActivity {
     private AllCommoditiesAdapter allCommoditiesAdapter;
     private NetUtil net;
     private JsonUtil json;
+    private ImageView searchBack;
    private mHandler handler = new mHandler();
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +47,11 @@ public class SearchActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.activity_search_customview);
         searchButton=(Button)findViewById(R.id.search_button);
-        searchButton.setOnClickListener(new ClickListener());
+        ClickListener clickListener = new ClickListener();
+        searchButton.setOnClickListener(clickListener);
         searchEdit=(EditText)findViewById(R.id.seach_edittext);
+        searchBack =(ImageView)findViewById(R.id.search_back_arrow);
+        searchBack.setOnClickListener(clickListener);
         linearLayoutManager = new LinearLayoutManager(this );
         recyclerView=(RecyclerView)findViewById(R.id.recyclerView_search);
         recyclerView.setHasFixedSize(true);
@@ -80,30 +89,39 @@ public class SearchActivity extends ActionBarActivity {
 
         @Override
         public void onClick(View v) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    searchObject = new JSONObject();
-                    try {
-                        searchObject.put("i.iname", searchEdit.getText().toString());
-                       ArrayList<Commodity> list = json.getCommodities(net.search(searchObject));
-                        Log.v(TAG,list.size()+"listsizelistsize");
-                        allCommoditiesAdapter.getCommodities().clear();
-                        allCommoditiesAdapter.setCommodities(list);
-                        Message msg = new Message();
-                        msg.what = 11;
-                        handler.sendMessage(msg);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+            switch (v.getId()) {
+                case R.id.search_button:
+                    dialog = LoadingDialog.createDialog(SearchActivity.this,"正在搜索。。。");
+                    dialog.show();
+                    new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        searchObject = new JSONObject();
+                        try {
+                            searchObject.put("i.iname", searchEdit.getText().toString());
+                            ArrayList<Commodity> list = json.getCommodities(net.search(searchObject));
+                            Log.v(TAG, list.size() + "listsizelistsize");
+                            allCommoditiesAdapter.getCommodities().clear();
+                            allCommoditiesAdapter.setCommodities(list);
+                            Message msg = new Message();
+                            msg.what = 11;
+                            handler.sendMessage(msg);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 //                    ArrayList<Commodity> list = json.getCommodities(net.search());
 //                    allCommoditiesAdapter.getCommodities().clear();
 //                    allCommoditiesAdapter.setCommodities(list);
 //                    Message msg = new Message();
 //                    msg.what = 11;
 //                    handler.sendMessage(msg);
-                }
-            }).start();
+                    }
+                }).start();
+                    break;
+                case R.id.search_back_arrow:
+                    finish();
+                    break;
+            }
         }
     }
 
@@ -113,6 +131,7 @@ public class SearchActivity extends ActionBarActivity {
             switch (msg.what) {
                 case 11:
                     allCommoditiesAdapter.notifyDataSetChanged();
+                    dialog.dismiss();
                     break;
             }
         }

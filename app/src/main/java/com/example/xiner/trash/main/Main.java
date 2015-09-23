@@ -116,7 +116,7 @@ public class Main extends Application {
 
 
     public boolean isLogin() {
-        return login == true;
+        return getDataStore().getBoolean("login",false);
 
     }
 

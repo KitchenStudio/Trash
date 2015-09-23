@@ -35,9 +35,6 @@
                 android:text="河西工业回收走廊"
                 android:textSize="9pt"  />
 
-
-
-
         </RelativeLayout>
 
 
@@ -79,7 +76,7 @@
 
             <TextView
                 android:layout_marginLeft="5dp"
-                android:id="@+id/money"
+                android:id="@+id/list_waste_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

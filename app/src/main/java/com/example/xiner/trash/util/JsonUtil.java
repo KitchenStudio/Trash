@@ -3,6 +3,7 @@ package com.example.xiner.trash.util;
 import android.util.Log;
 
 import com.example.xiner.trash.model.Commodity;
+import com.example.xiner.trash.model.Waste;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -60,20 +61,54 @@ public class JsonUtil {
         JsonParser parser = new JsonParser();
         JsonArray array = null;
         Log.v(TAG,json+"jsonjson");
-        if (parser.parse(json).isJsonArray()) {
-            array = parser.parse(json).getAsJsonArray();
+        if (!json.equals("No Thing")) {
+            if (parser.parse(json).isJsonArray()) {
+                array = parser.parse(json).getAsJsonArray();
 
-            ArrayList<Commodity> list = new ArrayList<Commodity>();
-            for (JsonElement e : array) {
-                Commodity item = gson.fromJson(e, Commodity.class);
-                list.add(item);
+                ArrayList<Commodity> list = new ArrayList<Commodity>();
+                for (JsonElement e : array) {
+                    Commodity item = gson.fromJson(e, Commodity.class);
+                    list.add(item);
+                }
+
+                return list;
+            } else {
+                return new ArrayList<>();
             }
-
-            return list;
         }else{
+            Log.v(TAG,"nothingnothing");
+
             return new ArrayList<>();
+
         }
     }
+    public ArrayList<Waste> getWaste(String json) {
+        Gson gson = new Gson();
+        JsonParser parser = new JsonParser();
+        JsonArray array = null;
+        Log.v(TAG,json+"jsonjson");
+        if (!json.equals("No Thing")) {
+            if (parser.parse(json).isJsonArray()) {
+                array = parser.parse(json).getAsJsonArray();
+
+                ArrayList<Waste> list = new ArrayList<Waste>();
+                for (JsonElement e : array) {
+                    Waste item = gson.fromJson(e, Waste.class);
+                    list.add(item);
+                }
+
+                return list;
+            } else {
+                return new ArrayList<>();
+            }
+        }else{
+            Log.v(TAG,"nothingnothing");
+
+            return new ArrayList<>();
+
+        }
+    }
+
 
 
 }

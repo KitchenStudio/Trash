@@ -53,17 +53,19 @@ import java.util.concurrent.Executors;
  */
 public class NetUtil {
     private static final String TAG = "NetUtil";
-    private static final String HEAD = "http://211.87.226.186:8080/Green/";
+    private static final String HEAD = "http://211.87.234.180:8080/Green/";
     private static final String LOGIN_URL = HEAD + "user/logcheck";
     private static final String REGISTER_URL = HEAD + "user/reg";
     private static final String SECONDHAND_REALEASE_URL = HEAD + "items/output";
     private static final String ITEM_FOR_FIVE_URL = HEAD + "items/ForFive";
     private static final String WASTE_REALEASE_URL = HEAD + "garbage/put";
-    private static final String UPLOADPICTURE_URL = "http://211.87.226.164:8080/annotations/register.action";
-//    private static final String UPLOADPICTURE_URL = "http://211.87.226.147/Green/upload";
+//    private static final String UPLOADPICTURE_URL = "http://211.87.226.164:8080/annotations/register.action";
+    private static final String UPLOADPICTURE_URL = "http://211.87.226.168/Green/upload";
 //    private static final String UPLOADPICTURE_URL = "http://211.87.226.181:8080/api/v1/item/file";
     private static final String GET_COMMODITY_URL = HEAD + "items/ForFive";
-    private static final String GET_WASTE_URL  = HEAD + "";
+    private static final String GET_WASTE_URL  = HEAD + "garbage/ForFive";
+    private static final String GET_WASTEALL_URL  = HEAD + "garbage/ForAll";
+
     private static final String SEARCH_URL = HEAD+"items/SearchByName";
     private static NetUtil netUtil =null;
     private HttpPost httpRequest;
@@ -490,7 +492,7 @@ public class NetUtil {
     public String wasteReq(int type) {
         String jsonData = "";
         switch (type) {
-            case 0://请求五条的初始数据
+            case 0://请求全部的的初始数据，我把服务器改了
                 try {
                     httpRequest = new HttpPost(GET_WASTE_URL);
                     httpResponse = new DefaultHttpClient()
@@ -511,9 +513,9 @@ public class NetUtil {
                 }
                 break;
 
-            case 1://请求所有的数据
+            case 1://请求所有的数据，服务器的这个方法好像由问题，我没有请求到数据，然后就吧数据库改了
                 try {
-                    httpRequest = new HttpPost(GET_COMMODITY_URL);
+                    httpRequest = new HttpPost(GET_WASTEALL_URL);
                     httpResponse = new DefaultHttpClient()
                             .execute(httpRequest);
                     int result = httpResponse.getStatusLine().getStatusCode();

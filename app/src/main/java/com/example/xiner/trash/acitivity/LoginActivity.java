@@ -86,9 +86,9 @@ public class LoginActivity extends ActionBarActivity {
 //                    } else {
 //                        showMessage("网络无连接，请重试！");
 //                    }
-                    intent = new Intent();
-                    intent.setClass(LoginActivity.this, PersonActivity.class);
-                    startActivity(intent);
+//                    intent = new Intent();
+//                    intent.setClass(LoginActivity.this, PersonActivity.class);
+//                    startActivity(intent);
 
                     name = nameEt.getText().toString();
                     pwd = passwordET.getText().toString();

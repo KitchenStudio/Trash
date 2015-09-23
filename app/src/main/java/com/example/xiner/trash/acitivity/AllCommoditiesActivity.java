@@ -48,7 +48,7 @@ public class AllCommoditiesActivity extends ActionBarActivity {
     private ImageView publishCommodityImage;
     private String[] time = {"时间", "由近到远", "由远到近"};
     private String[] distance = {"距离", "一千米之内", "两千米之内", "三千米之内", "三千米之外"};
-    private String[] money = {"价格", "一百元一下", "两百元以下", "两百元以上"};
+    private String[] money = {"价格", "由低到高","由高到低"};
 
     private ArrayAdapter<String> timeAda, distanceAda, moneyAda;
     private NetUtil net;
@@ -91,7 +91,7 @@ public class AllCommoditiesActivity extends ActionBarActivity {
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light, android.R.color.holo_green_light,
                 android.R.color.holo_blue_bright, android.R.color.holo_orange_light);
         address =(TextView)findViewById(R.id.address);
-        address.setText(Main.getInstance().getDataStore().getString("location","济南市"));
+        address.setText("山东省济南市");
         // SpinnerListener spListener = new SpinnerListener();
         timeSpin = (Spinner) findViewById(R.id.time_spinner);
         distanceSpin = (Spinner) findViewById(R.id.distance_spinner);
@@ -139,7 +139,6 @@ public class AllCommoditiesActivity extends ActionBarActivity {
                     Message msg = new Message();
                     msg.what = 12;
                     handler.sendMessage(msg);
-//                allCommoditiesAdapter.notifyDataSetChanged();
                 }
             }).start();
 
@@ -259,28 +258,30 @@ public class AllCommoditiesActivity extends ActionBarActivity {
 //    }
 
 
-//    class SpinnerListener implements AdapterView.OnItemSelectedListener {
-//
-//        @Override
-//        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//            switch (parent.getId()) {
-//                case R.id.time_spinner:
-//                    Toast.makeText(AllCommoditiesActivity.this, time[position] + "已选中", Toast.LENGTH_SHORT).show();
-//                    break;
-//                case R.id.money_spinner:
-//                    Toast.makeText(AllCommoditiesActivity.this, money[position] + "已选中", Toast.LENGTH_SHORT).show();
-//                    break;
-//                case R.id.distance_spinner:
-//                    Toast.makeText(AllCommoditiesActivity.this, distance[position] + "已选中", Toast.LENGTH_SHORT).show();
-//                    break;
-//            }
-//        }
-//
-//        @Override
-//        public void onNothingSelected(AdapterView<?> parent) {
-//
-//        }
-//    }
+    class SpinnerListener implements AdapterView.OnItemSelectedListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            switch (parent.getId()) {
+                case R.id.time_spinner:
+                    Toast.makeText(AllCommoditiesActivity.this, time[position] + "已选中", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.money_spinner:
+
+                    Toast.makeText(AllCommoditiesActivity.this, money[position] + "已选中", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.distance_spinner:
+                    Toast.makeText(AllCommoditiesActivity.this, distance[position] + "已选中", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

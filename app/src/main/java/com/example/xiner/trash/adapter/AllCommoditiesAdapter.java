@@ -91,7 +91,7 @@ public class AllCommoditiesAdapter extends RecyclerView.Adapter<AllCommoditiesAd
         TextView descTv;
         TextView dateTv;
         TextView priceTv;
-
+        TextView cateGary;
         public ViewHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.card_view_commodities);
@@ -100,6 +100,7 @@ public class AllCommoditiesAdapter extends RecyclerView.Adapter<AllCommoditiesAd
             descTv = (TextView) itemView.findViewById(R.id.list_commodity_tv_desc);
             dateTv = (TextView) itemView.findViewById(R.id.list_commodity_tv_date);
             priceTv = (TextView) itemView.findViewById(R.id.list_commodity_tv_price);
+//            cateGary=(TextView)itemView.findViewById(R.id.)
 
         }
     }

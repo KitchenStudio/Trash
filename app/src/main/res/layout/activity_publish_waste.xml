@@ -44,6 +44,7 @@
             android:orientation="horizontal">
 
             <TextView
+
                 android:layout_width="80dp"
                 android:layout_height="30dp"
                 android:gravity="center"
@@ -56,6 +57,7 @@
                 android:background="@android:color/darker_gray" />
 
             <EditText
+                android:textColor="@android:color/black"
                 android:id="@+id/publish_waste_et_iname"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
@@ -124,6 +126,8 @@
                 android:background="@android:color/darker_gray" />
 
             <EditText
+                android:textColor="@android:color/black"
+
                 android:id="@+id/publish_waste_et_desc"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -153,6 +157,8 @@
                 android:background="@android:color/darker_gray" />
 
             <EditText
+                android:textColor="@android:color/black"
+
                 android:id="@+id/publish_waste_et_uname"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
@@ -187,6 +193,8 @@
                 android:background="@android:color/darker_gray" />
 
             <EditText
+                android:textColor="@android:color/black"
+
                 android:id="@+id/publish_waste_et_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
@@ -220,6 +228,7 @@
                 android:background="@android:color/darker_gray" />
 
             <EditText
+                android:textColor="@android:color/black"
                 android:id="@+id/publish_waste_et_address"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"

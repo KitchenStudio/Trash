@@ -52,7 +52,7 @@ public class SelectActivity extends ActionBarActivity implements AMapLocationLis
         mLocationManagerProxy.requestLocationData(
                 LocationProviderProxy.AMapNetwork, 60*1000, 15, this);
 
-        mLocationManagerProxy.setGpsEnable(false);
+        mLocationManagerProxy.setGpsEnable(true);
     }
     @Override
     protected void onResume() {
@@ -69,12 +69,19 @@ public class SelectActivity extends ActionBarActivity implements AMapLocationLis
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         String address = aMapLocation.getProvince()+aMapLocation.getCity();
-        Log.v(TAG, aMapLocation.getProvince()+aMapLocation.getCity()+"citycitycity");
-        Main.getInstance().getDataStore().edit().putString("location",address).commit();
+        if (!address.equals("")) {
+            Log.v(TAG, aMapLocation.getProvince() + aMapLocation.getCity() + "citycitycity");
+            Main.getInstance().getDataStore().edit().putString("location",address).commit();
+
+        }else{
+            Main.getInstance().getDataStore().edit().putString("location","山东省济南市").commit();
+
+        }
     }
 
     @Override
     public void onLocationChanged(Location location) {
+
 
     }
 
